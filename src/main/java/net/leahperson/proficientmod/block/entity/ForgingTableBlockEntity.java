@@ -8,6 +8,9 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -50,7 +53,15 @@ public class ForgingTableBlockEntity extends BlockEntity {
         }
     }
 
-    public final OneSlotItemHandler itemHandler = new OneSlotItemHandler(NUM_SLOTS);
+    public final OneSlotItemHandler itemHandler = new OneSlotItemHandler(NUM_SLOTS){
+        @Override
+        protected void onContentsChanged(int slot) {
+            setChanged();
+            if(!level.isClientSide){
+                level.sendBlockUpdated(getBlockPos(),getBlockState(),getBlockState(),3);
+            }
+        }
+    };
 
 
     //public final int slotsOccupied = 0;
@@ -63,6 +74,8 @@ public class ForgingTableBlockEntity extends BlockEntity {
 
 
     }
+
+
 
     public boolean isFull(){
         for (int i = 0; i < NUM_SLOTS; i++) {
@@ -129,6 +142,14 @@ public class ForgingTableBlockEntity extends BlockEntity {
         }
         Containers.dropContents(this.level,this.worldPosition,inventory);
 
+    }
+
+    public List<ItemStack> getRenderItems(){
+        List<ItemStack> itemStacks = new ArrayList<ItemStack>();
+        for(int i = 0; i < itemHandler.getSlots();i++){
+            itemStacks.add(itemHandler.getStackInSlot(0));
+        }
+        return itemStacks;
     }
 
 
@@ -214,5 +235,15 @@ public class ForgingTableBlockEntity extends BlockEntity {
     public InteractionResult craftItem(Level pLevel, BlockPos pPos, Player pPlayer, ItemStack pItemStack, int pSlot){
         return InteractionResult.SUCCESS;
 
+    }
+
+    @Override
+    public @Nullable Packet<ClientGamePacketListener> getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
+    }
+
+    @Override
+    public CompoundTag getUpdateTag() {
+        return saveWithoutMetadata();
     }
 }

@@ -1,0 +1,15 @@
+-Implement item rendering
+-Add quality icon
+-Add attributes
+-Implement full crafting functionality (Proficiency, quality_ (Item pop off anvil?)
+-Fix Datapack
+-Add food attribute increases from rarity
+-Add equipment attribute increases from rarity
+-Add curious support
+-Add curious attribute increases from rarity
+-Add cooking pot
+-Add scribing table
+-Add jewelcrafting station
+-Add workbench
+-Add reforging station
+-Implement reforging mechanics
