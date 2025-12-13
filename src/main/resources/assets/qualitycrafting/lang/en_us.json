@@ -16,5 +16,14 @@
   "qualitycrafting.jei.proficiencycost": "Proficiency required: ",
   "qualitycrafting.jei.qualitycost": "Quality required: ",
   "qualitycrafting.jei.yieldcost": "+%s Output per %s Yield",
-  "qualitycrafting.jei.rarityinputtooltip": "+%s Quality if %s"
+  "qualitycrafting.jei.rarityinputtooltip": "+%s Quality if %s",
+
+
+  "qualitycrafting:proficiency": "Proficiency",
+  "qualitycrafting:proficiency.desc": "Determines which items you can forge.",
+
+  "qualitycrafting:quality": "Quality",
+  "qualitycrafting:quality.desc": "Improves the result of forged items.",
+
+  "qualitycrafting.station.notproficient": "Your Proficiency is too low. Needed: %s Current: %s"
 }

@@ -137,6 +137,8 @@ public class ForgingTableCategory implements IRecipeCategory<ForgingTableRecipe>
 
         //ticks++;
 
+        guiGraphics.drawString(Minecraft.getInstance().font, "aaTypes: "+RarityNBT.getMaxRarityIndex(Minecraft.getInstance().level),40,40,0xFF80FC20,true);
+
 
         guiGraphics.drawString(Minecraft.getInstance().font,Component.translatable("qualitycrafting.jei.levelcost").append(Integer.toString(recipe.getLevelCost())),5,20,0xFF80FC20,true);
 

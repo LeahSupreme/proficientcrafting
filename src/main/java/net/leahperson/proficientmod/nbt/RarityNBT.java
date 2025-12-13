@@ -16,7 +16,16 @@ import java.util.Optional;
 public class RarityNBT {
 
     public static int getMaxRarityIndex(Level level){
-        return 3;
+
+        Registry<QualityType> myregistry;
+
+                myregistry= level.registryAccess().registryOrThrow(QualityType.RARITY_REGISTRY);
+        int maxLevel = 0;
+        Registry<QualityType> myRealRegistry = myregistry;
+        Optional<QualityType> maxtype = myRealRegistry.stream().max((elema,elemb)->{
+            return elema.index()-elemb.index();
+        });
+        return maxtype.get().index();
     }
 
     public static MutableComponent styleRarity(int index,String text){
@@ -46,6 +55,14 @@ public class RarityNBT {
                 return Component.literal("Legendary").withStyle(ChatFormatting.GOLD);
         }
         return Component.literal("Common");
+    }
+
+
+
+    public static String getRarityName(int index){
+
+
+        return "";
     }
 
 

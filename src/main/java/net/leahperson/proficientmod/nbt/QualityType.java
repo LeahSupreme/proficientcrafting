@@ -41,11 +41,13 @@ public record QualityType(int index, double bonus, ResourceLocation icon) {
     public QualityType {
         index = Math.max(0, index);
         bonus = bonus;
+        icon = icon;
     }
 
     public static Quality createQuality(final Holder<QualityType> holder, final ItemStack stack) {
 
         QualityType type = holder.value();
+
 
 
 

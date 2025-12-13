@@ -4,6 +4,7 @@ import net.leahperson.proficientmod.block.entity.ForgingTableBlockEntity;
 import net.leahperson.proficientmod.util.ModTags;
 import net.minecraft.client.gui.components.ChatComponent;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
@@ -15,17 +16,17 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.BaseEntityBlock;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.HorizontalDirectionalBlock;
-import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.ChiseledBookShelfBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -38,11 +39,28 @@ import java.util.Optional;
 import java.util.function.Predicate;
 
 public class ForgingTableBlock extends BaseEntityBlock {
+
+    public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     public static final VoxelShape SHAPE = Block.box(0,0,0,16,16,16);
     private static final Logger log = LoggerFactory.getLogger(ForgingTableBlock.class);
 
     public ForgingTableBlock(Properties pProperties) {
         super(pProperties);
+
+        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
+
+    }
+
+    public BlockState getStateForPlacement(BlockPlaceContext pContext) {
+        return this.defaultBlockState().setValue(FACING, pContext.getHorizontalDirection().getClockWise());
+    }
+
+    public BlockState rotate(BlockState pState, Rotation pRot) {
+        return pState.setValue(FACING, pRot.rotate(pState.getValue(FACING)));
+    }
+
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
+        pBuilder.add(FACING);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package net.leahperson.proficientmod.block.entity;
 
 import net.leahperson.proficientmod.ProficientMod;
+import net.leahperson.proficientmod.attribute.ModAttributes;
 import net.leahperson.proficientmod.item.ModItems;
 import net.leahperson.proficientmod.recipe.ForgingTableRecipe;
 import net.minecraft.core.BlockPos;
@@ -98,7 +99,7 @@ public class ForgingTableBlockEntity extends BlockEntity {
 
 
     public void insertItem(Level pLevel, BlockPos pPos, BlockState pState, ItemStack pItemStack){
-        if (!pLevel.isClientSide) {
+        //if (!pLevel.isClientSide) {
             for (int i = 0; i < NUM_SLOTS; i++) {
                 if (itemHandler.getStackInSlot(i).isEmpty()) {
                     itemHandler.insertItem(i, pItemStack.split(1),false);
@@ -106,11 +107,11 @@ public class ForgingTableBlockEntity extends BlockEntity {
                     return;
                 }
             }
-        }
+        //}
     }
 
     public void removeLatestItem(Level pLevel, BlockPos pPos, BlockState pState, Player pPlayer){
-        if (!pLevel.isClientSide) {
+        //if (!pLevel.isClientSide) {
             for (int i = 9-1; i >= 0; i--) {
                 if (!itemHandler.getStackInSlot(i).isEmpty()) {
                     ItemStack itemstack = itemHandler.getStackInSlot(i).split(1);
@@ -121,7 +122,7 @@ public class ForgingTableBlockEntity extends BlockEntity {
                     return;
                 }
             }
-        }
+        //}
     }
 
 
@@ -147,7 +148,9 @@ public class ForgingTableBlockEntity extends BlockEntity {
     public List<ItemStack> getRenderItems(){
         List<ItemStack> itemStacks = new ArrayList<ItemStack>();
         for(int i = 0; i < itemHandler.getSlots();i++){
-            itemStacks.add(itemHandler.getStackInSlot(0));
+            if(!itemHandler.getStackInSlot(i).isEmpty()){
+                itemStacks.add(itemHandler.getStackInSlot(i));
+            }
         }
         return itemStacks;
     }
@@ -155,7 +158,14 @@ public class ForgingTableBlockEntity extends BlockEntity {
 
     public boolean attemptCraft(Level pLevel, BlockPos pPos, BlockState pState,Player pPlayer){
         if(hasRecipe()){
-            craftItem();
+            double prof = pPlayer.getAttribute(ModAttributes.PROFICIENCY.get()).getValue();
+
+            if(prof < getCurrentRecipe().get().getProficiencyRequired()){
+                pPlayer.displayClientMessage(Component.translatable("qualitycrafting.station.notproficient",getCurrentRecipe().get().getProficiencyRequired(),(int)prof),true);
+                return false;
+            }
+
+            craftItem(pPlayer);
             pLevel.playSound((Player) null, pPos, SoundEvents.ANVIL_USE, SoundSource.BLOCKS,
                     1f, 1f);
 
@@ -193,10 +203,14 @@ public class ForgingTableBlockEntity extends BlockEntity {
         return this.level.getRecipeManager().getRecipeFor(ForgingTableRecipe.Type.INSTANCE,inventory,level);
     }
 
-    public void craftItem(){
+    public void craftItem(Player pPlayer){
+
 
         Optional<ForgingTableRecipe> recipe = getCurrentRecipe();
-        ItemStack result = recipe.get().getResultItem(null);
+
+        double quality = pPlayer.getAttribute(ModAttributes.QUALITY.get()).getValue();
+
+        ItemStack result = recipe.get().getResultItemFromQualuty(quality);
 
         for(int i = 0; i < itemHandler.getSlots();i++){
             itemHandler.extractItem(i,itemHandler.getStackInSlot(i).getCount(),false);
@@ -204,7 +218,6 @@ public class ForgingTableBlockEntity extends BlockEntity {
         itemHandler.setStackInSlot(0,result);
 
 
-        //itemHandler.insertItem(0,1,new ItemStack(Items.IRON_INGOT))
     }
 
     @Override
@@ -232,10 +245,10 @@ public class ForgingTableBlockEntity extends BlockEntity {
         itemHandler.deserializeNBT(pTag.getCompound("inventory"));
     }
 
-    public InteractionResult craftItem(Level pLevel, BlockPos pPos, Player pPlayer, ItemStack pItemStack, int pSlot){
+    /*public InteractionResult craftItem(Level pLevel, BlockPos pPos, Player pPlayer, ItemStack pItemStack, int pSlot){
         return InteractionResult.SUCCESS;
 
-    }
+    }*/
 
     @Override
     public @Nullable Packet<ClientGamePacketListener> getUpdatePacket() {

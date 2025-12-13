@@ -18,7 +18,11 @@ public class ModBlockStateProvider extends BlockStateProvider {
     @Override
     protected void registerStatesAndModels() {
         //simpleBlockWithItem(ModBlocks.FORGING_TABLE.get(), models().getBuilder("minecraft:anvil"));
-        blockWithItem(ModBlocks.FORGING_TABLE);
+        //blockWithItem(ModBlocks.FORGING_TABLE);
+
+
+        horizontalBlock(ModBlocks.FORGING_TABLE.get(),new ModelFile.UncheckedModelFile(modLoc("block/sepiaanvil")));
+        simpleBlockItem(ModBlocks.FORGING_TABLE.get(),new ModelFile.UncheckedModelFile(modLoc("block/sepiaanvil")));
     }
 
     private void blockWithItem(RegistryObject<Block> blockRegistryObject) {

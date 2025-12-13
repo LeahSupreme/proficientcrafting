@@ -15,7 +15,7 @@
     "count": 1,
     "item": "minecraft:iron_ingot"
   },
-  "proficiency": 5,
+  "proficiency": 0,
   "qualityCosts": [10,20,30],
   "qualityPerIngredient": [10,20,30],
   "yieldCost": 10,

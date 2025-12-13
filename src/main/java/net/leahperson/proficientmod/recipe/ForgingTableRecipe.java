@@ -68,7 +68,6 @@ public class ForgingTableRecipe implements Recipe<SimpleContainer> {
                 inputs.add(itemstack);
             }
         }
-        ProficientMod.LOGGER.info("i: "+i+", size: "+inputItems.size());
         return i == this.inputItems.size() && RecipeMatcher.findMatches(inputs, this.inputItems) != null;
 
 
@@ -89,6 +88,17 @@ public class ForgingTableRecipe implements Recipe<SimpleContainer> {
     @Override
     public ItemStack getResultItem(RegistryAccess pRegistryAccess) {
         return output.copy();
+    }
+
+    public ItemStack getResultItemFromQualuty(double playerQuality){
+        int outputIndex = 0;
+        for(int i = 0; i < qualityRequired.size();i++){
+            if(playerQuality >= qualityRequired.get(i)){
+                outputIndex++;
+            }
+        }
+        return outputs.get(outputIndex).copy();
+        //return output.copy();
     }
 
 

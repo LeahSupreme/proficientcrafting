@@ -45,7 +45,7 @@
   "proficiency": 5,
   "qualityCosts": [11,22,33],
   "qualityPerIngredient": [1,2.5,5],
-  "yieldCost": 12,
-  "yieldAdded": 2,
+  "yieldCost": 0,
+  "yieldAdded": 0,
   "levelCost": 15
 }
