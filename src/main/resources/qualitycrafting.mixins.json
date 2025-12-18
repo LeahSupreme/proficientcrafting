@@ -1,0 +1,17 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.leahperson.proficientmod.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "qualitycrafting.refmap.json",
+  "plugin": "net.leahperson.proficientmod.mixin.ApplyMixinPlugin",
+  "mixins": [
+
+  ],
+  "client": [
+    "client.GuiGraphicsMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

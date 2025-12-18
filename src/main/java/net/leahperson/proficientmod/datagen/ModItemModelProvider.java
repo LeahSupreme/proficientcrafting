@@ -8,7 +8,10 @@ import net.minecraft.world.item.Item;
 import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.RegistryObject;
+
+import java.util.Arrays;
 
 public class ModItemModelProvider extends ItemModelProvider {
 
@@ -20,6 +23,7 @@ public class ModItemModelProvider extends ItemModelProvider {
     protected void registerModels() {
         simpleItem(ModItems.CRUDEHAMMER);
         simpleItem(ModItems.IRONHAMMER);
+
     }
 
     private ItemModelBuilder simpleItem(RegistryObject<Item> item) {

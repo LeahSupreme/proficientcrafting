@@ -1,6 +1,8 @@
 package net.leahperson.proficientmod.item;
 
 import net.leahperson.proficientmod.ProficientMod;
+import net.leahperson.proficientmod.nbt.QualityType;
+import net.minecraft.client.Minecraft;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -17,6 +19,8 @@ public class ModItems {
     public static final RegistryObject<Item> IRONHAMMER = ITEMS.register("ironforgehammer",
             () -> new Item(new Item.Properties()));
 
+    public static final RegistryObject<Item> RARITYITEM = ITEMS.register("rarityitem",
+            () -> new RarityItem(new Item.Properties()));
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);

@@ -9,17 +9,22 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
 import java.util.Optional;
 
 public class RarityNBT {
 
+    public static boolean hasQuality(ItemStack item){
+
+        return false;
+    }
+
     public static int getMaxRarityIndex(Level level){
 
         Registry<QualityType> myregistry;
-
-                myregistry= level.registryAccess().registryOrThrow(QualityType.RARITY_REGISTRY);
+        myregistry= level.registryAccess().registryOrThrow(QualityType.RARITY_REGISTRY);
         int maxLevel = 0;
         Registry<QualityType> myRealRegistry = myregistry;
         Optional<QualityType> maxtype = myRealRegistry.stream().max((elema,elemb)->{
