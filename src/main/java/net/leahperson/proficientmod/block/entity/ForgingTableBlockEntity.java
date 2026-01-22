@@ -3,6 +3,7 @@ package net.leahperson.proficientmod.block.entity;
 import net.leahperson.proficientmod.ProficientMod;
 import net.leahperson.proficientmod.attribute.ModAttributes;
 import net.leahperson.proficientmod.item.ModItems;
+import net.leahperson.proficientmod.nbt.RarityNBT;
 import net.leahperson.proficientmod.recipe.ForgingTableRecipe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -114,7 +115,7 @@ public class ForgingTableBlockEntity extends BlockEntity {
         //if (!pLevel.isClientSide) {
             for (int i = 9-1; i >= 0; i--) {
                 if (!itemHandler.getStackInSlot(i).isEmpty()) {
-                    ItemStack itemstack = itemHandler.getStackInSlot(i).split(1);
+                    ItemStack itemstack = itemHandler.getStackInSlot(i).split(itemHandler.getStackInSlot(i).getCount());
                     if (!pPlayer.getInventory().add(itemstack)) {
                         pPlayer.drop(itemstack, false);
                     }
@@ -208,9 +209,33 @@ public class ForgingTableBlockEntity extends BlockEntity {
 
         Optional<ForgingTableRecipe> recipe = getCurrentRecipe();
 
-        double quality = pPlayer.getAttribute(ModAttributes.QUALITY.get()).getValue();
+        double playerQuality = pPlayer.getAttribute(ModAttributes.QUALITY.get()).getValue();
 
-        ItemStack result = recipe.get().getResultItemFromQualuty(quality);
+        double ingredientQuality = 0;
+
+        for(int i = 0; i < itemHandler.getSlots();i++){
+
+            int thisQuality = RarityNBT.getQualityLevel(itemHandler.getStackInSlot(i));
+            if(thisQuality > 0){
+                ingredientQuality += recipe.get().getQualityPerIngredient().get(thisQuality-1);
+
+            }
+
+        }
+
+        double overallQuality = playerQuality+ingredientQuality;
+
+        ItemStack result = recipe.get().getResultItemFromQualuty(overallQuality);
+        if(recipe.get().getYieldCost() > 0 && recipe.get().getYieldAdded() > 0){
+            int baseOutput = result.getCount();
+            int yieldBonus = recipe.get().getYieldAdded();
+            int yieldProcs = (int) (pPlayer.getAttribute(ModAttributes.YIELD.get()).getValue()/recipe.get().getYieldCost());
+
+            int totalOutput = baseOutput+(yieldBonus*yieldProcs);
+
+            result.setCount(totalOutput);
+        }
+
 
         for(int i = 0; i < itemHandler.getSlots();i++){
             itemHandler.extractItem(i,itemHandler.getStackInSlot(i).getCount(),false);

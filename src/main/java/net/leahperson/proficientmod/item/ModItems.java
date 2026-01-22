@@ -19,8 +19,12 @@ public class ModItems {
     public static final RegistryObject<Item> IRONHAMMER = ITEMS.register("ironforgehammer",
             () -> new Item(new Item.Properties()));
 
-    public static final RegistryObject<Item> RARITYITEM = ITEMS.register("rarityitem",
-            () -> new RarityItem(new Item.Properties()));
+    public static final RegistryObject<Item> UNCOMMON_RARITY = ITEMS.register("rarity1",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> RARE_RARITY = ITEMS.register("rarity2",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> LEGENDARY_RARITY = ITEMS.register("rarity3",
+            () -> new Item(new Item.Properties()));
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);

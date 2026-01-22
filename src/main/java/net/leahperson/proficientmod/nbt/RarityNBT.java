@@ -1,25 +1,53 @@
 package net.leahperson.proficientmod.nbt;
 
 import com.mojang.datafixers.types.templates.Hook;
+import net.leahperson.proficientmod.ProficientMod;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Optional;
 
 public class RarityNBT {
 
-    public static boolean hasQuality(ItemStack item){
+    ///give Dev minecraft:diamond_axe{"qualitycrafting":{"quality":3}}
 
-        return false;
+    public static boolean hasQuality(ItemStack item){
+        return getQualityLevel(item) > 0;
+
     }
+
+    public static int getQualityLevel(ItemStack item){
+        CompoundTag tag = item.getTag();
+
+        try {
+            if (tag != null) {
+                CompoundTag qualityTag = tag.getCompound(ProficientMod.MOD_ID);
+                int rarity = qualityTag.getInt("quality");
+                return rarity;
+            }
+        } catch (Exception e) {
+            return 0;
+        }
+        return 0;
+
+    }
+
+
+
 
     public static int getMaxRarityIndex(Level level){
 
@@ -61,6 +89,42 @@ public class RarityNBT {
         }
         return Component.literal("Common");
     }
+
+    public static boolean isRarityItem(ItemStack stack, Level level){
+        ResourceLocation itemId = stack.getItem().builtInRegistryHolder().key().location();
+        Registry<QualityType> myregistry;
+        myregistry= level.registryAccess().registryOrThrow(QualityType.RARITY_REGISTRY);
+        int maxLevel = 0;
+        Registry<QualityType> myRealRegistry = myregistry;
+        boolean found = myRealRegistry.stream().anyMatch((elem)->{
+            if(elem.icon().equals(itemId)){
+                return true;
+            }
+            return false;
+        });
+        return found;
+    }
+
+public static ItemStack getRarityItem(int index, Level level){
+    Registry<QualityType> myregistry;
+    myregistry= level.registryAccess().registryOrThrow(QualityType.RARITY_REGISTRY);
+    int maxLevel = 0;
+    Registry<QualityType> myRealRegistry = myregistry;
+    Optional<QualityType> selectedType = myRealRegistry.stream().filter((elem)->{
+        if(elem.index() == index){
+            return true;
+        }
+        return false;
+    }).findAny();
+    ResourceLocation icon = selectedType.get().icon();
+    ItemStack something;
+    Item somethingelse;
+    return ForgeRegistries.ITEMS.getDelegate(icon).get().get().getDefaultInstance();
+    /*Item.FILTERED_REGISTRIES.stream().filter((elem) -> {
+        return elem.equals();
+    }).findAny();
+    return ItemStack.EMPTY;*/
+}
 
 
 

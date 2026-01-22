@@ -22,6 +22,9 @@ public class ModAttributes {
     public static final RegistryObject<Attribute> QUALITY = ATTRIBUTES.register("quality",
             () ->  new RangedAttribute("qualitycrafting:quality",0,0,1000000000));
 
+    public static final RegistryObject<Attribute> YIELD = ATTRIBUTES.register("yield",
+            () ->  new RangedAttribute("qualitycrafting:yield",0,0,1000000000));
+
     public static void register(IEventBus eventBus) {
         ATTRIBUTES.register(eventBus);
     }

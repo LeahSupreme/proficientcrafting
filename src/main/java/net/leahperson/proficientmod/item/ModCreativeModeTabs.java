@@ -18,6 +18,7 @@ public class ModCreativeModeTabs {
             .title(Component.translatable("creativetab.proficient_tab"))
             .displayItems((pParameters,pOutput)->{
                 pOutput.accept(ModItems.CRUDEHAMMER.get());
+                pOutput.accept(ModItems.IRONHAMMER.get());
                 pOutput.accept(ModBlocks.FORGING_TABLE.get());
             })
             .build());

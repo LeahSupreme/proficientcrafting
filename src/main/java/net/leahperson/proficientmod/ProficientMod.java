@@ -75,8 +75,11 @@ public class ProficientMod
     @SubscribeEvent
     public void applyAttribs(EntityAttributeModificationEvent e) {
 
+
+
         e.add(EntityType.PLAYER, ModAttributes.PROFICIENCY.get());
         e.add(EntityType.PLAYER, ModAttributes.QUALITY.get());
+        e.add(EntityType.PLAYER, ModAttributes.YIELD.get());
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call

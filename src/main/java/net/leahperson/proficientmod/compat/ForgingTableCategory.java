@@ -92,25 +92,16 @@ public class ForgingTableCategory implements IRecipeCategory<ForgingTableRecipe>
 
             slotBuilder.addIngredients(recipe.getIngredients().get(i));
 
-            //builder.addSlot().addIngredients(recipe.getIngredients().get(i));
         }
 
-        //============
 
-
-
-
-
-            //=========
 
         builder.addSlot(RecipeIngredientRole.CATALYST,90,52).addItemStack(new ItemStack(ModBlocks.FORGING_TABLE.get()));
 
         builder.addSlot(RecipeIngredientRole.CATALYST,90,12).addIngredients(Ingredient.of(ModTags.Items.FORGING_HAMMER));
 
-
-
-
         builder.addSlot(RecipeIngredientRole.OUTPUT, 139, 52).addItemStack(recipe.getResultItem(null));
+
 
 
     }
@@ -137,15 +128,13 @@ public class ForgingTableCategory implements IRecipeCategory<ForgingTableRecipe>
 
         //ticks++;
 
-        guiGraphics.drawString(Minecraft.getInstance().font, "aaTypes: "+RarityNBT.getMaxRarityIndex(Minecraft.getInstance().level),40,40,0xFF80FC20,true);
 
 
         guiGraphics.drawString(Minecraft.getInstance().font,Component.translatable("qualitycrafting.jei.levelcost").append(Integer.toString(recipe.getLevelCost())),5,20,0xFF80FC20,true);
 
         guiGraphics.drawString(Minecraft.getInstance().font,Component.translatable("qualitycrafting.jei.proficiencycost").append(Integer.toString(recipe.getProficiencyRequired())),10,90,0xFF636363,false);
         int numRarities = recipe.getNumOutputs();
-        //int rarityTick = ((ticks/120)%numRarities);
-        //if(ticks % (120*numRarities) )
+
 
 
             List<Integer> allQualities = new ArrayList<Integer>();
@@ -173,13 +162,23 @@ public class ForgingTableCategory implements IRecipeCategory<ForgingTableRecipe>
 
 
 
+
             //guiGraphics.drawString(Minecraft.getInstance().font, Component.literal("for ").append(mycom).append(" Rarity"),10,110,0xFF636363,false);
 
 
 
 
+        if(recipe.getYieldAdded() > 0){
+            guiGraphics.drawString(Minecraft.getInstance().font,Component.translatable("qualitycrafting.jei.yieldcost",recipe.getYieldAdded(),recipe.getYieldCost()),10,110,0xFF636363,false);
+        }
 
-        guiGraphics.drawString(Minecraft.getInstance().font,Component.translatable("qualitycrafting.jei.yieldcost",recipe.getYieldAdded(),recipe.getYieldCost()),10,110,0xFF636363,false);
+
+
+
+        //guiGraphics.blit(ResourceLocation.parse("jei:textures/jei/atlas/gui/button_enabled.png"),10,110,0,0,16,16,16,16);
+        //guiGraphics.blit(ResourceLocation.parse("jei:textures/jei/atlas/gui/icons/arrow_next.png"),10,110,0,0,16,16,16,16);
+
+
 
 
 

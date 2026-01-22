@@ -1,21 +1,23 @@
 package net.leahperson.proficientmod.util;
 
 import net.leahperson.proficientmod.item.ModItems;
+import net.leahperson.proficientmod.item.RarityItem;
+import net.leahperson.proficientmod.nbt.RarityNBT;
+import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
 public class OverlayUtils {
 
 
     public static ItemStack getOverlay(final ItemStack stack) {
-        CompoundTag tag = stack.getTag();
 
-        if (tag != null) {
-            //CompoundTag qualityTag = tag.getCompound(QualityUtils.QUALITY_TAG);
-            //return getOverlay(qualityTag.getInt(QualityUtils.QUALITY_KEY));
-        }
 
-        return new ItemStack(ModItems.CRUDEHAMMER.get());
+
+
+        return RarityNBT.getRarityItem(RarityNBT.getQualityLevel(stack), Minecraft.getInstance().level);
+
 
         //return ItemStack.EMPTY;
     }
@@ -53,6 +55,6 @@ public class OverlayUtils {
 
     public static boolean isOverlay(final ItemStack stack) {
         //return false;
-        return stack.is(ModItems.CRUDEHAMMER.get());
+        return RarityNBT.isRarityItem(stack,Minecraft.getInstance().level);
     }
 }

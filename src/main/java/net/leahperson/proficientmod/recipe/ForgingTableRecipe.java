@@ -132,7 +132,7 @@ public class ForgingTableRecipe implements Recipe<SimpleContainer> {
     }
 
     public int getNumOutputs(){
-        return outputs.size();
+        return output.getCount();
     }
 
     public int getLevelCost(){

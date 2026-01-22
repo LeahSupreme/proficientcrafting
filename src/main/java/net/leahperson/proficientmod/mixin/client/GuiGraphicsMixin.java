@@ -34,24 +34,31 @@ public abstract class GuiGraphicsMixin {
     @Inject(method = "renderItem(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/item/ItemStack;IIII)V", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/vertex/PoseStack;popPose()V", shift = At.Shift.AFTER))
     private void qualitycrafting$renderIcon(final LivingEntity entity, final Level level, final ItemStack stack, final int x, final int y, final int seed, final int guiOffset, final CallbackInfo callback, @Local final BakedModel model) {
 
+        if (!RarityNBT.hasQuality(stack) || OverlayUtils.isOverlay(stack)) {
+            return;
+        }
+
         GuiGraphics instance = (GuiGraphics) (Object) this;
         instance.pose().pushPose();
-        instance.pose().translate(0, 0, 200 + (model.isGui3d() ? guiOffset : 0));
+        instance.pose().translate(0, 0, 50 + (model.isGui3d() ? guiOffset : 0));
 
+
+
+        renderItem(entity, level, OverlayUtils.getOverlay(stack), x, y, seed, guiOffset);
         //ResourceLocation myResource = ResourceLocation.tryBuild(ProficientMod.MOD_ID, "item/" + ModItems.RARITYITEM.getId().getPath());
 
         /*ResourceLocation myResource = level.registryAccess().registryOrThrow(QualityType.RARITY_REGISTRY).stream().min((elema,elemb)->{
             return elema.index()-elemb.index();
         }).get().icon();*/
 
-        ResourceLocation resourceLocation = new ResourceLocation(ProficientMod.MOD_ID,"item/rarity1");
+        //ResourceLocation resourceLocation = new ResourceLocation(ProficientMod.MOD_ID,"item/rarity1");
         //ResourceLocation myResource = ResourceLocation.fromNamespaceAndPath(ProficientMod.MOD_ID,"item/rarity1");
 
         //LogUtils.getLogger().info(myResource.toString());
 
         //instance.blit(x,y,0,16,16,Minecraft.getInstance().getModelManager().getAtlas(myResource).getSprite(myResource));
 
-        instance.blit(resourceLocation,x,y,0,0,16,16);
+        //instance.blit(resourceLocation,x,y,0,0,16,16);
         instance.pose().popPose();
     }
 
