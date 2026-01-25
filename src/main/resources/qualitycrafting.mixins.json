@@ -6,7 +6,7 @@
   "refmap": "qualitycrafting.refmap.json",
   "plugin": "net.leahperson.proficientmod.mixin.ApplyMixinPlugin",
   "mixins": [
-
+    "FoodMixin"
   ],
   "client": [
     "client.GuiGraphicsMixin"

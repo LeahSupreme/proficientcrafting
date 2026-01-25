@@ -1,6 +1,8 @@
 package net.leahperson.proficientmod;
 
 import com.mojang.logging.LogUtils;
+import net.leahperson.proficientmod.attribute.AttributeAdditionData;
+import net.leahperson.proficientmod.attribute.FoodAdditionData;
 import net.leahperson.proficientmod.attribute.ModAttributes;
 import net.leahperson.proficientmod.block.ModBlocks;
 import net.leahperson.proficientmod.block.entity.ModBlockEntities;
@@ -47,6 +49,8 @@ public class ProficientMod
         ModAttributes.register(modEventBus);
         modEventBus.addListener((DataPackRegistryEvent.NewRegistry event) -> {
             event.dataPackRegistry(QualityType.RARITY_REGISTRY, QualityType.CODEC, QualityType.CODEC);
+            event.dataPackRegistry(AttributeAdditionData.QUALITY_ATTRIBUTE_REGISTRY,AttributeAdditionData.CODEC,AttributeAdditionData.CODEC);
+            event.dataPackRegistry(FoodAdditionData.FOOD_QUALITY_REGISTRY,FoodAdditionData.CODEC,FoodAdditionData.CODEC);
         });
 
 

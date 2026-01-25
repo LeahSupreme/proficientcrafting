@@ -27,5 +27,6 @@
   "qualitycrafting:yield": "Yield",
   "qualitycrafting:yield.desc": "Improves the amount of forged items created.",
 
-  "qualitycrafting.station.notproficient": "Your Proficiency is too low. Needed: %s Current: %s"
+  "qualitycrafting.station.notproficient": "Your Proficiency is too low. Needed: %s Current: %s",
+  "qualitycrafting.station.noexperience": "You need more experience."
 }

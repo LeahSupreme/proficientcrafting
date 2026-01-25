@@ -20,5 +20,5 @@
   "qualityPerIngredient": [10,20,30],
   "yieldCost": 10,
   "yieldAdded": 1,
-  "levelCost": 10
+  "levelCost": 0
 }

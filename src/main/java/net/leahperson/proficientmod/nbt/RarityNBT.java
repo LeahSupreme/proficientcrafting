@@ -23,7 +23,7 @@ import java.util.Optional;
 
 public class RarityNBT {
 
-    ///give Dev minecraft:diamond_axe{"qualitycrafting":{"quality":3}}
+    ///give Dev minecraft:iron_chestplate{"qualitycrafting":{"quality":3}}
 
     public static boolean hasQuality(ItemStack item){
         return getQualityLevel(item) > 0;

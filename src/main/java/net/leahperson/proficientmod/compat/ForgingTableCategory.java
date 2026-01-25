@@ -57,7 +57,7 @@ public class ForgingTableCategory implements IRecipeCategory<ForgingTableRecipe>
 
     @Override
     public int getWidth() {
-        return 180;
+        return 240;
     }
 
     @Override
@@ -94,50 +94,51 @@ public class ForgingTableCategory implements IRecipeCategory<ForgingTableRecipe>
 
         }
 
-
-
         builder.addSlot(RecipeIngredientRole.CATALYST,90,52).addItemStack(new ItemStack(ModBlocks.FORGING_TABLE.get()));
-
         builder.addSlot(RecipeIngredientRole.CATALYST,90,12).addIngredients(Ingredient.of(ModTags.Items.FORGING_HAMMER));
+        for(int i = 0; i < recipe.numQualityOutputTypes(); i++){
+            builder.addSlot(RecipeIngredientRole.OUTPUT, 139, 15+(i*18)).addItemStack(recipe.getOutputOfRarity(i));
 
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 139, 52).addItemStack(recipe.getResultItem(null));
+        }
 
 
 
     }
 
-    //static int ticks = 0;
+
 
     @Override
     public void draw(ForgingTableRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
-        //IRecipeCategory.super.draw(recipe, recipeSlotsView, guiGraphics, mouseX, mouseY);
-        //guiGraphics
 
-        //guiGraphics.blit(0,0,0,180,130);
+        for(int i = 0; i < recipe.numQualityOutputTypes(); i++){
+            int min = 0;
+            int max = 0;
 
+            if(i < recipe.numQualityOutputTypes()-1){
+                max = recipe.getQualityRequired().get(i)-1;
+            }
 
-        //Xp color: 128 252 32
+            if(i > 0 ){
+                min = recipe.getQualityRequired().get(i-1);
+            }
+            MutableComponent range = Component.literal(min+"-"+max+" ");
+            if(max == 0){
+                range = Component.literal(min+"+ ");
+            }
+            guiGraphics.drawString(Minecraft.getInstance().font,range.append(Component.translatable("qualitycrafting:quality"))    ,159,20+(18*i),0xFF636363,false);
 
-
-        /*if(mouseX >= 10 && mouseX <= 60 && mouseY >= 25 && mouseY <= 33){
-            guiGraphics.renderTooltip(Minecraft.getInstance().font,Component.literal("Some Text"),(int)mouseX,(int)mouseY);
         }
-        guiGraphics.drawString(Minecraft.getInstance().font,"Quality + ?",10,25,63*256*256+252*256+252,false);
-        */
 
+        if(recipe.getLevelCost() > 0){
+            guiGraphics.drawString(Minecraft.getInstance().font,Component.translatable("qualitycrafting.jei.levelcost").append(Integer.toString(recipe.getLevelCost())),5,20,0xFF80FC20,true);
 
-        //ticks++;
+        }
 
-
-
-        guiGraphics.drawString(Minecraft.getInstance().font,Component.translatable("qualitycrafting.jei.levelcost").append(Integer.toString(recipe.getLevelCost())),5,20,0xFF80FC20,true);
 
         guiGraphics.drawString(Minecraft.getInstance().font,Component.translatable("qualitycrafting.jei.proficiencycost").append(Integer.toString(recipe.getProficiencyRequired())),10,90,0xFF636363,false);
         int numRarities = recipe.getNumOutputs();
 
-
-
-            List<Integer> allQualities = new ArrayList<Integer>();
+            /*List<Integer> allQualities = new ArrayList<Integer>();
             allQualities.add(0);
             allQualities.addAll(recipe.getQualityRequired());
             List<MutableComponent> qualityComponents = new ArrayList<MutableComponent>();
@@ -151,35 +152,15 @@ public class ForgingTableCategory implements IRecipeCategory<ForgingTableRecipe>
                 return component.append(element);
             });
 
-            /*MutableComponent mycom = Component.empty();
-            for(int i = 0; i < numRarities; i++){
-                mycom = mycom.append(RarityNBT.getRarityComponent(i));
-            }*/
-
-
             String qualityString = String.join("/",allQualities.stream().map(elem->Integer.toString(elem)).toList());
             guiGraphics.drawString(Minecraft.getInstance().font,Component.translatable("qualitycrafting.jei.qualitycost").append(allQualitiesComponent),10,100,0xFF636363,false);
-
-
-
-
-            //guiGraphics.drawString(Minecraft.getInstance().font, Component.literal("for ").append(mycom).append(" Rarity"),10,110,0xFF636363,false);
-
-
-
-
+        */
         if(recipe.getYieldAdded() > 0){
-            guiGraphics.drawString(Minecraft.getInstance().font,Component.translatable("qualitycrafting.jei.yieldcost",recipe.getYieldAdded(),recipe.getYieldCost()),10,110,0xFF636363,false);
+            guiGraphics.drawString(Minecraft.getInstance().font,Component.translatable("qualitycrafting.jei.yieldcost",recipe.getYieldAdded(),recipe.getYieldCost()),10,100,0xFF636363,false);
         }
 
-
-
-
-        //guiGraphics.blit(ResourceLocation.parse("jei:textures/jei/atlas/gui/button_enabled.png"),10,110,0,0,16,16,16,16);
-        //guiGraphics.blit(ResourceLocation.parse("jei:textures/jei/atlas/gui/icons/arrow_next.png"),10,110,0,0,16,16,16,16);
-
-
-
+        guiGraphics.blit(ResourceLocation.parse("jei:textures/jei/atlas/gui/button_enabled.png"),10,110,0,0,16,16,16,16);
+        guiGraphics.blit(ResourceLocation.parse("jei:textures/jei/atlas/gui/icons/arrow_next.png"),10,110,0,0,16,16,16,16);
 
 
 

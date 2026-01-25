@@ -131,6 +131,10 @@ public class ForgingTableRecipe implements Recipe<SimpleContainer> {
         return this.outputs.get(rarity);
     }
 
+    public int numQualityOutputTypes(){
+        return this.outputs.size();
+    }
+
     public int getNumOutputs(){
         return output.getCount();
     }

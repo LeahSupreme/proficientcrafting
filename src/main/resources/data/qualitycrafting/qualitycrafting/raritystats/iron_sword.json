@@ -1,0 +1,32 @@
+{
+  "itemid": "minecraft:iron_sword",
+  "rarities": [
+    [
+      {
+        "attributeid":"minecraft:generic.attack_damage",
+        "amount": 1,
+        "operation": "ADDITION"
+      }
+    ]
+  ,[
+      {
+        "attributeid":"minecraft:generic.attack_damage",
+        "amount": 2,
+        "operation": "ADDITION"
+      }
+    ]
+  ,[
+      {
+        "attributeid":"minecraft:generic.attack_damage",
+        "amount": 4,
+        "operation": "ADDITION"
+      },
+      {
+        "attributeid":"minecraft:generic.attack_speed",
+        "amount": 0.2,
+        "operation": "ADDITION"
+      }
+    ]
+
+  ]
+}

@@ -5,6 +5,7 @@ import net.leahperson.proficientmod.attribute.ModAttributes;
 import net.leahperson.proficientmod.item.ModItems;
 import net.leahperson.proficientmod.nbt.RarityNBT;
 import net.leahperson.proficientmod.recipe.ForgingTableRecipe;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -19,6 +20,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Containers;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Player;
@@ -166,6 +168,11 @@ public class ForgingTableBlockEntity extends BlockEntity {
                 return false;
             }
 
+            if(pPlayer.experienceLevel < getCurrentRecipe().get().getLevelCost()){
+                pPlayer.displayClientMessage(Component.translatable("qualitycrafting.station.noexperience"),true);
+                return false;
+            }
+
             craftItem(pPlayer);
             pLevel.playSound((Player) null, pPos, SoundEvents.ANVIL_USE, SoundSource.BLOCKS,
                     1f, 1f);
@@ -237,8 +244,15 @@ public class ForgingTableBlockEntity extends BlockEntity {
         }
 
 
+        if(recipe.get().getLevelCost() > 0){
+            pPlayer.giveExperienceLevels(-1*recipe.get().getLevelCost());
+        }
+
         for(int i = 0; i < itemHandler.getSlots();i++){
             itemHandler.extractItem(i,itemHandler.getStackInSlot(i).getCount(),false);
+        }
+        if(pPlayer.getItemInHand(InteractionHand.MAIN_HAND).isDamageableItem()){
+                pPlayer.getItemInHand(InteractionHand.MAIN_HAND).hurtAndBreak(1, pPlayer,(e)->{});
         }
         itemHandler.setStackInSlot(0,result);
 
