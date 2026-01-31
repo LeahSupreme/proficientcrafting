@@ -20,6 +20,7 @@ public class ModCreativeModeTabs {
                 pOutput.accept(ModItems.CRUDEHAMMER.get());
                 pOutput.accept(ModItems.IRONHAMMER.get());
                 pOutput.accept(ModBlocks.FORGING_TABLE.get());
+                pOutput.accept(ModItems.FUNNYRING.get());
             })
             .build());
 

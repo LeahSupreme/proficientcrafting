@@ -16,10 +16,17 @@ public class ModItems {
             DeferredRegister.create(ForgeRegistries.ITEMS, ProficientMod.MOD_ID);
 
     public static final RegistryObject<Item> CRUDEHAMMER = ITEMS.register("crudeforgehammer",
-            () -> new Item(new Item.Properties().defaultDurability(32).durability(32)));
+            () -> new Item(new Item.Properties().stacksTo(1).defaultDurability(32).durability(32)));
 
     public static final RegistryObject<Item> IRONHAMMER = ITEMS.register("ironforgehammer",
-            () -> new Item(new Item.Properties().defaultDurability(64).durability(64)));
+            () -> new Item(new Item.Properties().stacksTo(1).defaultDurability(64).durability(64)));
+
+    public static final RegistryObject<Item> FUNNYRING = ITEMS.register("funnyring",
+            () -> new FunnyRing(new Item.Properties(),FunnyRing.funnyringAttributes()));
+
+
+
+
 
     public static final RegistryObject<Item> UNCOMMON_RARITY = ITEMS.register("rarity1",
             () -> new Item(new Item.Properties()));

@@ -16,10 +16,12 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import top.theillusivec4.curios.api.event.CurioAttributeModifierEvent;
 
 import java.util.List;
 import java.util.Optional;
@@ -32,6 +34,52 @@ public class QualityItemAttributeEvent {
 
 
 
+
+    @SubscribeEvent
+    public static void addQualityCurioAttributes(CurioAttributeModifierEvent event){
+
+
+
+        ItemStack stack = event.getItemStack();
+        if(!RarityNBT.hasQuality(stack)){
+            return;
+        }
+
+        ResourceLocation itemId = stack.getItem().builtInRegistryHolder().key().location();
+
+
+
+        Optional<AttributeAdditionData> qualityEntry = Minecraft.getInstance().level.registryAccess().registryOrThrow(AttributeAdditionData.QUALITY_CURIOS_REGISTRY).stream().filter((elem)->{
+            return elem.itemid().equals(itemId.getNamespace()+":"+itemId.getPath());
+        }).findAny();
+
+        if(qualityEntry.isEmpty()){
+            return;
+        }
+
+        List<AttributeAddition> attributes = qualityEntry.get().rarities().get(RarityNBT.getQualityLevel(stack)-1);
+
+        Multimap<Attribute, AttributeModifier> qualityModifiers = HashMultimap.create();
+
+        for(int i = 0; i < attributes.size(); i++){
+            String operation = attributes.get(i).operation();
+            String attributeid = attributes.get(i).attributeid();;
+            AtomicReference<Double> amount = new AtomicReference<>(attributes.get(i).amount());
+            ResourceLocation attributeResource = ResourceLocation.parse(attributeid);
+            Registry<Attribute> ar = Minecraft.getInstance().level.registryAccess().registryOrThrow(Registries.ATTRIBUTE);
+            Attribute a = ar.get(attributeResource);
+            AttributeModifier.Operation o = AttributeModifier.Operation.valueOf(operation);
+
+            qualityModifiers.put(a,new AttributeModifier(Mth.createInsecureUUID(RandomSource.create((itemId.toString()+ProficientMod.MOD_ID+String.valueOf(RarityNBT.getQualityLevel(stack))).hashCode())),ProficientMod.MOD_ID+" "+a.getDescriptionId(), amount.get(),o));
+        }
+        Multimap<Attribute, AttributeModifier> combinedModifiers = AttributeUtils.combineAttributes(event.getOriginalModifiers(),qualityModifiers);
+        event.clearModifiers();
+        combinedModifiers.forEach((key,elem)->{
+            event.addModifier(key,elem);
+        });
+
+
+    }
 
     @SubscribeEvent
     public static void addQualityToolAttributes(ItemAttributeModifierEvent event) {

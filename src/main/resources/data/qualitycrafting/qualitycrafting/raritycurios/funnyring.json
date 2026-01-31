@@ -1,0 +1,32 @@
+{
+  "itemid": "qualitycrafting:funnyring",
+  "rarities": [
+    [
+      {
+        "attributeid":"minecraft:generic.max_health",
+        "amount": 4,
+        "operation": "ADDITION"
+      }
+    ]
+  ,[
+      {
+        "attributeid":"minecraft:generic.max_health",
+        "amount": 8,
+        "operation": "ADDITION"
+      }
+    ]
+  ,[
+      {
+        "attributeid":"minecraft:generic.armor",
+        "amount": 4,
+        "operation": "ADDITION"
+      },
+      {
+        "attributeid":"minecraft:generic.max_health",
+        "amount": 16,
+        "operation": "ADDITION"
+      }
+    ]
+
+  ]
+}

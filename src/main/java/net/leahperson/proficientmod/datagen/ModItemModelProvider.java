@@ -23,6 +23,7 @@ public class ModItemModelProvider extends ItemModelProvider {
     protected void registerModels() {
         simpleItem(ModItems.CRUDEHAMMER);
         simpleItem(ModItems.IRONHAMMER);
+        simpleItem(ModItems.FUNNYRING);
         simpleItem(ModItems.UNCOMMON_RARITY);
         simpleItem(ModItems.RARE_RARITY);
         simpleItem(ModItems.LEGENDARY_RARITY);

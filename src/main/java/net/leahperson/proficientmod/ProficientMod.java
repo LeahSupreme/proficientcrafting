@@ -50,6 +50,7 @@ public class ProficientMod
         modEventBus.addListener((DataPackRegistryEvent.NewRegistry event) -> {
             event.dataPackRegistry(QualityType.RARITY_REGISTRY, QualityType.CODEC, QualityType.CODEC);
             event.dataPackRegistry(AttributeAdditionData.QUALITY_ATTRIBUTE_REGISTRY,AttributeAdditionData.CODEC,AttributeAdditionData.CODEC);
+            event.dataPackRegistry(AttributeAdditionData.QUALITY_CURIOS_REGISTRY,AttributeAdditionData.CODEC,AttributeAdditionData.CODEC);
             event.dataPackRegistry(FoodAdditionData.FOOD_QUALITY_REGISTRY,FoodAdditionData.CODEC,FoodAdditionData.CODEC);
         });
 

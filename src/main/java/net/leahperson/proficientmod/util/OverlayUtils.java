@@ -1,11 +1,7 @@
 package net.leahperson.proficientmod.util;
 
-import net.leahperson.proficientmod.item.ModItems;
-import net.leahperson.proficientmod.item.RarityItem;
 import net.leahperson.proficientmod.nbt.RarityNBT;
 import net.minecraft.client.Minecraft;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
 public class OverlayUtils {

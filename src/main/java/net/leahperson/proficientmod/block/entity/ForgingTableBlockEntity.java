@@ -177,10 +177,10 @@ public class ForgingTableBlockEntity extends BlockEntity {
             pLevel.playSound((Player) null, pPos, SoundEvents.ANVIL_USE, SoundSource.BLOCKS,
                     1f, 1f);
 
-            /*RandomSource myRandom = RandomSource.create();
-            for (int i = 0; i < 20; i++) {
+            RandomSource myRandom = RandomSource.create();
+            for (int i = 0; i < 200; i++) {
                 pLevel.addParticle(ParticleTypes.HAPPY_VILLAGER, (double) pPos.getX() + 0.5D, (double) pPos.getY() + 1.5D, (double) pPos.getZ() + 0.5D, 5 * ((double) ((float) pPos.getX() + myRandom.nextFloat()) - 0.5D), 5 * ((double) ((float) pPos.getY() - myRandom.nextFloat() - 1.0F)), 5 * ((double) ((float) pPos.getZ() + myRandom.nextFloat()) - 0.5D));
-            }*/
+            }
             setChanged(pLevel,pPos,pState);
             return true;
         }else{
@@ -252,7 +252,9 @@ public class ForgingTableBlockEntity extends BlockEntity {
             itemHandler.extractItem(i,itemHandler.getStackInSlot(i).getCount(),false);
         }
         if(pPlayer.getItemInHand(InteractionHand.MAIN_HAND).isDamageableItem()){
-                pPlayer.getItemInHand(InteractionHand.MAIN_HAND).hurtAndBreak(1, pPlayer,(e)->{});
+                pPlayer.getItemInHand(InteractionHand.MAIN_HAND).hurtAndBreak(1, pPlayer,(player) -> {
+                    player.broadcastBreakEvent(InteractionHand.MAIN_HAND);
+                });;
         }
         itemHandler.setStackInSlot(0,result);
 

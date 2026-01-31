@@ -13,6 +13,7 @@ import java.util.List;
 public record AttributeAdditionData(String itemid, List<List<AttributeAddition>> rarities) {
 
     public static final ResourceKey<Registry<AttributeAdditionData>> QUALITY_ATTRIBUTE_REGISTRY = ResourceKey.createRegistryKey(ResourceLocation.fromNamespaceAndPath(ProficientMod.MOD_ID, "raritystats"));
+    public static final ResourceKey<Registry<AttributeAdditionData>> QUALITY_CURIOS_REGISTRY = ResourceKey.createRegistryKey(ResourceLocation.fromNamespaceAndPath(ProficientMod.MOD_ID, "raritycurios"));
 
 
     //public static final AttributeAdditionData NONE = new AttributeAdditionData(0, 1, ProficientMod.location("none"));
