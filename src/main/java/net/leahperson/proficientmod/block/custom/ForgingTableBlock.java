@@ -97,7 +97,6 @@ public class ForgingTableBlock extends BaseEntityBlock {
             if(pPlayer.getItemInHand(pHand).isEmpty()){
                 //Handslot is empty, try to remove from the anvil
                 if(forgingTableBlockEntity.isEmpty()){
-                    //pPlayer.displayClientMessage(Component.literal("Nothing in table"),false);
 
                     return InteractionResult.CONSUME;
                 }else{
@@ -111,7 +110,6 @@ public class ForgingTableBlock extends BaseEntityBlock {
 
                     boolean result = forgingTableBlockEntity.attemptCraft(pLevel,pPos,pState,pPlayer);
                     if(!result){
-                        //pPlayer.displayClientMessage(Component.literal("Craft Failed"),false);
 
                         return InteractionResult.CONSUME;
                     }else{
@@ -119,7 +117,6 @@ public class ForgingTableBlock extends BaseEntityBlock {
 
 
 
-                        //pPlayer.displayClientMessage(Component.literal("Craft Succeeded"),false);
 
                         return InteractionResult.sidedSuccess(!pLevel.isClientSide);
                     }
@@ -129,7 +126,6 @@ public class ForgingTableBlock extends BaseEntityBlock {
                 }else{
                     //Attempt to insert item.
                     if(forgingTableBlockEntity.isFull()){
-                        //pPlayer.displayClientMessage(Component.literal("Table is full"),false);
                         return InteractionResult.CONSUME;
                     }else{
                         forgingTableBlockEntity.insertItem(pLevel,pPos,pState,pPlayer.getItemInHand(pHand));

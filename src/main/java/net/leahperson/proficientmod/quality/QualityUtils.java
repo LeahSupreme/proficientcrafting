@@ -1,27 +1,20 @@
-package net.leahperson.proficientmod.nbt;
+package net.leahperson.proficientmod.quality;
 
-import com.mojang.datafixers.types.templates.Hook;
 import net.leahperson.proficientmod.ProficientMod;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.Minecraft;
-import net.minecraft.core.Holder;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.Registry;
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Optional;
 
-public class RarityNBT {
+public class QualityUtils {
 
     ///give Dev minecraft:iron_chestplate{"qualitycrafting":{"quality":3}}
 
@@ -51,11 +44,11 @@ public class RarityNBT {
 
     public static int getMaxRarityIndex(Level level){
 
-        Registry<QualityType> myregistry;
-        myregistry= level.registryAccess().registryOrThrow(QualityType.RARITY_REGISTRY);
+        Registry<QualityDataType> myregistry;
+        myregistry= level.registryAccess().registryOrThrow(QualityDataType.RARITY_REGISTRY);
         int maxLevel = 0;
-        Registry<QualityType> myRealRegistry = myregistry;
-        Optional<QualityType> maxtype = myRealRegistry.stream().max((elema,elemb)->{
+        Registry<QualityDataType> myRealRegistry = myregistry;
+        Optional<QualityDataType> maxtype = myRealRegistry.stream().max((elema, elemb)->{
             return elema.index()-elemb.index();
         });
         return maxtype.get().index();
@@ -92,10 +85,10 @@ public class RarityNBT {
 
     public static boolean isRarityItem(ItemStack stack, Level level){
         ResourceLocation itemId = stack.getItem().builtInRegistryHolder().key().location();
-        Registry<QualityType> myregistry;
-        myregistry= level.registryAccess().registryOrThrow(QualityType.RARITY_REGISTRY);
+        Registry<QualityDataType> myregistry;
+        myregistry= level.registryAccess().registryOrThrow(QualityDataType.RARITY_REGISTRY);
         int maxLevel = 0;
-        Registry<QualityType> myRealRegistry = myregistry;
+        Registry<QualityDataType> myRealRegistry = myregistry;
         boolean found = myRealRegistry.stream().anyMatch((elem)->{
             if(elem.icon().equals(itemId)){
                 return true;
@@ -106,11 +99,11 @@ public class RarityNBT {
     }
 
 public static ItemStack getRarityItem(int index, Level level){
-    Registry<QualityType> myregistry;
-    myregistry= level.registryAccess().registryOrThrow(QualityType.RARITY_REGISTRY);
+    Registry<QualityDataType> myregistry;
+    myregistry= level.registryAccess().registryOrThrow(QualityDataType.RARITY_REGISTRY);
     int maxLevel = 0;
-    Registry<QualityType> myRealRegistry = myregistry;
-    Optional<QualityType> selectedType = myRealRegistry.stream().filter((elem)->{
+    Registry<QualityDataType> myRealRegistry = myregistry;
+    Optional<QualityDataType> selectedType = myRealRegistry.stream().filter((elem)->{
         if(elem.index() == index){
             return true;
         }

@@ -3,19 +3,10 @@ package net.leahperson.proficientmod.mixin.client;
 
 import com.llamalad7.mixinextras.sugar.Local;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.logging.LogUtils;
-import net.leahperson.proficientmod.ProficientMod;
-import net.leahperson.proficientmod.item.ModItems;
-import net.leahperson.proficientmod.nbt.QualityType;
-import net.leahperson.proficientmod.nbt.RarityNBT;
+import net.leahperson.proficientmod.quality.QualityUtils;
 import net.leahperson.proficientmod.util.OverlayUtils;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.renderer.texture.atlas.SpriteSource;
 import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.core.Registry;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -34,7 +25,7 @@ public abstract class GuiGraphicsMixin {
     @Inject(method = "renderItem(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/item/ItemStack;IIII)V", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/vertex/PoseStack;popPose()V", shift = At.Shift.AFTER))
     private void qualitycrafting$renderIcon(final LivingEntity entity, final Level level, final ItemStack stack, final int x, final int y, final int seed, final int guiOffset, final CallbackInfo callback, @Local final BakedModel model) {
 
-        if (!RarityNBT.hasQuality(stack) || OverlayUtils.isOverlay(stack)) {
+        if (!QualityUtils.hasQuality(stack) || OverlayUtils.isOverlay(stack)) {
             return;
         }
 

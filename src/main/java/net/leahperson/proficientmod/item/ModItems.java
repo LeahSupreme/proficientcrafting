@@ -1,11 +1,7 @@
 package net.leahperson.proficientmod.item;
 
 import net.leahperson.proficientmod.ProficientMod;
-import net.leahperson.proficientmod.nbt.QualityType;
-import net.minecraft.client.Minecraft;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ShearsItem;
-import net.minecraft.world.item.SwordItem;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;

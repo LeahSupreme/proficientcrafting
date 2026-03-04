@@ -8,7 +8,7 @@ import net.leahperson.proficientmod.block.ModBlocks;
 import net.leahperson.proficientmod.block.entity.ModBlockEntities;
 import net.leahperson.proficientmod.item.ModCreativeModeTabs;
 import net.leahperson.proficientmod.item.ModItems;
-import net.leahperson.proficientmod.nbt.QualityType;
+import net.leahperson.proficientmod.quality.QualityDataType;
 import net.leahperson.proficientmod.recipe.ModRecipes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
@@ -48,7 +48,7 @@ public class ProficientMod
         ModRecipes.register(modEventBus);
         ModAttributes.register(modEventBus);
         modEventBus.addListener((DataPackRegistryEvent.NewRegistry event) -> {
-            event.dataPackRegistry(QualityType.RARITY_REGISTRY, QualityType.CODEC, QualityType.CODEC);
+            event.dataPackRegistry(QualityDataType.RARITY_REGISTRY, QualityDataType.CODEC, QualityDataType.CODEC);
             event.dataPackRegistry(AttributeAdditionData.QUALITY_ATTRIBUTE_REGISTRY,AttributeAdditionData.CODEC,AttributeAdditionData.CODEC);
             event.dataPackRegistry(AttributeAdditionData.QUALITY_CURIOS_REGISTRY,AttributeAdditionData.CODEC,AttributeAdditionData.CODEC);
             event.dataPackRegistry(FoodAdditionData.FOOD_QUALITY_REGISTRY,FoodAdditionData.CODEC,FoodAdditionData.CODEC);

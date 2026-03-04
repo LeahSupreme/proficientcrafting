@@ -5,7 +5,7 @@ import com.google.common.collect.Multimap;
 import net.leahperson.proficientmod.ProficientMod;
 import net.leahperson.proficientmod.attribute.AttributeAddition;
 import net.leahperson.proficientmod.attribute.AttributeAdditionData;
-import net.leahperson.proficientmod.nbt.RarityNBT;
+import net.leahperson.proficientmod.quality.QualityUtils;
 import net.leahperson.proficientmod.util.AttributeUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.Registry;
@@ -16,7 +16,6 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -41,7 +40,7 @@ public class QualityItemAttributeEvent {
 
 
         ItemStack stack = event.getItemStack();
-        if(!RarityNBT.hasQuality(stack)){
+        if(!QualityUtils.hasQuality(stack)){
             return;
         }
 
@@ -57,7 +56,7 @@ public class QualityItemAttributeEvent {
             return;
         }
 
-        List<AttributeAddition> attributes = qualityEntry.get().rarities().get(RarityNBT.getQualityLevel(stack)-1);
+        List<AttributeAddition> attributes = qualityEntry.get().rarities().get(QualityUtils.getQualityLevel(stack)-1);
 
         Multimap<Attribute, AttributeModifier> qualityModifiers = HashMultimap.create();
 
@@ -70,7 +69,7 @@ public class QualityItemAttributeEvent {
             Attribute a = ar.get(attributeResource);
             AttributeModifier.Operation o = AttributeModifier.Operation.valueOf(operation);
 
-            qualityModifiers.put(a,new AttributeModifier(Mth.createInsecureUUID(RandomSource.create((itemId.toString()+ProficientMod.MOD_ID+String.valueOf(RarityNBT.getQualityLevel(stack))).hashCode())),ProficientMod.MOD_ID+" "+a.getDescriptionId(), amount.get(),o));
+            qualityModifiers.put(a,new AttributeModifier(Mth.createInsecureUUID(RandomSource.create((itemId.toString()+ProficientMod.MOD_ID+String.valueOf(QualityUtils.getQualityLevel(stack))).hashCode())),ProficientMod.MOD_ID+" "+a.getDescriptionId(), amount.get(),o));
         }
         Multimap<Attribute, AttributeModifier> combinedModifiers = AttributeUtils.combineAttributes(event.getOriginalModifiers(),qualityModifiers);
         event.clearModifiers();
@@ -87,7 +86,7 @@ public class QualityItemAttributeEvent {
 
         ItemStack stack = event.getItemStack();
 
-        if(!RarityNBT.hasQuality(stack)){
+        if(!QualityUtils.hasQuality(stack)){
             return;
         }
 
@@ -105,7 +104,7 @@ public class QualityItemAttributeEvent {
             return;
         }
 
-        List<AttributeAddition> attributes = qualityEntry.get().rarities().get(RarityNBT.getQualityLevel(stack)-1);
+        List<AttributeAddition> attributes = qualityEntry.get().rarities().get(QualityUtils.getQualityLevel(stack)-1);
 
         Multimap<Attribute, AttributeModifier> qualityModifiers = HashMultimap.create();
 
@@ -118,7 +117,7 @@ public class QualityItemAttributeEvent {
             Attribute a = ar.get(attributeResource);
             AttributeModifier.Operation o = AttributeModifier.Operation.valueOf(operation);
 
-            qualityModifiers.put(a,new AttributeModifier(Mth.createInsecureUUID(RandomSource.create((itemId.toString()+ProficientMod.MOD_ID+String.valueOf(RarityNBT.getQualityLevel(stack))).hashCode())),ProficientMod.MOD_ID+" "+a.getDescriptionId(), amount.get(),o));
+            qualityModifiers.put(a,new AttributeModifier(Mth.createInsecureUUID(RandomSource.create((itemId.toString()+ProficientMod.MOD_ID+String.valueOf(QualityUtils.getQualityLevel(stack))).hashCode())),ProficientMod.MOD_ID+" "+a.getDescriptionId(), amount.get(),o));
         }
         Multimap<Attribute, AttributeModifier> combinedModifiers = AttributeUtils.combineAttributes(event.getOriginalModifiers(),qualityModifiers);
         event.clearModifiers();

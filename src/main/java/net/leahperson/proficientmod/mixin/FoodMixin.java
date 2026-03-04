@@ -3,13 +3,10 @@ package net.leahperson.proficientmod.mixin;
 
 import net.leahperson.proficientmod.attribute.FoodAddition;
 import net.leahperson.proficientmod.attribute.FoodAdditionData;
-import net.leahperson.proficientmod.nbt.RarityNBT;
+import net.leahperson.proficientmod.quality.QualityUtils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
@@ -20,9 +17,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 
-import java.util.ArrayList;
 import java.util.Optional;
-import java.util.function.Supplier;
 
 @Mixin(Item.class)
 public abstract class FoodMixin implements IForgeItem {
@@ -30,7 +25,7 @@ public abstract class FoodMixin implements IForgeItem {
     @Override
     public FoodProperties getFoodProperties(ItemStack stack, @Nullable LivingEntity entity)
     {
-        if(!RarityNBT.hasQuality(stack)){
+        if(!QualityUtils.hasQuality(stack)){
             return IForgeItem.super.getFoodProperties(stack,entity);
         }
 
@@ -46,7 +41,7 @@ public abstract class FoodMixin implements IForgeItem {
             return IForgeItem.super.getFoodProperties(stack,entity);
         }
 
-        FoodAddition food = data.get().rarities().get(RarityNBT.getQualityLevel(stack)-1);
+        FoodAddition food = data.get().rarities().get(QualityUtils.getQualityLevel(stack)-1);
 
         FoodProperties baseFoodProperties = IForgeItem.super.getFoodProperties(stack,entity);
 

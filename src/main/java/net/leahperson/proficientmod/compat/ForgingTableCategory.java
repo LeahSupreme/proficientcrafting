@@ -12,24 +12,16 @@ import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.leahperson.proficientmod.ProficientMod;
 import net.leahperson.proficientmod.block.ModBlocks;
-import net.leahperson.proficientmod.nbt.RarityNBT;
 import net.leahperson.proficientmod.recipe.ForgingTableRecipe;
 import net.leahperson.proficientmod.util.ModTags;
-import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.core.NonNullList;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
 
 public class ForgingTableCategory implements IRecipeCategory<ForgingTableRecipe> {
     public static final ResourceLocation UID =  ResourceLocation.fromNamespaceAndPath(ProficientMod.MOD_ID, "forging_table");

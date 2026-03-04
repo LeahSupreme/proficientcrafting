@@ -1,6 +1,6 @@
 package net.leahperson.proficientmod.util;
 
-import net.leahperson.proficientmod.nbt.RarityNBT;
+import net.leahperson.proficientmod.quality.QualityUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.item.ItemStack;
 
@@ -12,7 +12,7 @@ public class OverlayUtils {
 
 
 
-        return RarityNBT.getRarityItem(RarityNBT.getQualityLevel(stack), Minecraft.getInstance().level);
+        return QualityUtils.getRarityItem(QualityUtils.getQualityLevel(stack), Minecraft.getInstance().level);
 
 
         //return ItemStack.EMPTY;
@@ -51,6 +51,6 @@ public class OverlayUtils {
 
     public static boolean isOverlay(final ItemStack stack) {
         //return false;
-        return RarityNBT.isRarityItem(stack,Minecraft.getInstance().level);
+        return QualityUtils.isRarityItem(stack,Minecraft.getInstance().level);
     }
 }
