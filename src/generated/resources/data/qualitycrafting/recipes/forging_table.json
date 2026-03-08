@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "minecraft:crafting_table"
+    },
+    "B": {
+      "item": "minecraft:smithing_table"
+    },
+    "C": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "pattern": [
+    "ACB",
+    " C ",
+    "CCC"
+  ],
+  "result": {
+    "item": "qualitycrafting:forging_table"
+  },
+  "show_notification": true
+}

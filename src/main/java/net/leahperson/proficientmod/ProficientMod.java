@@ -10,6 +10,8 @@ import net.leahperson.proficientmod.item.ModCreativeModeTabs;
 import net.leahperson.proficientmod.item.ModItems;
 import net.leahperson.proficientmod.quality.QualityDataType;
 import net.leahperson.proficientmod.recipe.ModRecipes;
+import net.leahperson.proficientmod.registry.ModRecipeSerializers;
+import net.leahperson.proficientmod.registry.ModRecipeTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -53,6 +55,8 @@ public class ProficientMod
             event.dataPackRegistry(AttributeAdditionData.QUALITY_CURIOS_REGISTRY,AttributeAdditionData.CODEC,AttributeAdditionData.CODEC);
             event.dataPackRegistry(FoodAdditionData.FOOD_QUALITY_REGISTRY,FoodAdditionData.CODEC,FoodAdditionData.CODEC);
         });
+        ModRecipeTypes.register(modEventBus);
+        ModRecipeSerializers.register(modEventBus);
 
 
         modEventBus.addListener(this::commonSetup);

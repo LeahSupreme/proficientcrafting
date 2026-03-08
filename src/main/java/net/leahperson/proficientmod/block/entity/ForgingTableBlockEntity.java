@@ -2,292 +2,238 @@ package net.leahperson.proficientmod.block.entity;
 
 import net.leahperson.proficientmod.attribute.ModAttributes;
 import net.leahperson.proficientmod.quality.QualityUtils;
+import net.leahperson.proficientmod.recipe.ForgingRecipe;
+import net.leahperson.proficientmod.recipe.ForgingRecipeContainer;
 import net.leahperson.proficientmod.recipe.ForgingTableRecipe;
+import net.leahperson.proficientmod.util.QualityDataUtil;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.RandomSource;
-import net.minecraft.world.Containers;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.SimpleContainer;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import java.util.Optional;
 
 import java.util.*;
 
 public class ForgingTableBlockEntity extends BlockEntity {
+    private static final int INPUT_SLOTS = 9;
 
-    public static final int NUM_SLOTS = 9;
+    private final NonNullList<ItemStack> inputStacks = NonNullList.withSize(INPUT_SLOTS, ItemStack.EMPTY);
+    private ItemStack outputStack = ItemStack.EMPTY;
 
+    private int progress = 0;
+    private int maxProgress = 0;
+    private boolean crafting = false;
 
-    class OneSlotItemHandler extends ItemStackHandler {
-        public OneSlotItemHandler(int numSlots) {
-            super(numSlots);
-        }
-
-        @Override
-        public int getSlotLimit(int slot) {
-            return 1;
-        }
+    public ForgingTableBlockEntity(BlockPos pos, BlockState state) {
+        super(ModBlockEntities.FORGING_TABLE_BE.get(), pos, state);
     }
 
-    public final OneSlotItemHandler itemHandler = new OneSlotItemHandler(NUM_SLOTS){
-        @Override
-        protected void onContentsChanged(int slot) {
-            setChanged();
-            if(!level.isClientSide){
-                level.sendBlockUpdated(getBlockPos(),getBlockState(),getBlockState(),3);
+    public NonNullList<ItemStack> getInputStacks() {
+        return inputStacks;
+    }
+
+    public ItemStack getOutputStack() {
+        return outputStack;
+    }
+
+    public boolean hasOutput() {
+        return !outputStack.isEmpty();
+    }
+
+    public boolean isCrafting() {
+        return crafting;
+    }
+
+    public boolean addInput(ItemStack stack) {
+        if (stack.isEmpty()) return false;
+        if (hasOutput() || crafting) return false;
+
+        for (int i = 0; i < inputStacks.size(); i++) {
+            if (inputStacks.get(i).isEmpty()) {
+                ItemStack one = stack.copy();
+                one.setCount(1);
+                inputStacks.set(i, one);
+                setChangedAndSync();
+                return true;
             }
         }
-    };
 
-
-    //public final int slotsOccupied = 0;
-
-    private LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.empty();
-
-    public ForgingTableBlockEntity(BlockPos pPos, BlockState pBlockState) {
-        super(ModBlockEntities.FORGING_TABLE_BE.get(), pPos, pBlockState);
-
-
-
+        return false;
     }
 
+    public ItemStack removeOutput() {
+        if (outputStack.isEmpty()) return ItemStack.EMPTY;
+        ItemStack copy = outputStack.copy();
+        outputStack = ItemStack.EMPTY;
+        setChangedAndSync();
+        return copy;
+    }
 
+    public ItemStack removeLastInput() {
+        if (crafting) return ItemStack.EMPTY;
 
-    public boolean isFull(){
-        for (int i = 0; i < NUM_SLOTS; i++) {
-            if(itemHandler.getStackInSlot(i).isEmpty()){
-                return false;
+        for (int i = inputStacks.size() - 1; i >= 0; i--) {
+            ItemStack stack = inputStacks.get(i);
+            if (!stack.isEmpty()) {
+                inputStacks.set(i, ItemStack.EMPTY);
+                setChangedAndSync();
+                return stack;
             }
         }
-        return true;
+
+        return ItemStack.EMPTY;
     }
 
-    public boolean isEmpty(){
-        for (int i = 0; i < NUM_SLOTS; i++) {
-            if(!itemHandler.getStackInSlot(i).isEmpty()){
-                return false;
-            }
-        }
-        return true;
-    }
+    public boolean startCraft(Level level) {
+        if (level == null || level.isClientSide) return false;
+        if (crafting || !outputStack.isEmpty()) return false;
 
-
-
-    public void insertItem(Level pLevel, BlockPos pPos, BlockState pState, ItemStack pItemStack){
-        //if (!pLevel.isClientSide) {
-            for (int i = 0; i < NUM_SLOTS; i++) {
-                if (itemHandler.getStackInSlot(i).isEmpty()) {
-                    itemHandler.insertItem(i, pItemStack.split(1),false);
-                    setChanged(pLevel,pPos,pState);
-                    return;
-                }
-            }
-        //}
-    }
-
-    public void removeLatestItem(Level pLevel, BlockPos pPos, BlockState pState, Player pPlayer){
-        //if (!pLevel.isClientSide) {
-            for (int i = 9-1; i >= 0; i--) {
-                if (!itemHandler.getStackInSlot(i).isEmpty()) {
-                    ItemStack itemstack = itemHandler.getStackInSlot(i).split(itemHandler.getStackInSlot(i).getCount());
-                    if (!pPlayer.getInventory().add(itemstack)) {
-                        pPlayer.drop(itemstack, false);
-                    }
-                    setChanged(pLevel,pPos,pState);
-                    return;
-                }
-            }
-        //}
-    }
-
-
-    @Override
-    public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-
-        if(cap == ForgeCapabilities.ITEM_HANDLER){
-            return lazyItemHandler.cast();
+        ItemStack[] copy = new ItemStack[INPUT_SLOTS];
+        for (int i = 0; i < INPUT_SLOTS; i++) {
+            copy[i] = inputStacks.get(i).copy();
         }
 
-        return super.getCapability(cap, side);
-    }
+        ForgingRecipeContainer container = new ForgingRecipeContainer(copy);
 
-    public void drops(){
-        SimpleContainer inventory = new SimpleContainer(itemHandler.getSlots());
-        for(int i = 0; i < itemHandler.getSlots(); i++){
-            inventory.setItem(i,itemHandler.getStackInSlot(i));
-        }
-        Containers.dropContents(this.level,this.worldPosition,inventory);
+        Optional<ForgingRecipe> recipeOpt = level.getRecipeManager()
+                .getAllRecipesFor(net.leahperson.proficientmod.registry.ModRecipeTypes.FORGING.get())
+                .stream()
+                .filter(recipe -> recipe.matches(container, level))
+                .findFirst();
 
-    }
-
-    public List<ItemStack> getRenderItems(){
-        List<ItemStack> itemStacks = new ArrayList<ItemStack>();
-        for(int i = 0; i < itemHandler.getSlots();i++){
-            if(!itemHandler.getStackInSlot(i).isEmpty()){
-                itemStacks.add(itemHandler.getStackInSlot(i));
-            }
-        }
-        return itemStacks;
-    }
-
-
-    public boolean attemptCraft(Level pLevel, BlockPos pPos, BlockState pState,Player pPlayer){
-        if(hasRecipe()){
-            double prof = pPlayer.getAttribute(ModAttributes.PROFICIENCY.get()).getValue();
-
-            if(prof < getCurrentRecipe().get().getProficiencyRequired()){
-                pPlayer.displayClientMessage(Component.translatable("qualitycrafting.station.notproficient",getCurrentRecipe().get().getProficiencyRequired(),(int)prof),true);
-                return false;
-            }
-
-            if(pPlayer.experienceLevel < getCurrentRecipe().get().getLevelCost()){
-                pPlayer.displayClientMessage(Component.translatable("qualitycrafting.station.noexperience"),true);
-                return false;
-            }
-
-            craftItem(pPlayer);
-            pLevel.playSound((Player) null, pPos, SoundEvents.ANVIL_USE, SoundSource.BLOCKS,
-                    1f, 1f);
-
-            RandomSource myRandom = RandomSource.create();
-
-
-            setChanged(pLevel,pPos,pState);
-            return true;
-        }else{
+        if (recipeOpt.isEmpty()) {
             return false;
         }
-    }
 
+        ForgingRecipe recipe = recipeOpt.get();
 
-    public boolean hasRecipe(){
+        this.crafting = true;
+        this.progress = 0;
+        this.maxProgress = recipe.getCraftTime();
 
-        Optional<ForgingTableRecipe> recipe = getCurrentRecipe();
-
-
-        if(recipe.isEmpty()){
-            return false;
-        }
+        setChangedAndSync();
         return true;
     }
 
-    private Optional<ForgingTableRecipe> getCurrentRecipe() {
-        SimpleContainer inventory = new SimpleContainer(this.itemHandler.getSlots());
-        for(int i = 0; i < itemHandler.getSlots(); i++){
-            inventory.setItem(i,this.itemHandler.getStackInSlot(i));
+    public static void tick(Level level, BlockPos pos, BlockState state, ForgingTableBlockEntity be) {
+        if (level.isClientSide) return;
+        if (!be.crafting) return;
+
+        be.progress++;
+
+        if (be.progress >= be.maxProgress) {
+            be.finishCraft((ServerLevel) level);
         }
 
-
-
-        return this.level.getRecipeManager().getRecipeFor(ForgingTableRecipe.Type.INSTANCE,inventory,level);
+        be.setChangedAndSync();
     }
 
-    public void craftItem(Player pPlayer){
-
-
-        Optional<ForgingTableRecipe> recipe = getCurrentRecipe();
-
-        double playerQuality = pPlayer.getAttribute(ModAttributes.QUALITY.get()).getValue();
-
-        double ingredientQuality = 0;
-
-        for(int i = 0; i < itemHandler.getSlots();i++){
-
-            int thisQuality = QualityUtils.getQualityLevel(itemHandler.getStackInSlot(i));
-            if(thisQuality > 0){
-                ingredientQuality += recipe.get().getQualityPerIngredient().get(thisQuality-1);
-
-            }
-
+    private void finishCraft(ServerLevel level) {
+        ItemStack[] copy = new ItemStack[INPUT_SLOTS];
+        for (int i = 0; i < INPUT_SLOTS; i++) {
+            copy[i] = inputStacks.get(i).copy();
         }
 
-        double overallQuality = playerQuality+ingredientQuality;
+        ForgingRecipeContainer container = new ForgingRecipeContainer(copy);
 
-        ItemStack result = recipe.get().getResultItemFromQualuty(overallQuality);
-        if(recipe.get().getYieldCost() > 0 && recipe.get().getYieldAdded() > 0){
-            int baseOutput = result.getCount();
-            int yieldBonus = recipe.get().getYieldAdded();
-            int yieldProcs = (int) (pPlayer.getAttribute(ModAttributes.YIELD.get()).getValue()/recipe.get().getYieldCost());
+        Optional<ForgingRecipe> recipeOpt = level.getRecipeManager()
+                .getAllRecipesFor(net.leahperson.proficientmod.registry.ModRecipeTypes.FORGING.get())
+                .stream()
+                .filter(recipe -> recipe.matches(container, level))
+                .findFirst();
 
-            int totalOutput = baseOutput+(yieldBonus*yieldProcs);
-
-            result.setCount(totalOutput);
+        if (recipeOpt.isEmpty()) {
+            resetCrafting();
+            return;
         }
 
+        ForgingRecipe recipe = recipeOpt.get();
+        ItemStack result = recipe.assemble(container, level.registryAccess());
 
-        if(recipe.get().getLevelCost() > 0){
-            pPlayer.giveExperienceLevels(-1*recipe.get().getLevelCost());
+        int rarity = recipe.getMinQuality() > 0 ? 1 : 0;
+        QualityDataUtil.setRarity(result, rarity);
+
+        for (int i = 0; i < inputStacks.size(); i++) {
+            inputStacks.set(i, ItemStack.EMPTY);
         }
 
-        for(int i = 0; i < itemHandler.getSlots();i++){
-            itemHandler.extractItem(i,itemHandler.getStackInSlot(i).getCount(),false);
-        }
-        if(pPlayer.getItemInHand(InteractionHand.MAIN_HAND).isDamageableItem()){
-                pPlayer.getItemInHand(InteractionHand.MAIN_HAND).hurtAndBreak(1, pPlayer,(player) -> {
-                    player.broadcastBreakEvent(InteractionHand.MAIN_HAND);
-                });;
-        }
-        itemHandler.setStackInSlot(0,result);
+        outputStack = result;
 
+        level.playSound(null, worldPosition, SoundEvents.ANVIL_USE, SoundSource.BLOCKS, 1.0F, 1.0F);
+        level.sendParticles(ParticleTypes.HAPPY_VILLAGER,
+                worldPosition.getX() + 0.5,
+                worldPosition.getY() + 1.1,
+                worldPosition.getZ() + 0.5,
+                10,
+                0.25, 0.15, 0.25,
+                0.01);
 
+        resetCrafting();
+        setChangedAndSync();
     }
 
-    @Override
-    public void onLoad() {
-        super.onLoad();
-        lazyItemHandler = LazyOptional.of(() -> itemHandler);
+    private void resetCrafting() {
+        this.crafting = false;
+        this.progress = 0;
+        this.maxProgress = 0;
     }
 
-    @Override
-    public void invalidateCaps() {
-        super.invalidateCaps();
-        lazyItemHandler.invalidate();
+    private void setChangedAndSync() {
+        setChanged();
+        if (level != null) {
+            level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
+        }
     }
 
     @Override
-    protected void saveAdditional(CompoundTag pTag) {
-        pTag.put("inventory",itemHandler.serializeNBT());
+    protected void saveAdditional(CompoundTag tag) {
+        super.saveAdditional(tag);
 
-        super.saveAdditional(pTag);
+        for (int i = 0; i < inputStacks.size(); i++) {
+            CompoundTag stackTag = new CompoundTag();
+            inputStacks.get(i).save(stackTag);
+            tag.put("Input" + i, stackTag);
+        }
+
+        CompoundTag outputTag = new CompoundTag();
+        outputStack.save(outputTag);
+        tag.put("Output", outputTag);
+
+        tag.putInt("Progress", progress);
+        tag.putInt("MaxProgress", maxProgress);
+        tag.putBoolean("Crafting", crafting);
     }
 
     @Override
-    public void load(CompoundTag pTag) {
-        super.load(pTag);
-        itemHandler.deserializeNBT(pTag.getCompound("inventory"));
-    }
+    public void load(CompoundTag tag) {
+        super.load(tag);
 
-    /*public InteractionResult craftItem(Level pLevel, BlockPos pPos, Player pPlayer, ItemStack pItemStack, int pSlot){
-        return InteractionResult.SUCCESS;
+        for (int i = 0; i < inputStacks.size(); i++) {
+            inputStacks.set(i, ItemStack.of(tag.getCompound("Input" + i)));
+        }
 
-    }*/
-
-    @Override
-    public @Nullable Packet<ClientGamePacketListener> getUpdatePacket() {
-        return ClientboundBlockEntityDataPacket.create(this);
+        outputStack = ItemStack.of(tag.getCompound("Output"));
+        progress = tag.getInt("Progress");
+        maxProgress = tag.getInt("MaxProgress");
+        crafting = tag.getBoolean("Crafting");
     }
 
     @Override
     public CompoundTag getUpdateTag() {
         return saveWithoutMetadata();
+    }
+
+    @Override
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
     }
 }

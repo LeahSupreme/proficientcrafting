@@ -7,7 +7,9 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -20,7 +22,12 @@ public class ModBlocks {
             DeferredRegister.create(ForgeRegistries.BLOCKS, ProficientMod.MOD_ID);
 
 
-    public static final RegistryObject<Block> FORGING_TABLE = registerBlock("forging_table",()->new ForgingTableBlock(BlockBehaviour.Properties.copy(Blocks.ANVIL).noOcclusion()));
+    public static final RegistryObject<Block> FORGING_TABLE = BLOCKS.register("forging_table",
+            () -> new ForgingTableBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.METAL)
+                    .strength(3.5F)
+                    .sound(SoundType.METAL)
+                    .noOcclusion()));
 
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block){

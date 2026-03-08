@@ -1,7 +1,10 @@
 package net.leahperson.proficientmod.item;
 
 import net.leahperson.proficientmod.ProficientMod;
+import net.leahperson.proficientmod.block.ModBlocks;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Rarity;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -14,8 +17,14 @@ public class ModItems {
     public static final RegistryObject<Item> CRUDEHAMMER = ITEMS.register("crudeforgehammer",
             () -> new Item(new Item.Properties().stacksTo(1).defaultDurability(32).durability(32)));
 
-    public static final RegistryObject<Item> IRONHAMMER = ITEMS.register("ironforgehammer",
-            () -> new Item(new Item.Properties().stacksTo(1).defaultDurability(64).durability(64)));
+    public static final RegistryObject<Item> FORGING_TABLE_ITEM = ITEMS.register("forging_table",
+            () -> new BlockItem(ModBlocks.FORGING_TABLE.get(), new Item.Properties()));
+
+    public static final RegistryObject<Item> IRONHAMMER = ITEMS.register("ironhammer",
+            () -> new Item(new Item.Properties()
+                    .stacksTo(1)
+                    .rarity(Rarity.UNCOMMON)
+                    .durability(250)));
 
     public static final RegistryObject<Item> FUNNYRING = ITEMS.register("funnyring",
             () -> new FunnyRing(new Item.Properties(),FunnyRing.funnyringAttributes()));

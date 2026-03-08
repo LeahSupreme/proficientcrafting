@@ -1,6 +1,8 @@
 package net.leahperson.proficientmod.block.custom;
 
 import net.leahperson.proficientmod.block.entity.ForgingTableBlockEntity;
+import net.leahperson.proficientmod.block.entity.ModBlockEntities;
+import net.leahperson.proficientmod.item.ModItems;
 import net.leahperson.proficientmod.util.ModTags;
 import net.minecraft.client.gui.components.ChatComponent;
 import net.minecraft.core.BlockPos;
@@ -38,117 +40,93 @@ import org.slf4j.LoggerFactory;
 import java.util.Optional;
 import java.util.function.Predicate;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import org.jetbrains.annotations.Nullable;
+
 public class ForgingTableBlock extends BaseEntityBlock {
 
-    public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
-    public static final VoxelShape SHAPE = Block.box(0,0,0,16,16,16);
-    private static final Logger log = LoggerFactory.getLogger(ForgingTableBlock.class);
-
-    public ForgingTableBlock(Properties pProperties) {
-        super(pProperties);
-
-        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
-
-    }
-
-    public BlockState getStateForPlacement(BlockPlaceContext pContext) {
-        return this.defaultBlockState().setValue(FACING, pContext.getHorizontalDirection().getClockWise());
-    }
-
-    public BlockState rotate(BlockState pState, Rotation pRot) {
-        return pState.setValue(FACING, pRot.rotate(pState.getValue(FACING)));
-    }
-
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
-        pBuilder.add(FACING);
+    public ForgingTableBlock(BlockBehaviour.Properties props) {
+        super(props);
     }
 
     @Override
-    public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
-        return SHAPE;
-    }
-
-    @Override
-    public RenderShape getRenderShape(BlockState pState) {
+    public RenderShape getRenderShape(BlockState state) {
         return RenderShape.MODEL;
     }
 
     @Override
-    public @Nullable BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
-        return new ForgingTableBlockEntity(pPos,pState);
+    public @Nullable BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new ForgingTableBlockEntity(pos, state);
     }
 
     @Override
-    public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pIsMoving) {
-        if (pState.getBlock() != pNewState.getBlock()) {
-            BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
-            if (blockEntity instanceof ForgingTableBlockEntity) {
-                ((ForgingTableBlockEntity) blockEntity).drops();
-            }
+    public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+        return createTickerHelper(type, ModBlockEntities.FORGING_TABLE_BE.get(), ForgingTableBlockEntity::tick);
+    }
+
+    @Override
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        if (level.isClientSide) {
+            return InteractionResult.SUCCESS;
         }
 
-        super.onRemove(pState, pLevel, pPos, pNewState, pIsMoving);
-    }
+        BlockEntity blockEntity = level.getBlockEntity(pos);
+        if (!(blockEntity instanceof ForgingTableBlockEntity table)) {
+            return InteractionResult.PASS;
+        }
 
-    @Override
-    public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
-        BlockEntity forgingTableEntity = pLevel.getBlockEntity(pPos);
-        if (forgingTableEntity instanceof ForgingTableBlockEntity forgingTableBlockEntity) {
-            if(pPlayer.getItemInHand(pHand).isEmpty()){
-                //Handslot is empty, try to remove from the anvil
-                if(forgingTableBlockEntity.isEmpty()){
+        ItemStack held = player.getItemInHand(hand);
 
-                    return InteractionResult.CONSUME;
-                }else{
-                    forgingTableBlockEntity.removeLatestItem(pLevel,pPos,pState,pPlayer);
-                    return InteractionResult.sidedSuccess(!pLevel.isClientSide);
-                }
-            }else{
-                //Handslot has something in it, try to add to the anvil or craft
-                if(pPlayer.getItemInHand(pHand).getTags().anyMatch(Predicate.isEqual(ModTags.Items.FORGING_HAMMER))){
-                    //Craft
+        if (held.is(ModItems.IRONHAMMER.get())) {
+            boolean started = table.startCraft(level);
+            if (started && !player.getAbilities().instabuild) {
+                held.hurtAndBreak(1, player, p -> p.broadcastBreakEvent(hand));
+            }
+            return started ? InteractionResult.CONSUME : InteractionResult.FAIL;
+        }
 
-                    boolean result = forgingTableBlockEntity.attemptCraft(pLevel,pPos,pState,pPlayer);
-                    if(!result){
-
-                        return InteractionResult.CONSUME;
-                    }else{
-
-
-
-
-
-                        return InteractionResult.sidedSuccess(!pLevel.isClientSide);
-                    }
-
-
-
-                }else{
-                    //Attempt to insert item.
-                    if(forgingTableBlockEntity.isFull()){
-                        return InteractionResult.CONSUME;
-                    }else{
-                        forgingTableBlockEntity.insertItem(pLevel,pPos,pState,pPlayer.getItemInHand(pHand));
-                        return InteractionResult.sidedSuccess(!pLevel.isClientSide);
-                    }
-                }
-
+        if (held.isEmpty()) {
+            ItemStack out = table.removeOutput();
+            if (!out.isEmpty()) {
+                player.addItem(out);
+                return InteractionResult.CONSUME;
             }
 
+            ItemStack removed = table.removeLastInput();
+            if (!removed.isEmpty()) {
+                player.addItem(removed);
+                return InteractionResult.CONSUME;
+            }
+
+            return InteractionResult.PASS;
         }
-        return InteractionResult.PASS;
-    }
 
-    public void addItem(Level pLevel, BlockPos pPos, Player pPlayer, ChiseledBookShelfBlockEntity pBlockEntity, ItemStack pItemStack){
+        ItemStack insertOne = held.copy();
+        insertOne.setCount(1);
 
-    }
+        boolean inserted = table.addInput(insertOne);
+        if (inserted) {
+            if (!player.getAbilities().instabuild) {
+                held.shrink(1);
+            }
+            return InteractionResult.CONSUME;
+        }
 
-    public Item removeItem(){
-        return null;
-    }
-
-    @Override
-    public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
-        return super.getTicker(pLevel, pState, pBlockEntityType);
+        return InteractionResult.FAIL;
     }
 }
