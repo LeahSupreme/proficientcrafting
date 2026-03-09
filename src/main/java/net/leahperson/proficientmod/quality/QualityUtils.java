@@ -119,12 +119,14 @@ public static ItemStack getRarityItem(int index, Level level){
     return ItemStack.EMPTY;*/
 }
 
-
-
     public static String getRarityName(int index){
-
-
-        return "";
+        switch (index){
+            case 0: return "Common";
+            case 1: return "Uncommon";
+            case 2: return "Rare";
+            case 3: return "Legendary";
+        }
+        return "Common";
     }
 
 

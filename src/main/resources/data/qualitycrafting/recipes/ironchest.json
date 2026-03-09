@@ -1,5 +1,5 @@
 {
-  "type": "qualitycrafting:forging_table",
+  "type": "qualitycrafting:forging",
   "ingredients": [
     {
       "item": "minecraft:iron_ingot"
@@ -27,24 +27,26 @@
     }
   ],
   "output": {
-    "count": 1,
-    "item": "iron_chestplate"
+    "item": "minecraft:iron_chestplate",
+    "count": 1
   },
   "outputPerQuality": [
     {
-      "count": 1,
-      "item": "golden_chestplate"
-    },{
-      "count": 1,
-      "item": "diamond_chestplate"
-    },{
-      "count": 1,
-      "item": "netherite_chestplate"
+      "item": "minecraft:golden_chestplate",
+      "count": 1
+    },
+    {
+      "item": "minecraft:diamond_chestplate",
+      "count": 1
+    },
+    {
+      "item": "minecraft:netherite_chestplate",
+      "count": 1
     }
   ],
-  "proficiency": 5,
-  "qualityCosts": [11,22,33],
-  "qualityPerIngredient": [1,2.5,5],
+  "proficiency": 0,
+  "qualityCosts": [11, 22, 33],
+  "qualityPerIngredient": [1, 2.5, 5],
   "yieldCost": 0,
   "yieldAdded": 0,
   "levelCost": 15

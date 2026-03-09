@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_crudeforgehammer": {
+    "has_crude_forge_hammer": {
       "conditions": {
         "items": [
           {
             "items": [
-              "qualitycrafting:crudeforgehammer"
+              "qualitycrafting:crude_forge_hammer"
             ]
           }
         ]
@@ -15,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "qualitycrafting:crudeforgehammer"
+        "recipe": "qualitycrafting:crude_forge_hammer"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_crudeforgehammer",
+      "has_crude_forge_hammer",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "qualitycrafting:crudeforgehammer"
+      "qualitycrafting:crude_forge_hammer"
     ]
   },
   "sends_telemetry_event": false

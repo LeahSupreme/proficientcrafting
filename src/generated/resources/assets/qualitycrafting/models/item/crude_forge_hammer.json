@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "qualitycrafting:item/crudeforgehammer"
+    "layer0": "qualitycrafting:item/crude_forge_hammer"
   }
 }

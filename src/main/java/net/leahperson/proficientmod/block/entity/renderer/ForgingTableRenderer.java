@@ -1,7 +1,10 @@
 package net.leahperson.proficientmod.block.entity.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Axis;
 import net.leahperson.proficientmod.block.entity.ForgingTableBlockEntity;
+import net.leahperson.proficientmod.quality.QualityUtils;
+import net.leahperson.proficientmod.util.OverlayUtils;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
@@ -37,8 +40,7 @@ public class ForgingTableRenderer implements BlockEntityRenderer<ForgingTableBlo
 
             // Centered roughly on the top face of the block
             poseStack.translate(0.2 + (col * 0.3), 1.02, 0.2 + (row * 0.3));
-
-            // Lay flat on the table
+            poseStack.mulPose(Axis.XP.rotationDegrees(90f));
             poseStack.scale(0.25f, 0.25f, 0.25f);
 
             itemRenderer.renderStatic(
@@ -52,6 +54,22 @@ public class ForgingTableRenderer implements BlockEntityRenderer<ForgingTableBlo
                     0
             );
 
+            if (QualityUtils.hasQuality(stack)) {
+                ItemStack overlay = OverlayUtils.getOverlay(stack);
+                if (!overlay.isEmpty()) {
+                    itemRenderer.renderStatic(
+                            overlay,
+                            ItemDisplayContext.FIXED,
+                            combinedLight,
+                            combinedOverlay,
+                            poseStack,
+                            bufferSource,
+                            blockEntity.getLevel(),
+                            i + 100
+                    );
+                }
+            }
+
             poseStack.popPose();
         }
 
@@ -60,7 +78,8 @@ public class ForgingTableRenderer implements BlockEntityRenderer<ForgingTableBlo
         if (!output.isEmpty()) {
             poseStack.pushPose();
 
-            poseStack.translate(0.5, 1.08, 0.5);
+            poseStack.translate(0.5, 1.02, 0.5);
+            poseStack.mulPose(Axis.XP.rotationDegrees(90f));
             poseStack.scale(0.35f, 0.35f, 0.35f);
 
             itemRenderer.renderStatic(
@@ -73,6 +92,22 @@ public class ForgingTableRenderer implements BlockEntityRenderer<ForgingTableBlo
                     blockEntity.getLevel(),
                     1
             );
+
+            if (QualityUtils.hasQuality(output)) {
+                ItemStack overlay = OverlayUtils.getOverlay(output);
+                if (!overlay.isEmpty()) {
+                    itemRenderer.renderStatic(
+                            overlay,
+                            ItemDisplayContext.FIXED,
+                            combinedLight,
+                            combinedOverlay,
+                            poseStack,
+                            bufferSource,
+                            blockEntity.getLevel(),
+                            2
+                    );
+                }
+            }
 
             poseStack.popPose();
         }

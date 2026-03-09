@@ -1,20 +1,22 @@
 {
   "type": "qualitycrafting:forging",
   "ingredients": [
-    { "item": "minecraft:iron_ingot" },
-    { "item": "minecraft:iron_ingot" },
-    { "item": "minecraft:iron_ingot" },
-    { "item": "minecraft:air" },
-    { "item": "minecraft:stick" },
-    { "item": "minecraft:air" },
-    { "item": "minecraft:air" },
-    { "item": "minecraft:air" },
-    { "item": "minecraft:air" }
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "minecraft:stick"
+    }
   ],
-  "result": {
+  "output": {
     "item": "minecraft:iron_sword",
     "count": 1
   },
-  "min_quality": 10,
-  "craft_time": 60
+  "proficiency": 10
 }

@@ -1,7 +1,7 @@
-// 1.20.1	2026-03-08T12:42:21.5600657	Item Models: qualitycrafting
-a628989aa31f8958b6c85330f5c612bc85636171 assets/qualitycrafting/models/item/crudeforgehammer.json
-e1b69e3bf6cd46755048bf34fc78558092867074 assets/qualitycrafting/models/item/funnyring.json
-c9c35c558f0999e3d6488df332a7ae1c2ac46980 assets/qualitycrafting/models/item/ironhammer.json
+// 1.20.1	2026-03-08T23:17:49.4338759	Item Models: qualitycrafting
+a3b1a3cc1590a653acf0816be64a4b912d9f9b32 assets/qualitycrafting/models/item/crude_forge_hammer.json
+3c11e5b11ac5f26a35d2e06b6540810edd09fe9f assets/qualitycrafting/models/item/funny_ring.json
+8011794e35b0419141eb8c78020ad238aea8d437 assets/qualitycrafting/models/item/iron_forge_hammer.json
 13786016ca93b15491e83171664824e5bf0239ce assets/qualitycrafting/models/item/rarity1.json
 b0ad82adca062ad7234a04b87b82c9b00532d93c assets/qualitycrafting/models/item/rarity2.json
 7391a03cfd8498105fcd01d045b30245a7973a95 assets/qualitycrafting/models/item/rarity3.json

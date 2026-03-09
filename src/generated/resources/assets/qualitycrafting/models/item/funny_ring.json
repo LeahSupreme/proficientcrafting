@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "qualitycrafting:item/ironhammer"
+    "layer0": "qualitycrafting:item/funny_ring"
   }
 }

@@ -4,44 +4,7 @@ import net.leahperson.proficientmod.block.entity.ForgingTableBlockEntity;
 import net.leahperson.proficientmod.block.entity.ModBlockEntities;
 import net.leahperson.proficientmod.item.ModItems;
 import net.leahperson.proficientmod.util.ModTags;
-import net.minecraft.client.gui.components.ChatComponent;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.network.chat.Component;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.tags.ItemTags;
-import net.minecraft.util.RandomSource;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.*;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityTicker;
-import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.block.entity.ChiseledBookShelfBlockEntity;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.Vec2;
-import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.VoxelShape;
-import org.jetbrains.annotations.Nullable;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.Optional;
-import java.util.function.Predicate;
-
-import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -53,9 +16,9 @@ import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import org.jetbrains.annotations.Nullable;
 
 public class ForgingTableBlock extends BaseEntityBlock {
@@ -92,8 +55,8 @@ public class ForgingTableBlock extends BaseEntityBlock {
 
         ItemStack held = player.getItemInHand(hand);
 
-        if (held.is(ModItems.IRONHAMMER.get())) {
-            boolean started = table.startCraft(level);
+        if (held.is(ModTags.Items.FORGING_HAMMER)) {
+            boolean started = table.startCraft(level, player);
             if (started && !player.getAbilities().instabuild) {
                 held.hurtAndBreak(1, player, p -> p.broadcastBreakEvent(hand));
             }
@@ -114,6 +77,10 @@ public class ForgingTableBlock extends BaseEntityBlock {
             }
 
             return InteractionResult.PASS;
+        }
+
+        if (table.hasOutput()) {
+            player.addItem(table.removeOutput());
         }
 
         ItemStack insertOne = held.copy();

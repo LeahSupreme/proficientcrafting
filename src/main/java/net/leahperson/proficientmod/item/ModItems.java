@@ -14,19 +14,19 @@ public class ModItems {
     public static final DeferredRegister<Item> ITEMS =
             DeferredRegister.create(ForgeRegistries.ITEMS, ProficientMod.MOD_ID);
 
-    public static final RegistryObject<Item> CRUDEHAMMER = ITEMS.register("crudeforgehammer",
+    public static final RegistryObject<Item> CRUDEHAMMER = ITEMS.register("crude_forge_hammer",
             () -> new Item(new Item.Properties().stacksTo(1).defaultDurability(32).durability(32)));
 
     public static final RegistryObject<Item> FORGING_TABLE_ITEM = ITEMS.register("forging_table",
             () -> new BlockItem(ModBlocks.FORGING_TABLE.get(), new Item.Properties()));
 
-    public static final RegistryObject<Item> IRONHAMMER = ITEMS.register("ironhammer",
+    public static final RegistryObject<Item> IRONHAMMER = ITEMS.register("iron_forge_hammer",
             () -> new Item(new Item.Properties()
                     .stacksTo(1)
                     .rarity(Rarity.UNCOMMON)
                     .durability(250)));
 
-    public static final RegistryObject<Item> FUNNYRING = ITEMS.register("funnyring",
+    public static final RegistryObject<Item> FUNNYRING = ITEMS.register("funny_ring",
             () -> new FunnyRing(new Item.Properties(),FunnyRing.funnyringAttributes()));
 
 

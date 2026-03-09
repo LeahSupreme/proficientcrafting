@@ -1,10 +1,8 @@
 package net.leahperson.proficientmod.block.entity;
 
 import net.leahperson.proficientmod.attribute.ModAttributes;
-import net.leahperson.proficientmod.quality.QualityUtils;
 import net.leahperson.proficientmod.recipe.ForgingRecipe;
 import net.leahperson.proficientmod.recipe.ForgingRecipeContainer;
-import net.leahperson.proficientmod.recipe.ForgingTableRecipe;
 import net.leahperson.proficientmod.util.QualityDataUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
@@ -14,14 +12,13 @@ import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.Optional;
-
-import java.util.*;
 
 public class ForgingTableBlockEntity extends BlockEntity {
     private static final int INPUT_SLOTS = 9;
@@ -32,6 +29,7 @@ public class ForgingTableBlockEntity extends BlockEntity {
     private int progress = 0;
     private int maxProgress = 0;
     private boolean crafting = false;
+    private int capturedQuality = 0;
 
     public ForgingTableBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.FORGING_TABLE_BE.get(), pos, state);
@@ -93,7 +91,7 @@ public class ForgingTableBlockEntity extends BlockEntity {
         return ItemStack.EMPTY;
     }
 
-    public boolean startCraft(Level level) {
+    public boolean startCraft(Level level, Player player) {
         if (level == null || level.isClientSide) return false;
         if (crafting || !outputStack.isEmpty()) return false;
 
@@ -116,10 +114,16 @@ public class ForgingTableBlockEntity extends BlockEntity {
 
         ForgingRecipe recipe = recipeOpt.get();
 
-        this.crafting = true;
-        this.progress = 0;
+        this.capturedQuality = (int) player.getAttributeValue(ModAttributes.QUALITY.get());
         this.maxProgress = recipe.getCraftTime();
 
+        if (this.maxProgress == 0) {
+            finishCraft((ServerLevel) level);
+            return true;
+        }
+
+        this.crafting = true;
+        this.progress = 0;
         setChangedAndSync();
         return true;
     }
@@ -157,10 +161,15 @@ public class ForgingTableBlockEntity extends BlockEntity {
         }
 
         ForgingRecipe recipe = recipeOpt.get();
-        ItemStack result = recipe.assemble(container, level.registryAccess());
 
-        int rarity = recipe.getMinQuality() > 0 ? 1 : 0;
-        QualityDataUtil.setRarity(result, rarity);
+        ItemStack result;
+        if (recipe.hasQualityOutputs()) {
+            result = recipe.getOutputForQuality(capturedQuality, level.getRandom());
+        } else {
+            result = recipe.assemble(container, level.registryAccess());
+            int rarity = recipe.getProficiencyRequired() > 0 ? 1 : 0;
+            QualityDataUtil.setRarity(result, rarity);
+        }
 
         for (int i = 0; i < inputStacks.size(); i++) {
             inputStacks.set(i, ItemStack.EMPTY);
@@ -211,6 +220,7 @@ public class ForgingTableBlockEntity extends BlockEntity {
         tag.putInt("Progress", progress);
         tag.putInt("MaxProgress", maxProgress);
         tag.putBoolean("Crafting", crafting);
+        tag.putInt("CapturedQuality", capturedQuality);
     }
 
     @Override
@@ -225,6 +235,7 @@ public class ForgingTableBlockEntity extends BlockEntity {
         progress = tag.getInt("Progress");
         maxProgress = tag.getInt("MaxProgress");
         crafting = tag.getBoolean("Crafting");
+        capturedQuality = tag.getInt("CapturedQuality");
     }
 
     @Override
