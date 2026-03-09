@@ -49,5 +49,6 @@
   "qualityPerIngredient": [1, 2.5, 5],
   "yieldCost": 0,
   "yieldAdded": 0,
-  "levelCost": 15
+  "levelCost": 15,
+  "craftTime": 200
 }

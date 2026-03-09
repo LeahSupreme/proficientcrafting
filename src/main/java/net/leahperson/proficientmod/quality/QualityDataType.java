@@ -13,7 +13,7 @@ public record QualityDataType(int index, double bonus, ResourceLocation icon) {
     public static final ResourceKey<Registry<QualityDataType>> RARITY_REGISTRY = ResourceKey.createRegistryKey(ResourceLocation.fromNamespaceAndPath(ProficientMod.MOD_ID, "rarity"));
 
 
-    public static final QualityDataType NONE = new QualityDataType(0, 1, ProficientMod.location("none"));
+    public static final QualityDataType NONE = new QualityDataType(0, 1, ProficientMod.modLocation("none"));
 
 
 

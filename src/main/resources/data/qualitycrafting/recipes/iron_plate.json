@@ -18,5 +18,6 @@
     "item": "minecraft:iron_sword",
     "count": 1
   },
-  "proficiency": 10
+  "proficiency": 10,
+  "craftTime": 60
 }

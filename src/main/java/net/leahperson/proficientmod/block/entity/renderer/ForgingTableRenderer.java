@@ -28,19 +28,46 @@ public class ForgingTableRenderer implements BlockEntityRenderer<ForgingTableBlo
                        int combinedLight,
                        int combinedOverlay) {
 
-        // Render 9 input slots in a 3x3 grid on top of the table
+        float t = 0f;
+        if (blockEntity.isCrafting() && blockEntity.getMaxProgress() > 0) {
+            t = Math.min((blockEntity.getProgress() + partialTick) / (float) blockEntity.getMaxProgress(), 1f);
+        }
+
+        int numRows = 0;
+        for (int i = 0; i < blockEntity.getInputStacks().size(); i++) {
+            if (!blockEntity.getInputStacks().get(i).isEmpty()) {
+                numRows = Math.max(numRows, i / 3 + 1);
+            }
+        }
+        if (numRows == 0) {
+            numRows = 1;
+        }
+
+        float gridStartZ = 0.5f - (numRows - 1) * 0.15f;
+
+        poseStack.pushPose();
+        poseStack.translate(0.5, 0, 0.5);
+        poseStack.mulPose(Axis.YP.rotationDegrees(90f));
+        poseStack.translate(-0.5, 0, -0.5);
+
         for (int i = 0; i < blockEntity.getInputStacks().size(); i++) {
             ItemStack stack = blockEntity.getInputStacks().get(i);
-            if (stack.isEmpty()) continue;
+            if (stack.isEmpty()) {
+                continue;
+            }
 
             int row = i / 3;
             int col = i % 3;
 
-            poseStack.pushPose();
+            float startX = 0.2f + (col * 0.3f);
+            float startZ = gridStartZ + (row * 0.3f);
+            float x = startX + (0.5f - startX) * t;
+            float z = startZ + (0.5f - startZ) * t;
+            float itemY = 1.02f + (i * 0.001f);
 
-            // Centered roughly on the top face of the block
-            poseStack.translate(0.2 + (col * 0.3), 1.02, 0.2 + (row * 0.3));
-            poseStack.mulPose(Axis.XP.rotationDegrees(90f));
+            poseStack.pushPose();
+            poseStack.translate(x, itemY, z);
+            poseStack.mulPose(Axis.XP.rotationDegrees(270));
             poseStack.scale(0.25f, 0.25f, 0.25f);
 
             itemRenderer.renderStatic(
@@ -51,7 +78,7 @@ public class ForgingTableRenderer implements BlockEntityRenderer<ForgingTableBlo
                     poseStack,
                     bufferSource,
                     blockEntity.getLevel(),
-                    0
+                    i
             );
 
             if (QualityUtils.hasQuality(stack)) {
@@ -73,12 +100,13 @@ public class ForgingTableRenderer implements BlockEntityRenderer<ForgingTableBlo
             poseStack.popPose();
         }
 
-        // Render output slightly above the center
+        poseStack.popPose();
+
         ItemStack output = blockEntity.getOutputStack();
         if (!output.isEmpty()) {
             poseStack.pushPose();
-
             poseStack.translate(0.5, 1.02, 0.5);
+            poseStack.mulPose(Axis.YP.rotationDegrees(270));
             poseStack.mulPose(Axis.XP.rotationDegrees(90f));
             poseStack.scale(0.35f, 0.35f, 0.35f);
 
@@ -90,7 +118,7 @@ public class ForgingTableRenderer implements BlockEntityRenderer<ForgingTableBlo
                     poseStack,
                     bufferSource,
                     blockEntity.getLevel(),
-                    1
+                    200
             );
 
             if (QualityUtils.hasQuality(output)) {
@@ -104,7 +132,7 @@ public class ForgingTableRenderer implements BlockEntityRenderer<ForgingTableBlo
                             poseStack,
                             bufferSource,
                             blockEntity.getLevel(),
-                            2
+                            201
                     );
                 }
             }

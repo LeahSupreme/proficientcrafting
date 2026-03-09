@@ -13,7 +13,6 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import org.jetbrains.annotations.Nullable;
 
 public class ForgingRecipeSerializer implements RecipeSerializer<ForgingRecipe> {
-
     @Override
     public ForgingRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
         JsonArray ingredientsJson = GsonHelper.getAsJsonArray(json, "ingredients");
@@ -24,7 +23,7 @@ public class ForgingRecipeSerializer implements RecipeSerializer<ForgingRecipe> 
 
         ItemStack output = CraftingHelper.getItemStack(GsonHelper.getAsJsonObject(json, "output"), true);
         int proficiencyRequired = GsonHelper.getAsInt(json, "proficiency", 0);
-        int craftTime = GsonHelper.getAsInt(json, "craft_time", 0);
+        int craftTime = GsonHelper.getAsInt(json, "craftTime", 0);
         int levelCost = GsonHelper.getAsInt(json, "levelCost", 0);
         int yieldCost = GsonHelper.getAsInt(json, "yieldCost", 0);
         int yieldAdded = GsonHelper.getAsInt(json, "yieldAdded", 0);
@@ -102,21 +101,20 @@ public class ForgingRecipeSerializer implements RecipeSerializer<ForgingRecipe> 
             outputs.set(i, buf.readItem());
         }
 
-        int qpiSize = buf.readVarInt();
-        NonNullList<Float> qualityPerIngredient = NonNullList.withSize(qpiSize, 0f);
-        for (int i = 0; i < qpiSize; i++) {
+        int qualityPerIngredientSize = buf.readVarInt();
+        NonNullList<Float> qualityPerIngredient = NonNullList.withSize(qualityPerIngredientSize, 0f);
+        for (int i = 0; i < qualityPerIngredientSize; i++) {
             qualityPerIngredient.set(i, buf.readFloat());
         }
 
-        int qdSize = buf.readVarInt();
-        NonNullList<Integer> qualityDecoration = NonNullList.withSize(qdSize, 0);
-        for (int i = 0; i < qdSize; i++) {
+        int qualityDecorationSize = buf.readVarInt();
+        NonNullList<Integer> qualityDecoration = NonNullList.withSize(qualityDecorationSize, 0);
+        for (int i = 0; i < qualityDecorationSize; i++) {
             qualityDecoration.set(i, buf.readVarInt());
         }
 
-        return new ForgingRecipe(recipeId, inputItems, output, outputs, proficiencyRequired,
-                qualityRequired, qualityPerIngredient, levelCost, yieldCost, yieldAdded, craftTime,
-                qualityDecoration);
+        return new ForgingRecipe(
+                recipeId, inputItems, output, outputs, proficiencyRequired, qualityRequired, qualityPerIngredient, levelCost, yieldCost, yieldAdded, craftTime, qualityDecoration);
     }
 
     @Override
@@ -144,13 +142,13 @@ public class ForgingRecipeSerializer implements RecipeSerializer<ForgingRecipe> 
         }
 
         buf.writeVarInt(recipe.getQualityPerIngredient().size());
-        for (float qpi : recipe.getQualityPerIngredient()) {
-            buf.writeFloat(qpi);
+        for (float qualityPerIngredient : recipe.getQualityPerIngredient()) {
+            buf.writeFloat(qualityPerIngredient);
         }
 
         buf.writeVarInt(recipe.getQualityDecoration().size());
-        for (int qd : recipe.getQualityDecoration()) {
-            buf.writeVarInt(qd);
+        for (int qualityDecoration : recipe.getQualityDecoration()) {
+            buf.writeVarInt(qualityDecoration);
         }
     }
 }

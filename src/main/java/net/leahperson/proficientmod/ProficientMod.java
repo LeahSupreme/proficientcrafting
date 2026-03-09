@@ -20,7 +20,9 @@ import net.minecraft.world.entity.ai.attributes.DefaultAttributes;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
+import net.leahperson.proficientmod.command.ModCommands;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
+import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.entity.EntityAttributeModificationEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -58,7 +60,6 @@ public class ProficientMod
         ModRecipeTypes.register(modEventBus);
         ModRecipeSerializers.register(modEventBus);
 
-
         modEventBus.addListener(this::commonSetup);
 
         MinecraftForge.EVENT_BUS.register(this);
@@ -69,8 +70,8 @@ public class ProficientMod
 
     private void commonSetup(final FMLCommonSetupEvent event) {
         AttributeSupplier playerAttribs = DefaultAttributes.getSupplier(EntityType.PLAYER);
-        for (Attribute attr : ForgeRegistries.ATTRIBUTES.getValues()) {
-            if (playerAttribs.hasAttribute(attr)) attr.setSyncable(true);
+        for (Attribute attribute : ForgeRegistries.ATTRIBUTES.getValues()) {
+            if (playerAttribs.hasAttribute(attribute)) attribute.setSyncable(true);
         }
     }
 
@@ -94,6 +95,11 @@ public class ProficientMod
 
     }
 
+    @SubscribeEvent
+    public void onRegisterCommands(RegisterCommandsEvent event) {
+        ModCommands.register(event.getDispatcher());
+    }
+
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
     @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientModEvents {
@@ -103,7 +109,7 @@ public class ProficientMod
         }
     }
 
-    public static ResourceLocation location(final String path) {
+    public static ResourceLocation modLocation(final String path) {
         return ResourceLocation.fromNamespaceAndPath(ProficientMod.MOD_ID, path);
     }
 }

@@ -1,11 +1,17 @@
 package net.leahperson.proficientmod.block.entity;
 
 import net.leahperson.proficientmod.attribute.ModAttributes;
+import net.leahperson.proficientmod.quality.QualityUtils;
 import net.leahperson.proficientmod.recipe.ForgingRecipe;
 import net.leahperson.proficientmod.recipe.ForgingRecipeContainer;
+import net.leahperson.proficientmod.registry.ModRecipeTypes;
 import net.leahperson.proficientmod.util.QualityDataUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
+import net.minecraftforge.common.util.RecipeMatcher;
+
+import java.util.*;
+
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -17,8 +23,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-
-import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
 public class ForgingTableBlockEntity extends BlockEntity {
     private static final int INPUT_SLOTS = 9;
@@ -30,6 +35,7 @@ public class ForgingTableBlockEntity extends BlockEntity {
     private int maxProgress = 0;
     private boolean crafting = false;
     private int capturedQuality = 0;
+    private UUID capturedPlayerUUID = null;
 
     public ForgingTableBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.FORGING_TABLE_BE.get(), pos, state);
@@ -49,6 +55,14 @@ public class ForgingTableBlockEntity extends BlockEntity {
 
     public boolean isCrafting() {
         return crafting;
+    }
+
+    public int getProgress() {
+        return progress;
+    }
+
+    public int getMaxProgress() {
+        return maxProgress;
     }
 
     public boolean addInput(ItemStack stack) {
@@ -103,7 +117,7 @@ public class ForgingTableBlockEntity extends BlockEntity {
         ForgingRecipeContainer container = new ForgingRecipeContainer(copy);
 
         Optional<ForgingRecipe> recipeOpt = level.getRecipeManager()
-                .getAllRecipesFor(net.leahperson.proficientmod.registry.ModRecipeTypes.FORGING.get())
+                .getAllRecipesFor(ModRecipeTypes.FORGING.get())
                 .stream()
                 .filter(recipe -> recipe.matches(container, level))
                 .findFirst();
@@ -115,6 +129,34 @@ public class ForgingTableBlockEntity extends BlockEntity {
         ForgingRecipe recipe = recipeOpt.get();
 
         this.capturedQuality = (int) player.getAttributeValue(ModAttributes.QUALITY.get());
+        this.capturedPlayerUUID = player.getUUID();
+
+        if (!recipe.getQualityPerIngredient().isEmpty()) {
+            List<ItemStack> inputs = new ArrayList<>();
+            for (int i = 0; i < INPUT_SLOTS; i++) {
+                if (!inputStacks.get(i).isEmpty()) {
+                    inputs.add(inputStacks.get(i));
+                }
+            }
+            int[] matches = RecipeMatcher.findMatches(inputs, recipe.getInputItems());
+            if (matches != null) {
+                for (int inputIndex : matches) {
+                    if (inputIndex < 0 || inputIndex >= inputs.size()) {
+                        continue;
+                    }
+                    int itemQuality = QualityUtils.getQualityLevel(inputs.get(inputIndex));
+                    if (itemQuality <= 0) {
+                        continue;
+                    }
+                    int rarityIndex = itemQuality - 1;
+                    if (rarityIndex >= recipe.getQualityPerIngredient().size()) {
+                        continue;
+                    }
+                    this.capturedQuality += recipe.getQualityPerIngredient().get(rarityIndex);
+                }
+            }
+        }
+
         this.maxProgress = recipe.getCraftTime();
 
         if (this.maxProgress == 0) {
@@ -128,17 +170,17 @@ public class ForgingTableBlockEntity extends BlockEntity {
         return true;
     }
 
-    public static void tick(Level level, BlockPos pos, BlockState state, ForgingTableBlockEntity be) {
+    public static void tick(Level level, BlockPos pos, BlockState state, ForgingTableBlockEntity forgingTableBlockEntity) {
         if (level.isClientSide) return;
-        if (!be.crafting) return;
+        if (!forgingTableBlockEntity.crafting) return;
 
-        be.progress++;
+        forgingTableBlockEntity.progress++;
 
-        if (be.progress >= be.maxProgress) {
-            be.finishCraft((ServerLevel) level);
+        if (forgingTableBlockEntity.progress >= forgingTableBlockEntity.maxProgress) {
+            forgingTableBlockEntity.finishCraft((ServerLevel) level);
         }
 
-        be.setChangedAndSync();
+        forgingTableBlockEntity.setChangedAndSync();
     }
 
     private void finishCraft(ServerLevel level) {
@@ -171,10 +213,14 @@ public class ForgingTableBlockEntity extends BlockEntity {
             QualityDataUtil.setRarity(result, rarity);
         }
 
-        for (int i = 0; i < inputStacks.size(); i++) {
-            inputStacks.set(i, ItemStack.EMPTY);
+        if (capturedPlayerUUID != null && recipe.getLevelCost() > 0) {
+            Player player = level.getPlayerByUUID(capturedPlayerUUID);
+            if (player != null && !player.isCreative()) {
+                player.giveExperienceLevels(-recipe.getLevelCost());
+            }
         }
 
+        Collections.fill(inputStacks, ItemStack.EMPTY);
         outputStack = result;
 
         level.playSound(null, worldPosition, SoundEvents.ANVIL_USE, SoundSource.BLOCKS, 1.0F, 1.0F);
@@ -204,7 +250,7 @@ public class ForgingTableBlockEntity extends BlockEntity {
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag) {
+    protected void saveAdditional(@NotNull CompoundTag tag) {
         super.saveAdditional(tag);
 
         for (int i = 0; i < inputStacks.size(); i++) {
@@ -221,10 +267,13 @@ public class ForgingTableBlockEntity extends BlockEntity {
         tag.putInt("MaxProgress", maxProgress);
         tag.putBoolean("Crafting", crafting);
         tag.putInt("CapturedQuality", capturedQuality);
+        if (capturedPlayerUUID != null) {
+            tag.putUUID("PlayerUUID", capturedPlayerUUID);
+        }
     }
 
     @Override
-    public void load(CompoundTag tag) {
+    public void load(@NotNull CompoundTag tag) {
         super.load(tag);
 
         for (int i = 0; i < inputStacks.size(); i++) {
@@ -236,6 +285,7 @@ public class ForgingTableBlockEntity extends BlockEntity {
         maxProgress = tag.getInt("MaxProgress");
         crafting = tag.getBoolean("Crafting");
         capturedQuality = tag.getInt("CapturedQuality");
+        capturedPlayerUUID = tag.hasUUID("PlayerUUID") ? tag.getUUID("PlayerUUID") : null;
     }
 
     @Override
