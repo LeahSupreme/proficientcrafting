@@ -1,8 +1,7 @@
 package net.leahperson.proficientmod;
 
 import com.mojang.logging.LogUtils;
-import net.leahperson.proficientmod.attribute.AttributeAdditionData;
-import net.leahperson.proficientmod.attribute.FoodAdditionData;
+import net.leahperson.proficientmod.attribute.ItemQualityData;
 import net.leahperson.proficientmod.attribute.ModAttributes;
 import net.leahperson.proficientmod.block.ModBlocks;
 import net.leahperson.proficientmod.block.entity.ModBlockEntities;
@@ -21,6 +20,7 @@ import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.leahperson.proficientmod.command.ModCommands;
+import net.leahperson.proficientmod.loot.ModLootModifiers;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.entity.EntityAttributeModificationEvent;
@@ -53,12 +53,11 @@ public class ProficientMod
         ModAttributes.register(modEventBus);
         modEventBus.addListener((DataPackRegistryEvent.NewRegistry event) -> {
             event.dataPackRegistry(QualityDataType.RARITY_REGISTRY, QualityDataType.CODEC, QualityDataType.CODEC);
-            event.dataPackRegistry(AttributeAdditionData.QUALITY_ATTRIBUTE_REGISTRY,AttributeAdditionData.CODEC,AttributeAdditionData.CODEC);
-            event.dataPackRegistry(AttributeAdditionData.QUALITY_CURIOS_REGISTRY,AttributeAdditionData.CODEC,AttributeAdditionData.CODEC);
-            event.dataPackRegistry(FoodAdditionData.FOOD_QUALITY_REGISTRY,FoodAdditionData.CODEC,FoodAdditionData.CODEC);
+            event.dataPackRegistry(ItemQualityData.REGISTRY, ItemQualityData.CODEC, ItemQualityData.CODEC);
         });
         ModRecipeTypes.register(modEventBus);
         ModRecipeSerializers.register(modEventBus);
+        ModLootModifiers.register(modEventBus);
 
         modEventBus.addListener(this::commonSetup);
 
@@ -87,6 +86,12 @@ public class ProficientMod
         attributeModificationEvent.add(EntityType.PLAYER, ModAttributes.PROFICIENCY.get());
         attributeModificationEvent.add(EntityType.PLAYER, ModAttributes.QUALITY.get());
         attributeModificationEvent.add(EntityType.PLAYER, ModAttributes.YIELD.get());
+        attributeModificationEvent.add(EntityType.PLAYER, ModAttributes.FARMING_QUALITY.get());
+        attributeModificationEvent.add(EntityType.PLAYER, ModAttributes.FARMING_YIELD.get());
+        attributeModificationEvent.add(EntityType.PLAYER, ModAttributes.MINING_QUALITY.get());
+        attributeModificationEvent.add(EntityType.PLAYER, ModAttributes.MINING_YIELD.get());
+        attributeModificationEvent.add(EntityType.PLAYER, ModAttributes.MOB_DROP_QUALITY.get());
+        attributeModificationEvent.add(EntityType.PLAYER, ModAttributes.MOB_DROP_YIELD.get());
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call

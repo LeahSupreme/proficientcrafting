@@ -1,7 +1,12 @@
 package net.leahperson.proficientmod.block;
 
 import net.leahperson.proficientmod.ProficientMod;
+import net.leahperson.proficientmod.block.custom.CookingPotBlock;
 import net.leahperson.proficientmod.block.custom.ForgingTableBlock;
+import net.leahperson.proficientmod.block.custom.JewelcraftingStationBlock;
+import net.leahperson.proficientmod.block.custom.ReforgingAltarBlock;
+import net.leahperson.proficientmod.block.custom.ScribingTableBlock;
+import net.leahperson.proficientmod.block.custom.WorkbenchBlock;
 import net.leahperson.proficientmod.item.ModItems;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -27,6 +32,41 @@ public class ModBlocks {
                     .mapColor(MapColor.METAL)
                     .strength(3.5F)
                     .sound(SoundType.METAL)
+                    .noOcclusion()));
+
+    public static final RegistryObject<Block> COOKING_POT = registerBlock("cooking_pot",
+            () -> new CookingPotBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.METAL)
+                    .strength(3.0F)
+                    .sound(SoundType.METAL)
+                    .noOcclusion()));
+
+    public static final RegistryObject<Block> SCRIBING_TABLE = registerBlock("scribing_table",
+            () -> new ScribingTableBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.WOOD)
+                    .strength(2.5F)
+                    .sound(SoundType.WOOD)
+                    .noOcclusion()));
+
+    public static final RegistryObject<Block> JEWELCRAFTING_STATION = registerBlock("jewelcrafting_station",
+            () -> new JewelcraftingStationBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.METAL)
+                    .strength(3.5F)
+                    .sound(SoundType.METAL)
+                    .noOcclusion()));
+
+    public static final RegistryObject<Block> WORKBENCH = registerBlock("workbench",
+            () -> new WorkbenchBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.WOOD)
+                    .strength(2.5F)
+                    .sound(SoundType.WOOD)
+                    .noOcclusion()));
+
+    public static final RegistryObject<Block> REFORGING_ALTAR = registerBlock("reforging_altar",
+            () -> new ReforgingAltarBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.STONE)
+                    .strength(4.0F)
+                    .sound(SoundType.STONE)
                     .noOcclusion()));
 
 

@@ -1,6 +1,8 @@
 package net.leahperson.proficientmod.registry;
 
 import net.leahperson.proficientmod.ProficientMod;
+import net.leahperson.proficientmod.recipe.CookingRecipe;
+import net.leahperson.proficientmod.recipe.CookingRecipeSerializer;
 import net.leahperson.proficientmod.recipe.ForgingRecipe;
 import net.leahperson.proficientmod.recipe.ForgingRecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -15,6 +17,9 @@ public class ModRecipeSerializers {
 
     public static final RegistryObject<RecipeSerializer<ForgingRecipe>> FORGING =
             RECIPE_SERIALIZERS.register("forging", ForgingRecipeSerializer::new);
+
+    public static final RegistryObject<RecipeSerializer<CookingRecipe>> COOKING =
+            RECIPE_SERIALIZERS.register("cooking", CookingRecipeSerializer::new);
 
     public static void register(IEventBus bus) {
         RECIPE_SERIALIZERS.register(bus);

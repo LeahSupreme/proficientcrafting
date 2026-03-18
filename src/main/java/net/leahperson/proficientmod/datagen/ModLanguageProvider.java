@@ -25,6 +25,11 @@ public class ModLanguageProvider extends LanguageProvider {
         addSimpleItemName(ModItems.FUNNYRING);
 
         addSimpleBlockName(ModBlocks.FORGING_TABLE);
+        addSimpleBlockName(ModBlocks.COOKING_POT);
+        addSimpleBlockName(ModBlocks.SCRIBING_TABLE);
+        addSimpleBlockName(ModBlocks.JEWELCRAFTING_STATION);
+        addSimpleBlockName(ModBlocks.WORKBENCH);
+        addSimpleBlockName(ModBlocks.REFORGING_ALTAR);
 
         add("creativetab.proficient_tab", "Quality Crafting");
 
@@ -40,6 +45,7 @@ public class ModLanguageProvider extends LanguageProvider {
         add("qualitycrafting.jei.qualitycost", "Quality required: ");
         add("qualitycrafting.jei.yieldcost", "+%s Output per %s Yield");
         add("qualitycrafting.jei.rarityinputtooltip", "+%s Quality if %s");
+        add("qualitycrafting.jei.cooktime", "Cook Time: ");
 
         add("qualitycrafting:proficiency", "Proficiency");
         add("qualitycrafting:proficiency.desc", "Determines which items you can forge.");
@@ -48,8 +54,23 @@ public class ModLanguageProvider extends LanguageProvider {
         add("qualitycrafting:yield", "Yield");
         add("qualitycrafting:yield.desc", "Improves the amount of forged items created.");
 
+        add("qualitycrafting:farming_quality", "Farming Quality");
+        add("qualitycrafting:farming_quality.desc", "Improves the rarity of harvested crops.");
+        add("qualitycrafting:farming_yield", "Farming Yield");
+        add("qualitycrafting:farming_yield.desc", "Increases crop drops, stacking with Fortune.");
+        add("qualitycrafting:mining_quality", "Mining Quality");
+        add("qualitycrafting:mining_quality.desc", "Improves the rarity of mined drops.");
+        add("qualitycrafting:mining_yield", "Mining Yield");
+        add("qualitycrafting:mining_yield.desc", "Increases ore drops, stacking with Fortune.");
+        add("qualitycrafting:mob_drop_quality", "Mob Drop Quality");
+        add("qualitycrafting:mob_drop_quality.desc", "Improves the rarity of mob drops.");
+        add("qualitycrafting:mob_drop_yield", "Mob Drop Yield");
+        add("qualitycrafting:mob_drop_yield.desc", "Increases mob drops, stacking with Looting.");
+
         add("qualitycrafting.station.notproficient", "Your Proficiency is too low. Needed: %s Current: %s");
         add("qualitycrafting.station.noexperience", "You need more experience.");
+
+        add("qualitycrafting.tooltip.food.effect", "%s (%s)");
     }
 
     public void addSimpleItemName(Supplier<? extends Item> supplier) {

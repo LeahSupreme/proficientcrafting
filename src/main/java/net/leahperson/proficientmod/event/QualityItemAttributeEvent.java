@@ -3,30 +3,36 @@ package net.leahperson.proficientmod.event;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import net.leahperson.proficientmod.ProficientMod;
+import net.leahperson.proficientmod.Config;
 import net.leahperson.proficientmod.attribute.AttributeAddition;
-import net.leahperson.proficientmod.attribute.AttributeAdditionData;
+import net.leahperson.proficientmod.attribute.ItemQualityData;
+import net.leahperson.proficientmod.util.ModTags;
 import net.leahperson.proficientmod.quality.QualityUtils;
 import net.leahperson.proficientmod.util.AttributeUtils;
-import net.minecraft.client.Minecraft;
-import net.minecraft.core.Registry;
-import net.minecraft.core.registries.Registries;
+import net.leahperson.proficientmod.util.RarityAttributeNBT;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.server.ServerLifecycleHooks;
 import top.theillusivec4.curios.api.event.CurioAttributeModifierEvent;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicReference;
 
 @Mod.EventBusSubscriber(modid = ProficientMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class QualityItemAttributeEvent {
@@ -34,88 +40,142 @@ public class QualityItemAttributeEvent {
     @SubscribeEvent
     public static void addQualityTooltip(ItemTooltipEvent event) {
         ItemStack stack = event.getItemStack();
-        if (!QualityUtils.hasQuality(stack)) {
-            return;
-        }
+        if (!QualityUtils.hasQuality(stack) && !RarityAttributeNBT.hasAttributes(stack)) return;
         int quality = QualityUtils.getQualityLevel(stack);
         List<Component> tooltip = event.getToolTip();
-        if (tooltip.isEmpty()) {
-            return;
+        if (tooltip.isEmpty()) return;
+
+        if (quality > 0) {
+            String itemName = tooltip.get(0).getString();
+            tooltip.set(0, QualityUtils.styleRarity(quality, QualityUtils.getRarityName(quality) + " " + itemName));
         }
-        String itemName = tooltip.get(0).getString();
-        tooltip.set(0, QualityUtils.styleRarity(quality, QualityUtils.getRarityName(quality) + " " + itemName));
     }
 
     @SubscribeEvent
-    public static void addQualityCurioAttributes(CurioAttributeModifierEvent event){
+    public static void addQualityCurioAttributes(CurioAttributeModifierEvent event) {
         ItemStack stack = event.getItemStack();
-        if(!QualityUtils.hasQuality(stack)){
-            return;
-        }
 
         ResourceLocation itemId = stack.getItem().builtInRegistryHolder().key().location();
-        Optional<AttributeAdditionData> qualityEntry = Minecraft.getInstance().level.registryAccess().registryOrThrow(
-                AttributeAdditionData.QUALITY_CURIOS_REGISTRY).stream().filter((elem)-> elem.itemid().equals(itemId.getNamespace()+":"+itemId.getPath())).findAny();
 
-        if(qualityEntry.isEmpty()){
+        List<AttributeAddition> attributeAdditions;
+        if (RarityAttributeNBT.hasAttributes(stack)) {
+            attributeAdditions = RarityAttributeNBT.getAttributes(stack);
+        } else if (QualityUtils.hasQuality(stack)) {
+            RegistryAccess registryAccess = event.getSlotContext().entity().level().registryAccess();
+            Optional<ItemQualityData> qualityEntry = registryAccess
+                    .registryOrThrow(ItemQualityData.REGISTRY)
+                    .stream()
+                    .filter(d -> d.item_id().equals(itemId.getNamespace() + ":" + itemId.getPath()))
+                    .findAny();
+            if (qualityEntry.isEmpty() || qualityEntry.get().rarities().isEmpty()) return;
+            int rarityIndex = QualityUtils.getQualityLevel(stack) - 1;
+            List<List<AttributeAddition>> rarities = qualityEntry.get().rarities().get();
+            if (rarityIndex < 0 || rarityIndex >= rarities.size()) return;
+            attributeAdditions = rarities.get(rarityIndex);
+        } else {
             return;
         }
 
-        List<AttributeAddition> attributes = qualityEntry.get().rarities().get(QualityUtils.getQualityLevel(stack)-1);
-        Multimap<Attribute, AttributeModifier> qualityModifiers = HashMultimap.create();
-        for (AttributeAddition attribute : attributes) {
-            String operation = attribute.operation();
-            String attributeid = attribute.attributeid();
-            AtomicReference<Double> amount = new AtomicReference<>(attribute.amount());
-            ResourceLocation attributeResource = ResourceLocation.parse(attributeid);
-            Registry<Attribute> ar = Minecraft.getInstance().level.registryAccess().registryOrThrow(Registries.ATTRIBUTE);
-            Attribute a = ar.get(attributeResource);
-            AttributeModifier.Operation o = AttributeModifier.Operation.valueOf(operation);
+        if (attributeAdditions.isEmpty()) return;
 
-            qualityModifiers.put(a, new AttributeModifier(Mth.createInsecureUUID(RandomSource.create((itemId.toString() + ProficientMod.MOD_ID + String.valueOf(QualityUtils.getQualityLevel(stack))).hashCode())), ProficientMod.MOD_ID + " " + a.getDescriptionId(), amount.get(), o));
-        }
-        Multimap<Attribute, AttributeModifier> combinedModifiers = AttributeUtils.combineAttributes(event.getOriginalModifiers(),qualityModifiers);
+        Multimap<Attribute, AttributeModifier> qualityModifiers = buildModifiers(attributeAdditions, itemId, QualityUtils.getQualityLevel(stack));
+        Multimap<Attribute, AttributeModifier> combined = AttributeUtils.combineAttributes(event.getOriginalModifiers(), qualityModifiers);
         event.clearModifiers();
-        combinedModifiers.forEach(event::addModifier);
-
-
+        combined.forEach(event::addModifier);
     }
 
     @SubscribeEvent
     public static void addQualityToolAttributes(ItemAttributeModifierEvent event) {
         ItemStack stack = event.getItemStack();
-        if(!QualityUtils.hasQuality(stack)){
-            return;
-        }
+        if (!LivingEntity.getEquipmentSlotForItem(stack).equals(event.getSlotType())) return;
 
-        if(!LivingEntity.getEquipmentSlotForItem(stack).equals(event.getSlotType())){
-            return;
-        }
         ResourceLocation itemId = stack.getItem().builtInRegistryHolder().key().location();
-        Optional<AttributeAdditionData> qualityEntry = Minecraft.getInstance().level.registryAccess().registryOrThrow(
-                AttributeAdditionData.QUALITY_ATTRIBUTE_REGISTRY).stream().filter((elem)-> elem.itemid().equals(itemId.getNamespace()+":"+itemId.getPath())).findAny();
 
-        if(qualityEntry.isEmpty()){
+        List<AttributeAddition> attributeAdditions;
+        if (RarityAttributeNBT.hasAttributes(stack)) {
+            attributeAdditions = RarityAttributeNBT.getAttributes(stack);
+        } else if (QualityUtils.hasQuality(stack)) {
+            var server = ServerLifecycleHooks.getCurrentServer();
+            if (server == null) return;
+            RegistryAccess registryAccess = server.registryAccess();
+            Optional<ItemQualityData> qualityEntry = registryAccess
+                    .registryOrThrow(ItemQualityData.REGISTRY)
+                    .stream()
+                    .filter(d -> d.item_id().equals(itemId.getNamespace() + ":" + itemId.getPath()))
+                    .findAny();
+            if (qualityEntry.isEmpty() || qualityEntry.get().rarities().isEmpty()) return;
+            int rarityIndex = QualityUtils.getQualityLevel(stack) - 1;
+            List<List<AttributeAddition>> rarities = qualityEntry.get().rarities().get();
+            if (rarityIndex < 0 || rarityIndex >= rarities.size()) return;
+            attributeAdditions = rarities.get(rarityIndex);
+        } else {
             return;
         }
 
-        List<AttributeAddition> attributes = qualityEntry.get().rarities().get(QualityUtils.getQualityLevel(stack)-1);
-        Multimap<Attribute, AttributeModifier> qualityModifiers = HashMultimap.create();
-        for (AttributeAddition attribute : attributes) {
-            String operation = attribute.operation();
-            String attributeid = attribute.attributeid();
-            AtomicReference<Double> amount = new AtomicReference<>(attribute.amount());
-            ResourceLocation attributeResource = ResourceLocation.parse(attributeid);
-            Registry<Attribute> ar = Minecraft.getInstance().level.registryAccess().registryOrThrow(Registries.ATTRIBUTE);
-            Attribute a = ar.get(attributeResource);
-            AttributeModifier.Operation o = AttributeModifier.Operation.valueOf(operation);
+        if (attributeAdditions.isEmpty()) return;
 
-            qualityModifiers.put(a, new AttributeModifier(Mth.createInsecureUUID(RandomSource.create((itemId.toString() + ProficientMod.MOD_ID + String.valueOf(QualityUtils.getQualityLevel(stack))).hashCode())), ProficientMod.MOD_ID + " " + a.getDescriptionId(), amount.get(), o));
-        }
-        Multimap<Attribute, AttributeModifier> combinedModifiers = AttributeUtils.combineAttributes(event.getOriginalModifiers(),qualityModifiers);
+        Multimap<Attribute, AttributeModifier> qualityModifiers = buildModifiers(attributeAdditions, itemId, QualityUtils.getQualityLevel(stack));
+        Multimap<Attribute, AttributeModifier> combined = AttributeUtils.combineAttributes(event.getOriginalModifiers(), qualityModifiers);
         event.clearModifiers();
-        combinedModifiers.forEach((key,elem)->{
-            event.addModifier(key,elem);
-        });
+        combined.forEach(event::addModifier);
+    }
+
+    @SubscribeEvent
+    public static void addToolBaseStats(ItemAttributeModifierEvent event) {
+        ItemStack stack = event.getItemStack();
+        if (!LivingEntity.getEquipmentSlotForItem(stack).equals(event.getSlotType())) return;
+
+        ResourceLocation itemId = stack.getItem().builtInRegistryHolder().key().location();
+
+        List<AttributeAddition> additions = null;
+        if (stack.getTags().anyMatch(t -> t.equals(ModTags.Items.GOLDEN_SWORDS))) {
+            if (Config.goldenSwordMobDropQuality > 0)
+                additions = List.of(new AttributeAddition("qualitycrafting:mob_drop_quality", Config.goldenSwordMobDropQuality, "ADDITION"));
+        } else if (stack.getTags().anyMatch(t -> t.equals(ModTags.Items.GOLDEN_PICKAXES))) {
+            additions = buildGoldenPickaxeAdditions();
+        } else if (stack.getTags().anyMatch(t -> t.equals(ModTags.Items.GOLDEN_HOES))) {
+            additions = buildGoldenHoeAdditions();
+        }
+        if (additions == null || additions.isEmpty()) return;
+
+        Multimap<Attribute, AttributeModifier> baseModifiers = buildModifiers(additions, itemId, 0);
+        Multimap<Attribute, AttributeModifier> combined = AttributeUtils.combineAttributes(event.getOriginalModifiers(), baseModifiers);
+        event.clearModifiers();
+        combined.forEach(event::addModifier);
+    }
+
+    private static List<AttributeAddition> buildGoldenPickaxeAdditions() {
+        List<AttributeAddition> list = new java.util.ArrayList<>();
+        if (Config.goldenPickaxeMiningQuality > 0)
+            list.add(new AttributeAddition("qualitycrafting:mining_quality", Config.goldenPickaxeMiningQuality, "ADDITION"));
+        if (Config.goldenPickaxeMiningYield > 0)
+            list.add(new AttributeAddition("qualitycrafting:mining_yield", Config.goldenPickaxeMiningYield, "ADDITION"));
+        return list;
+    }
+
+    private static List<AttributeAddition> buildGoldenHoeAdditions() {
+        List<AttributeAddition> list = new java.util.ArrayList<>();
+        if (Config.goldenHoeFarmingQuality > 0)
+            list.add(new AttributeAddition("qualitycrafting:farming_quality", Config.goldenHoeFarmingQuality, "ADDITION"));
+        if (Config.goldenHoeFarmingYield > 0)
+            list.add(new AttributeAddition("qualitycrafting:farming_yield", Config.goldenHoeFarmingYield, "ADDITION"));
+        return list;
+    }
+
+    private static Multimap<Attribute, AttributeModifier> buildModifiers(
+            List<AttributeAddition> additions, ResourceLocation itemId, int qualityLevel) {
+        Multimap<Attribute, AttributeModifier> modifiers = HashMultimap.create();
+        for (AttributeAddition addition : additions) {
+            Attribute attribute = ForgeRegistries.ATTRIBUTES.getValue(ResourceLocation.parse(addition.attribute_id()));
+            if (attribute == null) continue;
+            AttributeModifier.Operation operation = AttributeModifier.Operation.valueOf(addition.operation());
+            modifiers.put(attribute, new AttributeModifier(
+                    Mth.createInsecureUUID(RandomSource.create(
+                            (itemId + ProficientMod.MOD_ID + qualityLevel + addition.attribute_id()).hashCode())),
+                    ProficientMod.MOD_ID + " " + attribute.getDescriptionId(),
+                    addition.amount(),
+                    operation));
+        }
+        return modifiers;
     }
 }

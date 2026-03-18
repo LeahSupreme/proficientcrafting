@@ -1,2 +1,7 @@
-// 1.20.1	2026-03-08T12:42:21.5600657	Loot Tables
+// 1.20.1	2026-03-17T21:29:17.1980578	Loot Tables
+9f1d682c0cd1657c77efe85f829e3c5a1f72953d data/qualitycrafting/loot_tables/blocks/cooking_pot.json
 6e4946b618caf046df74976a98b824d436866ec5 data/qualitycrafting/loot_tables/blocks/forging_table.json
+b42877e9e5d59e1d715237185e5845681a6c637a data/qualitycrafting/loot_tables/blocks/jewelcrafting_station.json
+afcf9ef8bf40a052aaf8792f884fa644c7716634 data/qualitycrafting/loot_tables/blocks/reforging_altar.json
+712554be1067788ce564e68de92dfaf5e4c8f427 data/qualitycrafting/loot_tables/blocks/scribing_table.json
+bf9b0ee81490f277d267bbd64043295cf7bf4514 data/qualitycrafting/loot_tables/blocks/workbench.json

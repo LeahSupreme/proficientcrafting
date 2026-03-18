@@ -3,6 +3,7 @@ package net.leahperson.proficientmod.datagen;
 import net.leahperson.proficientmod.ProficientMod;
 import net.leahperson.proficientmod.item.ModItems;
 import net.leahperson.proficientmod.util.ModTags;
+import net.minecraft.world.item.Items;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
@@ -28,6 +29,10 @@ public class ModItemTagGenerator extends ItemTagsProvider {
 
         this.tag(ModTags.Items.FORGING_HAMMER).add(ModItems.CRUDEHAMMER.get());
         this.tag(ModTags.Items.FORGING_HAMMER).add(ModItems.IRONHAMMER.get());
+
+        this.tag(ModTags.Items.GOLDEN_SWORDS).add(Items.GOLDEN_SWORD);
+        this.tag(ModTags.Items.GOLDEN_PICKAXES).add(Items.GOLDEN_PICKAXE);
+        this.tag(ModTags.Items.GOLDEN_HOES).add(Items.GOLDEN_HOE);
         //this.tag(new TagKey<Item>(ResourceKey.createRegistryKey(ResourceLocation.parse("curios:ring")),ResourceLocation.parse("curios:ring"))).add(ModItems.FUNNYRING.get());
 
 

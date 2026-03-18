@@ -47,9 +47,9 @@ public abstract class ItemMixin implements IForgeItem {
 
         for(int i = 0; i < attributes.size(); i++){
             String operation = attributes.get(i).operation();
-            String attributeid = attributes.get(i).attributeid();;
+            String attribute_id = attributes.get(i).attribute_id();;
             AtomicReference<Double> amount = new AtomicReference<>(attributes.get(i).amount());
-            ResourceLocation attributeResource = ResourceLocation.parse(attributeid);
+            ResourceLocation attributeResource = ResourceLocation.parse(attribute_id);
             Registry<Attribute> ar = Minecraft.getInstance().level.registryAccess().registryOrThrow(Registries.ATTRIBUTE);
             Attribute a = ar.get(attributeResource);
             AttributeModifier.Operation o = AttributeModifier.Operation.valueOf(operation);

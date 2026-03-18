@@ -21,6 +21,9 @@ public class ModTags {
 
     public static class Items {
         public static final TagKey<Item> FORGING_HAMMER = tag("forging_hammer");
+        public static final TagKey<Item> GOLDEN_SWORDS = tag("golden_swords");
+        public static final TagKey<Item> GOLDEN_PICKAXES = tag("golden_pickaxes");
+        public static final TagKey<Item> GOLDEN_HOES = tag("golden_hoes");
 
         private static TagKey<Item> tag(String name) {
             return ItemTags.create(ResourceLocation.fromNamespaceAndPath(ProficientMod.MOD_ID, name));

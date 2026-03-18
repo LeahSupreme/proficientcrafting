@@ -1,56 +1,38 @@
 package net.leahperson.proficientmod.util;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.leahperson.proficientmod.quality.QualityUtils;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 
 public class OverlayUtils {
-
+    public static boolean isOverlay(final ItemStack stack) {
+        if (Minecraft.getInstance().level != null) {
+            return QualityUtils.isRarityItem(stack, Minecraft.getInstance().level);
+        } else {
+            return false;
+        }
+    }
 
     public static ItemStack getOverlay(final ItemStack stack) {
-
-
-
-
-        return QualityUtils.getRarityItem(QualityUtils.getQualityLevel(stack), Minecraft.getInstance().level);
-
-
-        //return ItemStack.EMPTY;
+        if (Minecraft.getInstance().level != null) {
+            return QualityUtils.getRarityItem(QualityUtils.getQualityLevel(stack), Minecraft.getInstance().level);
+        } else {
+            return ItemStack.EMPTY;
+        }
     }
 
-    /*public static ItemStack getOverlay(final int ordinal) {
-        return getOverlay(Quality.get(ordinal));
-    }
-
-    public static ItemStack getOverlay(final Quality quality) {
-        return switch (quality) {
-            case IRON -> {
-                if (IRON_OVERLAY == null) {
-                    IRON_OVERLAY = new ItemStack(QFItems.IRON_OVERLAY.get());
-                }
-
-                yield IRON_OVERLAY;
-            }
-            case GOLD -> {
-                if (GOLD_OVERLAY == null) {
-                    GOLD_OVERLAY = new ItemStack(QFItems.GOLD_OVERLAY.get());
-                }
-
-                yield GOLD_OVERLAY;
-            }
-            case DIAMOND -> {
-                if (DIAMOND_OVERLAY == null) {
-                    DIAMOND_OVERLAY = new ItemStack(QFItems.DIAMOND_OVERLAY.get());
-                }
-
-                yield DIAMOND_OVERLAY;
-            }
-            default -> ItemStack.EMPTY;
-        };
-    }*/
-
-    public static boolean isOverlay(final ItemStack stack) {
-        //return false;
-        return QualityUtils.isRarityItem(stack,Minecraft.getInstance().level);
+    public static void renderOverlay(ItemStack stack, int seed, PoseStack poseStack, MultiBufferSource bufferSource, int combinedLight, int combinedOverlay, Level level) {
+        if (!QualityUtils.hasQuality(stack)) {
+            return;
+        }
+        ItemStack overlay = getOverlay(stack);
+        if (overlay.isEmpty()) {
+            return;
+        }
+        Minecraft.getInstance().getItemRenderer().renderStatic(overlay, ItemDisplayContext.FIXED, combinedLight, combinedOverlay, poseStack, bufferSource, level, seed);
     }
 }

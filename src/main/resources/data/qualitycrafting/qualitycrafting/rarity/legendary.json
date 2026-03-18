@@ -1,5 +1,16 @@
 {
   "index": 3,
   "bonus": 1.5,
-  "icon": "qualitycrafting:rarity3"
+  "icon": "qualitycrafting:rarity3",
+  "food": {
+    "nutritionadd": 6,
+    "saturationmodifieradd": 0.2,
+    "effectsadd": [
+      {
+        "effectid": "minecraft:regeneration",
+        "duration": 60,
+        "amplifier": 0
+      }
+    ]
+  }
 }

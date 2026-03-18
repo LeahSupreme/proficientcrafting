@@ -1,0 +1,26 @@
+{
+  "item_id": "minecraft:bread",
+  "food": [
+    {
+      "nutritionadd": 2,
+      "saturationmodifieradd": 0,
+      "effectsadd": []
+    },
+    {
+      "nutritionadd": 4,
+      "saturationmodifieradd": 0.1,
+      "effectsadd": []
+    },
+    {
+      "nutritionadd": 6,
+      "saturationmodifieradd": 0.2,
+      "effectsadd": [
+        {
+          "effectid": "minecraft:regeneration",
+          "duration": 60,
+          "amplifier": 0
+        }
+      ]
+    }
+  ]
+}

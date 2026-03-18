@@ -1,0 +1,61 @@
+{
+  "item_id": "minecraft:diamond_sword",
+  "rarities": [
+    [
+      {
+        "attribute_id": "minecraft:generic.attack_damage",
+        "amount": 1,
+        "operation": "ADDITION"
+      },
+      {
+        "attribute_id": "qualitycrafting:mob_drop_quality",
+        "amount": 30,
+        "operation": "ADDITION"
+      },
+      {
+        "attribute_id": "qualitycrafting:mob_drop_yield",
+        "amount": 6,
+        "operation": "ADDITION"
+      }
+    ],
+    [
+      {
+        "attribute_id": "minecraft:generic.attack_damage",
+        "amount": 2,
+        "operation": "ADDITION"
+      },
+      {
+        "attribute_id": "qualitycrafting:mob_drop_quality",
+        "amount": 65,
+        "operation": "ADDITION"
+      },
+      {
+        "attribute_id": "qualitycrafting:mob_drop_yield",
+        "amount": 14,
+        "operation": "ADDITION"
+      }
+    ],
+    [
+      {
+        "attribute_id": "minecraft:generic.attack_damage",
+        "amount": 5,
+        "operation": "ADDITION"
+      },
+      {
+        "attribute_id": "minecraft:generic.attack_speed",
+        "amount": 0.3,
+        "operation": "ADDITION"
+      },
+      {
+        "attribute_id": "qualitycrafting:mob_drop_quality",
+        "amount": 110,
+        "operation": "ADDITION"
+      },
+      {
+        "attribute_id": "qualitycrafting:mob_drop_yield",
+        "amount": 28,
+        "operation": "ADDITION"
+      }
+    ]
+  ]
+}

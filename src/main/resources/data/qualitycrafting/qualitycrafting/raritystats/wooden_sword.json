@@ -1,0 +1,56 @@
+{
+  "item_id": "minecraft:wooden_sword",
+  "rarities": [
+    [
+      {
+        "attribute_id": "minecraft:generic.attack_damage",
+        "amount": 0.5,
+        "operation": "ADDITION"
+      },
+      {
+        "attribute_id": "qualitycrafting:mob_drop_quality",
+        "amount": 10,
+        "operation": "ADDITION"
+      },
+      {
+        "attribute_id": "qualitycrafting:mob_drop_yield",
+        "amount": 2,
+        "operation": "ADDITION"
+      }
+    ],
+    [
+      {
+        "attribute_id": "minecraft:generic.attack_damage",
+        "amount": 1,
+        "operation": "ADDITION"
+      },
+      {
+        "attribute_id": "qualitycrafting:mob_drop_quality",
+        "amount": 25,
+        "operation": "ADDITION"
+      },
+      {
+        "attribute_id": "qualitycrafting:mob_drop_yield",
+        "amount": 5,
+        "operation": "ADDITION"
+      }
+    ],
+    [
+      {
+        "attribute_id": "minecraft:generic.attack_damage",
+        "amount": 2,
+        "operation": "ADDITION"
+      },
+      {
+        "attribute_id": "qualitycrafting:mob_drop_quality",
+        "amount": 45,
+        "operation": "ADDITION"
+      },
+      {
+        "attribute_id": "qualitycrafting:mob_drop_yield",
+        "amount": 10,
+        "operation": "ADDITION"
+      }
+    ]
+  ]
+}

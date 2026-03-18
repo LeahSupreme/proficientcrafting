@@ -1,16 +1,28 @@
 package net.leahperson.proficientmod.block.entity;
 
+import net.leahperson.proficientmod.attribute.AttributeAddition;
+import net.leahperson.proficientmod.attribute.ItemQualityData;
 import net.leahperson.proficientmod.attribute.ModAttributes;
+import net.leahperson.proficientmod.quality.QualityDataType;
+import net.leahperson.proficientmod.quality.RarityTagDefault;
 import net.leahperson.proficientmod.quality.QualityUtils;
 import net.leahperson.proficientmod.recipe.ForgingRecipe;
 import net.leahperson.proficientmod.recipe.ForgingRecipeContainer;
 import net.leahperson.proficientmod.registry.ModRecipeTypes;
 import net.leahperson.proficientmod.util.QualityDataUtil;
+import net.leahperson.proficientmod.util.RarityAttributeNBT;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 import net.minecraftforge.common.util.RecipeMatcher;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -128,6 +140,17 @@ public class ForgingTableBlockEntity extends BlockEntity {
 
         ForgingRecipe recipe = recipeOpt.get();
 
+        int requiredProficiency = recipe.getProficiencyRequired();
+        if (requiredProficiency > 0) {
+            int playerProficiency = (int) player.getAttributeValue(ModAttributes.PROFICIENCY.get());
+            if (playerProficiency < requiredProficiency) {
+                player.displayClientMessage(Component.translatable(
+                        "qualitycrafting.station.notproficient",
+                        requiredProficiency, playerProficiency), true);
+                return false;
+            }
+        }
+
         this.capturedQuality = (int) player.getAttributeValue(ModAttributes.QUALITY.get());
         this.capturedPlayerUUID = player.getUUID();
 
@@ -220,6 +243,14 @@ public class ForgingTableBlockEntity extends BlockEntity {
             }
         }
 
+        int rarity = QualityDataUtil.getRarity(result);
+        if (rarity > 0) {
+            List<AttributeAddition> additions = resolveAttributes(result, rarity, level);
+            if (!additions.isEmpty()) {
+                RarityAttributeNBT.setAttributes(result, additions);
+            }
+        }
+
         Collections.fill(inputStacks, ItemStack.EMPTY);
         outputStack = result;
 
@@ -234,6 +265,49 @@ public class ForgingTableBlockEntity extends BlockEntity {
 
         resetCrafting();
         setChangedAndSync();
+    }
+
+    /**
+     * Resolves which attribute additions to bake into this item's NBT based on rarity.
+     * Priority: per-item equipment entry > per-item curio entry > tag-based defaults.
+     */
+    private static List<AttributeAddition> resolveAttributes(ItemStack stack, int rarity, Level level) {
+        RegistryAccess registryAccess = level.registryAccess();
+        ResourceLocation itemId = stack.getItem().builtInRegistryHolder().key().location();
+        String itemIdStr = itemId.getNamespace() + ":" + itemId.getPath();
+        int rarityIndex = rarity - 1;
+
+        // 1. Per-item entry (equipment or curio)
+        Optional<ItemQualityData> itemEntry = registryAccess
+                .registry(ItemQualityData.REGISTRY)
+                .flatMap(reg -> reg.stream()
+                        .filter(e -> e.item_id().equals(itemIdStr))
+                        .findAny());
+        if (itemEntry.isPresent() && itemEntry.get().rarities().isPresent()) {
+            List<List<AttributeAddition>> rarities = itemEntry.get().rarities().get();
+            if (rarityIndex < rarities.size()) {
+                return rarities.get(rarityIndex);
+            }
+        }
+
+        Optional<net.minecraft.core.Registry<QualityDataType>> rarityRegistry =
+                registryAccess.registry(QualityDataType.RARITY_REGISTRY);
+        if (rarityRegistry.isPresent()) {
+            Optional<QualityDataType> tier = rarityRegistry.get().stream()
+                    .filter(qualityDataType -> qualityDataType.index() == rarity)
+                    .findFirst();
+            if (tier.isPresent() && tier.get().tagDefaults().isPresent()) {
+                Set<TagKey<Item>> itemTags = stack.getTags().collect(Collectors.toSet());
+                for (RarityTagDefault tagDefault : tier.get().tagDefaults().get()) {
+                    TagKey<Item> tagKey = TagKey.create(Registries.ITEM, ResourceLocation.parse(tagDefault.tag()));
+                    if (itemTags.contains(tagKey)) {
+                        return tagDefault.attributes();
+                    }
+                }
+            }
+        }
+
+        return List.of();
     }
 
     private void resetCrafting() {

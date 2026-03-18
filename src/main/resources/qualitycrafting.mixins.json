@@ -9,7 +9,8 @@
     "FoodMixin"
   ],
   "client": [
-    "client.GuiGraphicsMixin"
+    "client.GuiGraphicsMixin",
+    "client.ItemStackMixin"
   ],
   "injectors": {
     "defaultRequire": 1

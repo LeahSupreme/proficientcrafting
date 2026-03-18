@@ -1,2 +1,5 @@
-// 1.20.1	2026-03-08T23:17:49.4323631	Tags for minecraft:item mod id qualitycrafting
+// 1.20.1	2026-03-09T14:38:44.045112	Tags for minecraft:item mod id qualitycrafting
 01f901b27456d4787f2fed9ba7db4c57834111b4 data/qualitycrafting/tags/items/forging_hammer.json
+483bcd5d09befe602b1b40c1c3d1365d130c7666 data/qualitycrafting/tags/items/golden_hoes.json
+7e2fefed1689cdc93d54fe23ea13e525c9c61baf data/qualitycrafting/tags/items/golden_pickaxes.json
+9871a009afb820cac6e99b03ebe3e7b21c8ad23f data/qualitycrafting/tags/items/golden_swords.json

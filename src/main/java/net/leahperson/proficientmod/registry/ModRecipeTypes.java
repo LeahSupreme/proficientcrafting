@@ -1,6 +1,7 @@
 package net.leahperson.proficientmod.registry;
 
 import net.leahperson.proficientmod.ProficientMod;
+import net.leahperson.proficientmod.recipe.CookingRecipe;
 import net.leahperson.proficientmod.recipe.ForgingRecipe;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -17,6 +18,14 @@ public class ModRecipeTypes {
                 @Override
                 public String toString() {
                     return ProficientMod.MOD_ID + ":forging";
+                }
+            });
+
+    public static final RegistryObject<RecipeType<CookingRecipe>> COOKING =
+            RECIPE_TYPES.register("cooking", () -> new RecipeType<>() {
+                @Override
+                public String toString() {
+                    return ProficientMod.MOD_ID + ":cooking";
                 }
             });
 

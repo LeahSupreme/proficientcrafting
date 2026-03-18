@@ -1,0 +1,41 @@
+{
+  "item_id": "minecraft:stone_pickaxe",
+  "rarities": [
+    [
+      {
+        "attribute_id": "qualitycrafting:mining_quality",
+        "amount": 15,
+        "operation": "ADDITION"
+      },
+      {
+        "attribute_id": "qualitycrafting:mining_yield",
+        "amount": 3,
+        "operation": "ADDITION"
+      }
+    ],
+    [
+      {
+        "attribute_id": "qualitycrafting:mining_quality",
+        "amount": 35,
+        "operation": "ADDITION"
+      },
+      {
+        "attribute_id": "qualitycrafting:mining_yield",
+        "amount": 7,
+        "operation": "ADDITION"
+      }
+    ],
+    [
+      {
+        "attribute_id": "qualitycrafting:mining_quality",
+        "amount": 60,
+        "operation": "ADDITION"
+      },
+      {
+        "attribute_id": "qualitycrafting:mining_yield",
+        "amount": 14,
+        "operation": "ADDITION"
+      }
+    ]
+  ]
+}

@@ -18,6 +18,11 @@ public class QualityDataUtil {
     }
 
     public static void setRarity(ItemStack stack, int rarity) {
+        if (rarity <= 0) {
+            CompoundTag modTag = stack.getTagElement(ProficientMod.MOD_ID);
+            if (modTag != null) modTag.remove(TAG_QUALITY);
+            return;
+        }
         stack.getOrCreateTagElement(ProficientMod.MOD_ID).putInt(TAG_QUALITY, rarity);
     }
 }

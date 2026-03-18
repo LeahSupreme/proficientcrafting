@@ -1,0 +1,41 @@
+{
+  "item_id": "minecraft:netherite_pickaxe",
+  "rarities": [
+    [
+      {
+        "attribute_id": "qualitycrafting:mining_quality",
+        "amount": 40,
+        "operation": "ADDITION"
+      },
+      {
+        "attribute_id": "qualitycrafting:mining_yield",
+        "amount": 8,
+        "operation": "ADDITION"
+      }
+    ],
+    [
+      {
+        "attribute_id": "qualitycrafting:mining_quality",
+        "amount": 85,
+        "operation": "ADDITION"
+      },
+      {
+        "attribute_id": "qualitycrafting:mining_yield",
+        "amount": 18,
+        "operation": "ADDITION"
+      }
+    ],
+    [
+      {
+        "attribute_id": "qualitycrafting:mining_quality",
+        "amount": 140,
+        "operation": "ADDITION"
+      },
+      {
+        "attribute_id": "qualitycrafting:mining_yield",
+        "amount": 36,
+        "operation": "ADDITION"
+      }
+    ]
+  ]
+}

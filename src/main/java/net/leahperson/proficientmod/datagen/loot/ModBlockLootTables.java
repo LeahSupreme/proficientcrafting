@@ -19,6 +19,11 @@ public class ModBlockLootTables extends BlockLootSubProvider {
     @Override
     protected void generate() {
         this.dropSelf(ModBlocks.FORGING_TABLE.get());
+        this.dropSelf(ModBlocks.COOKING_POT.get());
+        this.dropSelf(ModBlocks.SCRIBING_TABLE.get());
+        this.dropSelf(ModBlocks.JEWELCRAFTING_STATION.get());
+        this.dropSelf(ModBlocks.WORKBENCH.get());
+        this.dropSelf(ModBlocks.REFORGING_ALTAR.get());
     }
 
     @Override

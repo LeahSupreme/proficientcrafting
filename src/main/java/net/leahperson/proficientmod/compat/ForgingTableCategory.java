@@ -119,10 +119,8 @@ public class ForgingTableCategory implements IRecipeCategory<ForgingRecipe> {
             }
         }
 
-        if (recipe.getProficiencyRequired() > 0) {
-            guiGraphics.drawString(Minecraft.getInstance().font,
-                    Component.translatable("qualitycrafting.jei.proficiencycost").append(Integer.toString(recipe.getProficiencyRequired())),
-                    10, 90, 0xFF636363, false);
-        }
+        guiGraphics.drawString(Minecraft.getInstance().font,
+                Component.translatable("qualitycrafting.jei.proficiencycost").append(Integer.toString(recipe.getProficiencyRequired())),
+                10, 90, 0xFF636363, false);
     }
 }

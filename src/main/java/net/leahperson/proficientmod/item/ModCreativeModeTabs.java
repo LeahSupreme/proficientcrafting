@@ -20,6 +20,11 @@ public class ModCreativeModeTabs {
                 pOutput.accept(ModItems.CRUDEHAMMER.get());
                 pOutput.accept(ModItems.IRONHAMMER.get());
                 pOutput.accept(ModBlocks.FORGING_TABLE.get());
+                pOutput.accept(ModBlocks.COOKING_POT.get());
+                pOutput.accept(ModBlocks.SCRIBING_TABLE.get());
+                pOutput.accept(ModBlocks.JEWELCRAFTING_STATION.get());
+                pOutput.accept(ModBlocks.WORKBENCH.get());
+                pOutput.accept(ModBlocks.REFORGING_ALTAR.get());
                 pOutput.accept(ModItems.FUNNYRING.get());
             })
             .build());

@@ -1,0 +1,15 @@
+{
+  "type": "qualitycrafting:cooking",
+  "ingredients": [
+    { "item": "minecraft:rabbit" },
+    { "item": "minecraft:carrot" },
+    { "item": "minecraft:baked_potato" },
+    { "item": "minecraft:brown_mushroom" },
+    { "item": "minecraft:bowl" }
+  ],
+  "output": { "item": "minecraft:rabbit_stew" },
+  "cookTime": 300,
+  "qualityCosts": [30, 70, 130],
+  "qualityPerIngredient": [15, 35, 65],
+  "qualityDecoration": [0, 1, 2, 3]
+}

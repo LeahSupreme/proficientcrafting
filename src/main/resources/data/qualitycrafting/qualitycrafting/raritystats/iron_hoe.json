@@ -1,0 +1,41 @@
+{
+  "item_id": "minecraft:iron_hoe",
+  "rarities": [
+    [
+      {
+        "attribute_id": "qualitycrafting:farming_quality",
+        "amount": 20,
+        "operation": "ADDITION"
+      },
+      {
+        "attribute_id": "qualitycrafting:farming_yield",
+        "amount": 4,
+        "operation": "ADDITION"
+      }
+    ],
+    [
+      {
+        "attribute_id": "qualitycrafting:farming_quality",
+        "amount": 45,
+        "operation": "ADDITION"
+      },
+      {
+        "attribute_id": "qualitycrafting:farming_yield",
+        "amount": 10,
+        "operation": "ADDITION"
+      }
+    ],
+    [
+      {
+        "attribute_id": "qualitycrafting:farming_quality",
+        "amount": 80,
+        "operation": "ADDITION"
+      },
+      {
+        "attribute_id": "qualitycrafting:farming_yield",
+        "amount": 20,
+        "operation": "ADDITION"
+      }
+    ]
+  ]
+}

@@ -2,6 +2,7 @@ package net.leahperson.proficientmod.client;
 
 import net.leahperson.proficientmod.ProficientMod;
 import net.leahperson.proficientmod.block.entity.ModBlockEntities;
+import net.leahperson.proficientmod.block.entity.renderer.CookingPotRenderer;
 import net.leahperson.proficientmod.block.entity.renderer.ForgingTableRenderer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
@@ -16,6 +17,10 @@ public class ClientModEvents {
         event.registerBlockEntityRenderer(
                 ModBlockEntities.FORGING_TABLE_BE.get(),
                 ForgingTableRenderer::new
+        );
+        event.registerBlockEntityRenderer(
+                ModBlockEntities.COOKING_POT_BE.get(),
+                CookingPotRenderer::new
         );
     }
 }

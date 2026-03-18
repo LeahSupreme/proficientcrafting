@@ -1,0 +1,32 @@
+{
+  "type": "qualitycrafting:forging",
+  "ingredients": [
+    {
+      "item": "minecraft:cobblestone"
+    },
+    {
+      "item": "minecraft:cobblestone"
+    },
+    {
+      "item": "minecraft:cobblestone"
+    },
+    {
+      "item": "minecraft:stick"
+    },
+    {
+      "item": "minecraft:stick"
+    }
+  ],
+  "output": {
+    "item": "minecraft:stone_pickaxe",
+    "count": 1
+  },
+  "proficiency": 0,
+  "craftTime": 50,
+  "levelCost": 0,
+  "yieldCost": 0,
+  "yieldAdded": 0,
+  "qualityCosts": [30, 80, 150],
+  "qualityPerIngredient": [20, 50, 90],
+  "qualityDecoration": [0, 1, 2, 3]
+}

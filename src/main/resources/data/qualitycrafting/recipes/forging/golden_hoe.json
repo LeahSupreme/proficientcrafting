@@ -1,0 +1,29 @@
+{
+  "type": "qualitycrafting:forging",
+  "ingredients": [
+    {
+      "item": "minecraft:gold_ingot"
+    },
+    {
+      "item": "minecraft:gold_ingot"
+    },
+    {
+      "item": "minecraft:stick"
+    },
+    {
+      "item": "minecraft:stick"
+    }
+  ],
+  "output": {
+    "item": "minecraft:golden_hoe",
+    "count": 1
+  },
+  "proficiency": 0,
+  "craftTime": 60,
+  "levelCost": 1,
+  "yieldCost": 0,
+  "yieldAdded": 0,
+  "qualityCosts": [40, 100, 180],
+  "qualityPerIngredient": [30, 65, 110],
+  "qualityDecoration": [0, 1, 2, 3]
+}

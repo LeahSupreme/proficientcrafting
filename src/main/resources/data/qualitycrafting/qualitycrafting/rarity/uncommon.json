@@ -1,5 +1,10 @@
 {
   "index": 1,
   "bonus": 1.1,
-  "icon": "qualitycrafting:rarity1"
+  "icon": "qualitycrafting:rarity1",
+  "food": {
+    "nutritionadd": 2,
+    "saturationmodifieradd": 0.0,
+    "effectsadd": []
+  }
 }

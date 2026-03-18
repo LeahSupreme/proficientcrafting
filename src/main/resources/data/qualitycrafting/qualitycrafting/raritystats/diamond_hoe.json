@@ -1,0 +1,41 @@
+{
+  "item_id": "minecraft:diamond_hoe",
+  "rarities": [
+    [
+      {
+        "attribute_id": "qualitycrafting:farming_quality",
+        "amount": 30,
+        "operation": "ADDITION"
+      },
+      {
+        "attribute_id": "qualitycrafting:farming_yield",
+        "amount": 6,
+        "operation": "ADDITION"
+      }
+    ],
+    [
+      {
+        "attribute_id": "qualitycrafting:farming_quality",
+        "amount": 65,
+        "operation": "ADDITION"
+      },
+      {
+        "attribute_id": "qualitycrafting:farming_yield",
+        "amount": 14,
+        "operation": "ADDITION"
+      }
+    ],
+    [
+      {
+        "attribute_id": "qualitycrafting:farming_quality",
+        "amount": 110,
+        "operation": "ADDITION"
+      },
+      {
+        "attribute_id": "qualitycrafting:farming_yield",
+        "amount": 28,
+        "operation": "ADDITION"
+      }
+    ]
+  ]
+}

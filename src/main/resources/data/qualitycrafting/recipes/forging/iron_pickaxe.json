@@ -12,12 +12,21 @@
     },
     {
       "item": "minecraft:stick"
+    },
+    {
+      "item": "minecraft:stick"
     }
   ],
   "output": {
-    "item": "minecraft:iron_sword",
+    "item": "minecraft:iron_pickaxe",
     "count": 1
   },
-  "proficiency": 10,
-  "craftTime": 60
+  "proficiency": 0,
+  "craftTime": 60,
+  "levelCost": 1,
+  "yieldCost": 0,
+  "yieldAdded": 0,
+  "qualityCosts": [40, 100, 180],
+  "qualityPerIngredient": [30, 65, 110],
+  "qualityDecoration": [0, 1, 2, 3]
 }

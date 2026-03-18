@@ -19,12 +19,26 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 public class ForgingTableBlock extends BaseEntityBlock {
 
+    private static final VoxelShape BASE  = box(2.0, 0.0, 2.0, 14.0, 4.0, 14.0);
+    private static final VoxelShape LEG1  = box(4.0, 4.0, 3.0, 12.0, 5.0, 13.0);
+    private static final VoxelShape LEG2  = box(6.0, 5.0, 4.0, 10.0, 10.0, 12.0);
+    private static final VoxelShape TOP   = box(3.0, 10.0, 0.0, 13.0, 16.0, 16.0);
+    private static final VoxelShape SHAPE = Shapes.or(BASE, LEG1, LEG2, TOP);
+
     public ForgingTableBlock(BlockBehaviour.Properties props) {
         super(props);
+    }
+
+    @Override
+    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        return SHAPE;
     }
 
     @Override

@@ -3,7 +3,6 @@ package net.leahperson.proficientmod.block.entity.renderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.leahperson.proficientmod.block.entity.ForgingTableBlockEntity;
-import net.leahperson.proficientmod.quality.QualityUtils;
 import net.leahperson.proficientmod.util.OverlayUtils;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
@@ -81,21 +80,15 @@ public class ForgingTableRenderer implements BlockEntityRenderer<ForgingTableBlo
                     i
             );
 
-            if (QualityUtils.hasQuality(stack)) {
-                ItemStack overlay = OverlayUtils.getOverlay(stack);
-                if (!overlay.isEmpty()) {
-                    itemRenderer.renderStatic(
-                            overlay,
-                            ItemDisplayContext.FIXED,
-                            combinedLight,
-                            combinedOverlay,
-                            poseStack,
-                            bufferSource,
-                            blockEntity.getLevel(),
-                            i + 100
-                    );
-                }
-            }
+            OverlayUtils.renderOverlay(
+                    stack,
+                    i + 100,
+                    poseStack,
+                    bufferSource,
+                    combinedLight,
+                    combinedOverlay,
+                    blockEntity.getLevel()
+            );
 
             poseStack.popPose();
         }
@@ -121,21 +114,15 @@ public class ForgingTableRenderer implements BlockEntityRenderer<ForgingTableBlo
                     200
             );
 
-            if (QualityUtils.hasQuality(output)) {
-                ItemStack overlay = OverlayUtils.getOverlay(output);
-                if (!overlay.isEmpty()) {
-                    itemRenderer.renderStatic(
-                            overlay,
-                            ItemDisplayContext.FIXED,
-                            combinedLight,
-                            combinedOverlay,
-                            poseStack,
-                            bufferSource,
-                            blockEntity.getLevel(),
-                            201
-                    );
-                }
-            }
+            OverlayUtils.renderOverlay(
+                    output,
+                    201,
+                    poseStack,
+                    bufferSource,
+                    combinedLight,
+                    combinedOverlay,
+                    blockEntity.getLevel()
+            );
 
             poseStack.popPose();
         }

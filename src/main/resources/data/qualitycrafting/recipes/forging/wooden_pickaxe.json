@@ -1,0 +1,32 @@
+{
+  "type": "qualitycrafting:forging",
+  "ingredients": [
+    {
+      "tag": "minecraft:planks"
+    },
+    {
+      "tag": "minecraft:planks"
+    },
+    {
+      "tag": "minecraft:planks"
+    },
+    {
+      "item": "minecraft:stick"
+    },
+    {
+      "item": "minecraft:stick"
+    }
+  ],
+  "output": {
+    "item": "minecraft:wooden_pickaxe",
+    "count": 1
+  },
+  "proficiency": 0,
+  "craftTime": 40,
+  "levelCost": 0,
+  "yieldCost": 0,
+  "yieldAdded": 0,
+  "qualityCosts": [25, 65, 130],
+  "qualityPerIngredient": [15, 40, 75],
+  "qualityDecoration": [0, 1, 2, 3]
+}

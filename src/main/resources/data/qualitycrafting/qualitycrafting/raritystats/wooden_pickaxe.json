@@ -1,0 +1,41 @@
+{
+  "item_id": "minecraft:wooden_pickaxe",
+  "rarities": [
+    [
+      {
+        "attribute_id": "qualitycrafting:mining_quality",
+        "amount": 10,
+        "operation": "ADDITION"
+      },
+      {
+        "attribute_id": "qualitycrafting:mining_yield",
+        "amount": 2,
+        "operation": "ADDITION"
+      }
+    ],
+    [
+      {
+        "attribute_id": "qualitycrafting:mining_quality",
+        "amount": 25,
+        "operation": "ADDITION"
+      },
+      {
+        "attribute_id": "qualitycrafting:mining_yield",
+        "amount": 5,
+        "operation": "ADDITION"
+      }
+    ],
+    [
+      {
+        "attribute_id": "qualitycrafting:mining_quality",
+        "amount": 45,
+        "operation": "ADDITION"
+      },
+      {
+        "attribute_id": "qualitycrafting:mining_yield",
+        "amount": 10,
+        "operation": "ADDITION"
+      }
+    ]
+  ]
+}

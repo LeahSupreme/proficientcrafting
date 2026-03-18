@@ -1,0 +1,12 @@
+{
+  "type": "qualitycrafting:cooking",
+  "ingredients": [
+    { "item": "minecraft:brown_mushroom" },
+    { "item": "minecraft:bowl" }
+  ],
+  "output": { "item": "minecraft:mushroom_stew" },
+  "cookTime": 160,
+  "qualityCosts": [20, 50, 100],
+  "qualityPerIngredient": [15, 35, 65],
+  "qualityDecoration": [0, 1, 2, 3]
+}
