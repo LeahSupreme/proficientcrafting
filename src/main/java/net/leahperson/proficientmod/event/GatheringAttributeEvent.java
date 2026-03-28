@@ -4,6 +4,7 @@ import net.leahperson.proficientmod.Config;
 import net.leahperson.proficientmod.ProficientMod;
 import net.leahperson.proficientmod.attribute.ModAttributes;
 import net.leahperson.proficientmod.util.QualityDataUtil;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -12,6 +13,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.List;
 
@@ -29,7 +31,10 @@ public class GatheringAttributeEvent {
         int quality = (int) player.getAttributeValue(ModAttributes.MOB_DROP_QUALITY.get());
         int yield = (int) player.getAttributeValue(ModAttributes.MOB_DROP_YIELD.get());
 
-        applyQuality(drops, quality, player.level().getRandom());
+        ResourceLocation entityId = ForgeRegistries.ENTITY_TYPES.getKey(event.getEntity().getType());
+        int extraQuality = entityId != null ? Config.qualityThresholds.getOrDefault(entityId.toString(), 0) : 0;
+
+        applyQuality(drops, quality - extraQuality, player.level().getRandom());
         applyYield(drops, yield, player.level().getRandom());
     }
 

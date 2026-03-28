@@ -18,15 +18,27 @@
     }
   ],
   "output": {
-    "item": "minecraft:golden_pickaxe",
-    "count": 1
+    "item": "minecraft:golden_pickaxe"
   },
   "proficiency": 0,
   "craftTime": 60,
   "levelCost": 1,
   "yieldCost": 0,
   "yieldAdded": 0,
-  "qualityCosts": [40, 100, 180],
-  "qualityPerIngredient": [30, 65, 110],
-  "qualityDecoration": [0, 1, 2, 3]
+  "qualityCosts": [
+    50,
+    170,
+    510
+  ],
+  "qualityPerIngredient": [
+    17,
+    40,
+    114
+  ],
+  "qualityDecoration": [
+    0,
+    1,
+    2,
+    3
+  ]
 }

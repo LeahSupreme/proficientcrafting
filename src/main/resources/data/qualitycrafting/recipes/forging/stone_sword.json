@@ -12,15 +12,27 @@
     }
   ],
   "output": {
-    "item": "minecraft:stone_sword",
-    "count": 1
+    "item": "minecraft:stone_sword"
   },
   "proficiency": 0,
   "craftTime": 50,
   "levelCost": 0,
   "yieldCost": 0,
   "yieldAdded": 0,
-  "qualityCosts": [30, 80, 150],
-  "qualityPerIngredient": [20, 50, 90],
-  "qualityDecoration": [0, 1, 2, 3]
+  "qualityCosts": [
+    40,
+    130,
+    390
+  ],
+  "qualityPerIngredient": [
+    22,
+    51,
+    145
+  ],
+  "qualityDecoration": [
+    0,
+    1,
+    2,
+    3
+  ]
 }

@@ -1,6 +1,10 @@
 {
   "values": [
-    "qualitycrafting:crude_forge_hammer",
-    "qualitycrafting:iron_forge_hammer"
+    "qualitycrafting:stone_forge_hammer",
+    "qualitycrafting:iron_forge_hammer",
+    "qualitycrafting:diamond_forge_hammer",
+    "qualitycrafting:gold_forge_hammer",
+    "qualitycrafting:amethyst_forge_hammer",
+    "qualitycrafting:netherite_forge_hammer"
   ]
 }

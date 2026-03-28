@@ -1,6 +1,10 @@
 {
   "replace": false,
   "values": [
-    "qualitycrafting:funnyring"
+    "qualitycrafting:lapis_ring",
+    "qualitycrafting:diamond_ring",
+    "qualitycrafting:emerald_ring",
+    "qualitycrafting:amethyst_ring",
+    "qualitycrafting:nether_star_ring"
   ]
 }

@@ -1,0 +1,23 @@
+{
+  "type": "qualitycrafting:workbench",
+  "ingredients": [
+    { "item": "minecraft:oak_planks" },
+    { "item": "minecraft:iron_ingot" },
+    { "item": "minecraft:oak_planks" },
+    { "item": "minecraft:oak_planks" },
+    { "item": "minecraft:iron_nugget" },
+    { "item": "minecraft:oak_planks" },
+    { "item": "minecraft:oak_planks" },
+    { "item": "minecraft:iron_nugget" },
+    { "item": "minecraft:oak_planks" }
+  ],
+  "output": { "item": "minecraft:shield", "count": 1 },
+  "proficiency": 5,
+  "craftTime": 100,
+  "levelCost": 1,
+  "yieldCost": 0,
+  "yieldAdded": 0,
+  "qualityCosts": [50, 200, 650],
+  "qualityPerIngredient": [7, 27, 80],
+  "qualityDecoration": [0, 1, 2, 3]
+}

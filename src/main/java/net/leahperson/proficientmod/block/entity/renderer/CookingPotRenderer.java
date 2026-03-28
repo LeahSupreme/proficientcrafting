@@ -109,25 +109,15 @@ public class CookingPotRenderer implements BlockEntityRenderer<CookingPotBlockEn
             poseStack.mulPose(Axis.YP.rotationDegrees(outputRotation));
             poseStack.scale(0.67f, 0.67f, 0.67f);
 
-            itemRenderer.renderStatic(
+            OverlayUtils.renderOutputStack(
                     output,
-                    ItemDisplayContext.FIXED,
-                    combinedLight,
-                    combinedOverlay,
+                    200,
                     poseStack,
                     bufferSource,
+                    combinedLight,
+                    combinedOverlay,
                     blockEntity.getLevel(),
-                    200
-            );
-
-            OverlayUtils.renderOverlay(
-                    output,
-                    201,
-                    poseStack,
-                    bufferSource,
-                    combinedLight,
-                    combinedOverlay,
-                    blockEntity.getLevel()
+                    itemRenderer
             );
 
             poseStack.popPose();

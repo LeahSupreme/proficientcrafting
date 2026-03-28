@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "qualitycrafting:item/amethyst_forge_hammer"
+  }
+}

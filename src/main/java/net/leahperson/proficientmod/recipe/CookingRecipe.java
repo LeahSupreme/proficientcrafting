@@ -28,11 +28,15 @@ public class CookingRecipe implements Recipe<Container> {
     private final NonNullList<Float> qualityPerIngredient;
     private final NonNullList<Integer> qualityDecoration;
     private final int levelCost;
+    private final int proficiencyRequired;
+    private final int yieldCost;
+    private final int yieldAdded;
 
     public CookingRecipe(ResourceLocation id, NonNullList<Ingredient> inputItems, ItemStack output,
                          NonNullList<ItemStack> outputs, int cookTime,
                          NonNullList<Integer> qualityRequired, NonNullList<Float> qualityPerIngredient,
-                         NonNullList<Integer> qualityDecoration, int levelCost) {
+                         NonNullList<Integer> qualityDecoration, int levelCost, int proficiencyRequired,
+                         int yieldCost, int yieldAdded) {
         this.id = id;
         this.inputItems = inputItems;
         this.output = output;
@@ -42,6 +46,9 @@ public class CookingRecipe implements Recipe<Container> {
         this.qualityPerIngredient = qualityPerIngredient;
         this.qualityDecoration = qualityDecoration;
         this.levelCost = levelCost;
+        this.proficiencyRequired = proficiencyRequired;
+        this.yieldCost = yieldCost;
+        this.yieldAdded = yieldAdded;
     }
 
     public NonNullList<Ingredient> getInputItems() {
@@ -70,6 +77,18 @@ public class CookingRecipe implements Recipe<Container> {
 
     public int getLevelCost() {
         return levelCost;
+    }
+
+    public int getProficiencyRequired() {
+        return proficiencyRequired;
+    }
+
+    public int getYieldCost() {
+        return yieldCost;
+    }
+
+    public int getYieldAdded() {
+        return yieldAdded;
     }
 
     public boolean hasQualityOutputs() {

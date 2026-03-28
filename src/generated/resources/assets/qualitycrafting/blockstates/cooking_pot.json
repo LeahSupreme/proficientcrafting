@@ -1,7 +1,19 @@
 {
   "variants": {
-    "": {
-      "model": "minecraft:block/cauldron"
+    "facing=east": {
+      "model": "qualitycrafting:block/cooking_pot",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "qualitycrafting:block/cooking_pot"
+    },
+    "facing=south": {
+      "model": "qualitycrafting:block/cooking_pot",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "qualitycrafting:block/cooking_pot",
+      "y": 270
     }
   }
 }

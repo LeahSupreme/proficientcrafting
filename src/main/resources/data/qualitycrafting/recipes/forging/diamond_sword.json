@@ -12,15 +12,27 @@
     }
   ],
   "output": {
-    "item": "minecraft:diamond_sword",
-    "count": 1
+    "item": "minecraft:diamond_sword"
   },
   "proficiency": 0,
   "craftTime": 80,
   "levelCost": 2,
   "yieldCost": 0,
   "yieldAdded": 0,
-  "qualityCosts": [50, 120, 200],
-  "qualityPerIngredient": [35, 75, 125],
-  "qualityDecoration": [0, 1, 2, 3]
+  "qualityCosts": [
+    60,
+    200,
+    600
+  ],
+  "qualityPerIngredient": [
+    33,
+    78,
+    222
+  ],
+  "qualityDecoration": [
+    0,
+    1,
+    2,
+    3
+  ]
 }

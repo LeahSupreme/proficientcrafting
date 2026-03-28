@@ -18,15 +18,27 @@
     }
   ],
   "output": {
-    "item": "minecraft:wooden_pickaxe",
-    "count": 1
+    "item": "minecraft:wooden_pickaxe"
   },
   "proficiency": 0,
   "craftTime": 40,
   "levelCost": 0,
   "yieldCost": 0,
   "yieldAdded": 0,
-  "qualityCosts": [25, 65, 130],
-  "qualityPerIngredient": [15, 40, 75],
-  "qualityDecoration": [0, 1, 2, 3]
+  "qualityCosts": [
+    30,
+    100,
+    300
+  ],
+  "qualityPerIngredient": [
+    12,
+    24,
+    67
+  ],
+  "qualityDecoration": [
+    0,
+    1,
+    2,
+    3
+  ]
 }

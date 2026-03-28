@@ -21,6 +21,11 @@ public class ModTags {
 
     public static class Items {
         public static final TagKey<Item> FORGING_HAMMER = tag("forging_hammer");
+        public static final TagKey<Item> COOKING_LADLE = tag("cooking_ladle");
+        public static final TagKey<Item> SCRIBING_QUILL = tag("scribing_quill");
+        public static final TagKey<Item> JEWEL_CHISEL = tag("jewel_chisel");
+        public static final TagKey<Item> WOODWORKING_SAW = tag("woodworking_saw");
+        public static final TagKey<Item> REFORGING_SCEPTER = tag("reforging_scepter");
         public static final TagKey<Item> GOLDEN_SWORDS = tag("golden_swords");
         public static final TagKey<Item> GOLDEN_PICKAXES = tag("golden_pickaxes");
         public static final TagKey<Item> GOLDEN_HOES = tag("golden_hoes");

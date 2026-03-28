@@ -7,7 +7,7 @@ import net.leahperson.proficientmod.quality.QualityDataType;
 import net.leahperson.proficientmod.quality.RarityTagDefault;
 import net.leahperson.proficientmod.quality.QualityUtils;
 import net.leahperson.proficientmod.recipe.ForgingRecipe;
-import net.leahperson.proficientmod.recipe.ForgingRecipeContainer;
+import net.leahperson.proficientmod.recipe.util.SimpleItemContainer;
 import net.leahperson.proficientmod.registry.ModRecipeTypes;
 import net.leahperson.proficientmod.util.QualityDataUtil;
 import net.leahperson.proficientmod.util.RarityAttributeNBT;
@@ -47,10 +47,11 @@ public class ForgingTableBlockEntity extends BlockEntity {
     private int maxProgress = 0;
     private boolean crafting = false;
     private int capturedQuality = 0;
+    private int capturedYield = 0;
     private UUID capturedPlayerUUID = null;
 
     public ForgingTableBlockEntity(BlockPos pos, BlockState state) {
-        super(ModBlockEntities.FORGING_TABLE_BE.get(), pos, state);
+        super(ModBlockEntities.FORGING_STATION_BE.get(), pos, state);
     }
 
     public NonNullList<ItemStack> getInputStacks() {
@@ -126,7 +127,7 @@ public class ForgingTableBlockEntity extends BlockEntity {
             copy[i] = inputStacks.get(i).copy();
         }
 
-        ForgingRecipeContainer container = new ForgingRecipeContainer(copy);
+        SimpleItemContainer container = new SimpleItemContainer(copy);
 
         Optional<ForgingRecipe> recipeOpt = level.getRecipeManager()
                 .getAllRecipesFor(ModRecipeTypes.FORGING.get())
@@ -152,6 +153,7 @@ public class ForgingTableBlockEntity extends BlockEntity {
         }
 
         this.capturedQuality = (int) player.getAttributeValue(ModAttributes.QUALITY.get());
+        this.capturedYield = (int) player.getAttributeValue(ModAttributes.YIELD.get());
         this.capturedPlayerUUID = player.getUUID();
 
         if (!recipe.getQualityPerIngredient().isEmpty()) {
@@ -212,7 +214,7 @@ public class ForgingTableBlockEntity extends BlockEntity {
             copy[i] = inputStacks.get(i).copy();
         }
 
-        ForgingRecipeContainer container = new ForgingRecipeContainer(copy);
+        SimpleItemContainer container = new SimpleItemContainer(copy);
 
         Optional<ForgingRecipe> recipeOpt = level.getRecipeManager()
                 .getAllRecipesFor(net.leahperson.proficientmod.registry.ModRecipeTypes.FORGING.get())
@@ -251,6 +253,13 @@ public class ForgingTableBlockEntity extends BlockEntity {
             }
         }
 
+        if (recipe.getYieldCost() > 0 && recipe.getYieldAdded() > 0) {
+            int bonusCount = (capturedYield / recipe.getYieldCost()) * recipe.getYieldAdded();
+            if (bonusCount > 0) {
+                result.grow(Math.min(bonusCount, result.getMaxStackSize() - result.getCount()));
+            }
+        }
+
         Collections.fill(inputStacks, ItemStack.EMPTY);
         outputStack = result;
 
@@ -270,7 +279,12 @@ public class ForgingTableBlockEntity extends BlockEntity {
     /**
      * Resolves which attribute additions to bake into this item's NBT based on rarity.
      * Priority: per-item equipment entry > per-item curio entry > tag-based defaults.
+     * Public so other crafting stations can share this logic.
      */
+    public static List<AttributeAddition> resolveAttributesPublic(ItemStack stack, int rarity, Level level) {
+        return resolveAttributes(stack, rarity, level);
+    }
+
     private static List<AttributeAddition> resolveAttributes(ItemStack stack, int rarity, Level level) {
         RegistryAccess registryAccess = level.registryAccess();
         ResourceLocation itemId = stack.getItem().builtInRegistryHolder().key().location();
@@ -341,6 +355,7 @@ public class ForgingTableBlockEntity extends BlockEntity {
         tag.putInt("MaxProgress", maxProgress);
         tag.putBoolean("Crafting", crafting);
         tag.putInt("CapturedQuality", capturedQuality);
+        tag.putInt("CapturedYield", capturedYield);
         if (capturedPlayerUUID != null) {
             tag.putUUID("PlayerUUID", capturedPlayerUUID);
         }
@@ -359,6 +374,7 @@ public class ForgingTableBlockEntity extends BlockEntity {
         maxProgress = tag.getInt("MaxProgress");
         crafting = tag.getBoolean("Crafting");
         capturedQuality = tag.getInt("CapturedQuality");
+        capturedYield = tag.getInt("CapturedYield");
         capturedPlayerUUID = tag.hasUUID("PlayerUUID") ? tag.getUUID("PlayerUUID") : null;
     }
 

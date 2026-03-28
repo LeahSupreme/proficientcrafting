@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "F": {
+      "item": "minecraft:feather"
+    },
+    "I": {
+      "item": "minecraft:ink_sac"
+    },
+    "L": {
+      "item": "minecraft:lectern"
+    },
+    "P": {
+      "tag": "minecraft:planks"
+    }
+  },
+  "pattern": [
+    "I F",
+    "PLP",
+    "PPP"
+  ],
+  "result": {
+    "item": "qualitycrafting:scribing_table"
+  },
+  "show_notification": true
+}

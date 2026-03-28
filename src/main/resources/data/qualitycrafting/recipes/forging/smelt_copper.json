@@ -12,13 +12,25 @@
     }
   ],
   "output": {
-    "item": "minecraft:copper_ingot",
-    "count": 2
+    "item": "minecraft:copper_ingot"
   },
   "proficiency": 0,
-  "qualityCosts": [5, 10, 15],
-  "qualityPerIngredient": [2.5, 5, 7.5],
-  "qualityDecoration": [0, 1, 2, 3],
+  "qualityCosts": [
+    30,
+    100,
+    300
+  ],
+  "qualityPerIngredient": [
+    20,
+    60,
+    165
+  ],
+  "qualityDecoration": [
+    0,
+    1,
+    2,
+    3
+  ],
   "yieldCost": 5,
   "yieldAdded": 1,
   "levelCost": 0,

@@ -6,7 +6,9 @@ import net.leahperson.proficientmod.ProficientMod;
 import net.leahperson.proficientmod.Config;
 import net.leahperson.proficientmod.attribute.AttributeAddition;
 import net.leahperson.proficientmod.attribute.ItemQualityData;
+import net.leahperson.proficientmod.enchantment.ModEnchantments;
 import net.leahperson.proficientmod.util.ModTags;
+import net.leahperson.proficientmod.util.QualityDataUtil;
 import net.leahperson.proficientmod.quality.QualityUtils;
 import net.leahperson.proficientmod.util.AttributeUtils;
 import net.leahperson.proficientmod.util.RarityAttributeNBT;
@@ -25,6 +27,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -33,9 +36,35 @@ import top.theillusivec4.curios.api.event.CurioAttributeModifierEvent;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Mod.EventBusSubscriber(modid = ProficientMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class QualityItemAttributeEvent {
+
+    @SubscribeEvent
+    public static void onItemCrafted(PlayerEvent.ItemCraftedEvent event) {
+        ItemStack output = event.getCrafting();
+        if (output.isEmpty()) return;
+
+        net.minecraft.world.Container inventory = event.getInventory();
+        int minRarity = Integer.MAX_VALUE;
+        boolean anyQuality = false;
+
+        for (int i = 0; i < inventory.getContainerSize(); i++) {
+            ItemStack ingredient = inventory.getItem(i);
+            if (!ingredient.isEmpty() && QualityUtils.hasQuality(ingredient)) {
+                int rarity = QualityUtils.getQualityLevel(ingredient);
+                if (rarity > 0) {
+                    minRarity = Math.min(minRarity, rarity);
+                    anyQuality = true;
+                }
+            }
+        }
+
+        if (anyQuality && minRarity != Integer.MAX_VALUE) {
+            QualityDataUtil.setRarity(output, minRarity);
+        }
+    }
 
     @SubscribeEvent
     public static void addQualityTooltip(ItemTooltipEvent event) {
@@ -140,6 +169,45 @@ public class QualityItemAttributeEvent {
 
         Multimap<Attribute, AttributeModifier> baseModifiers = buildModifiers(additions, itemId, 0);
         Multimap<Attribute, AttributeModifier> combined = AttributeUtils.combineAttributes(event.getOriginalModifiers(), baseModifiers);
+        event.clearModifiers();
+        combined.forEach(event::addModifier);
+    }
+
+    // Fixed UUIDs so the same modifier isn't double-applied across ticks
+    private static final UUID ENCHANT_QUALITY_UUID      = UUID.fromString("a1b2c3d4-0001-0000-0000-000000000001");
+    private static final UUID ENCHANT_PROFICIENCY_UUID  = UUID.fromString("a1b2c3d4-0001-0000-0000-000000000002");
+    private static final UUID ENCHANT_YIELD_UUID        = UUID.fromString("a1b2c3d4-0001-0000-0000-000000000003");
+
+    @SubscribeEvent
+    public static void addEnchantmentAttributes(ItemAttributeModifierEvent event) {
+        ItemStack stack = event.getItemStack();
+        if (!stack.isEnchanted()) return;
+        if (!event.getSlotType().equals(net.minecraft.world.entity.EquipmentSlot.MAINHAND)) return;
+
+        int qualityLevel      = net.minecraft.world.item.enchantment.EnchantmentHelper.getItemEnchantmentLevel(ModEnchantments.CRAFTING_QUALITY.get(), stack);
+        int proficiencyLevel  = net.minecraft.world.item.enchantment.EnchantmentHelper.getItemEnchantmentLevel(ModEnchantments.CRAFTING_PROFICIENCY.get(), stack);
+        int yieldLevel        = net.minecraft.world.item.enchantment.EnchantmentHelper.getItemEnchantmentLevel(ModEnchantments.CRAFTING_YIELD.get(), stack);
+
+        if (qualityLevel == 0 && proficiencyLevel == 0 && yieldLevel == 0) return;
+
+        Multimap<Attribute, AttributeModifier> additions = HashMultimap.create();
+        if (qualityLevel > 0) {
+            additions.put(net.leahperson.proficientmod.attribute.ModAttributes.QUALITY.get(),
+                    new AttributeModifier(ENCHANT_QUALITY_UUID, "Crafting Quality Enchantment",
+                            qualityLevel * 5.0, AttributeModifier.Operation.ADDITION));
+        }
+        if (proficiencyLevel > 0) {
+            additions.put(net.leahperson.proficientmod.attribute.ModAttributes.PROFICIENCY.get(),
+                    new AttributeModifier(ENCHANT_PROFICIENCY_UUID, "Crafting Proficiency Enchantment",
+                            proficiencyLevel * 5.0, AttributeModifier.Operation.ADDITION));
+        }
+        if (yieldLevel > 0) {
+            additions.put(net.leahperson.proficientmod.attribute.ModAttributes.YIELD.get(),
+                    new AttributeModifier(ENCHANT_YIELD_UUID, "Crafting Yield Enchantment",
+                            yieldLevel * 5.0, AttributeModifier.Operation.ADDITION));
+        }
+
+        Multimap<Attribute, AttributeModifier> combined = AttributeUtils.combineAttributes(event.getOriginalModifiers(), additions);
         event.clearModifiers();
         combined.forEach(event::addModifier);
     }

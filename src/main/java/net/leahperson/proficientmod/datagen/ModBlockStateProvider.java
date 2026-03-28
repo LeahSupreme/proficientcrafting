@@ -14,25 +14,29 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
     @Override
     protected void registerStatesAndModels() {
-        ModelFile forgingTableModel = new ModelFile.UncheckedModelFile(modLoc("block/sepiaanvil"));
-        ModelFile cauldronModel = new ModelFile.UncheckedModelFile(mcLoc("block/cauldron"));
+        ModelFile forgingStationModel      = new ModelFile.UncheckedModelFile(modLoc("block/forging_station"));
+        ModelFile cookingPotModel          = new ModelFile.UncheckedModelFile(modLoc("block/cooking_pot"));
+        ModelFile reforgingAltarModel      = new ModelFile.UncheckedModelFile(modLoc("block/reforging_altar"));
+        ModelFile scribingTableModel       = new ModelFile.UncheckedModelFile(modLoc("block/scribing_table"));
+        ModelFile jewelcraftingStationModel = new ModelFile.UncheckedModelFile(modLoc("block/jewelcrafting_station"));
+        ModelFile workbenchModel           = new ModelFile.UncheckedModelFile(modLoc("block/workbench"));
 
-        simpleBlock(ModBlocks.FORGING_TABLE.get(), forgingTableModel);
-        simpleBlockItem(ModBlocks.FORGING_TABLE.get(), forgingTableModel);
+        horizontalBlock(ModBlocks.FORGING_STATION.get(), forgingStationModel, 90);
+        simpleBlockItem(ModBlocks.FORGING_STATION.get(), forgingStationModel);
 
-        simpleBlock(ModBlocks.COOKING_POT.get(), cauldronModel);
-        itemModels().withExistingParent("cooking_pot", mcLoc("item/cauldron"));
+        horizontalBlock(ModBlocks.COOKING_POT.get(), cookingPotModel);
+        simpleBlockItem(ModBlocks.COOKING_POT.get(), cookingPotModel);
 
-        // Plain cube placeholders until custom models are made
-        simplePlaceholder(ModBlocks.SCRIBING_TABLE.get(), "scribing_table");
-        simplePlaceholder(ModBlocks.JEWELCRAFTING_STATION.get(), "jewelcrafting_station");
-        simplePlaceholder(ModBlocks.WORKBENCH.get(), "workbench");
-        simplePlaceholder(ModBlocks.REFORGING_ALTAR.get(), "reforging_altar");
-    }
+        horizontalBlock(ModBlocks.REFORGING_ALTAR.get(), reforgingAltarModel);
+        simpleBlockItem(ModBlocks.REFORGING_ALTAR.get(), reforgingAltarModel);
 
-    private void simplePlaceholder(net.minecraft.world.level.block.Block block, String name) {
-        ModelFile model = models().cubeAll(name, mcLoc("block/smooth_stone"));
-        simpleBlock(block, model);
-        simpleBlockItem(block, model);
+        horizontalBlock(ModBlocks.SCRIBING_TABLE.get(), scribingTableModel);
+        simpleBlockItem(ModBlocks.SCRIBING_TABLE.get(), scribingTableModel);
+
+        horizontalBlock(ModBlocks.JEWELCRAFTING_STATION.get(), jewelcraftingStationModel);
+        simpleBlockItem(ModBlocks.JEWELCRAFTING_STATION.get(), jewelcraftingStationModel);
+
+        horizontalBlock(ModBlocks.WORKBENCH.get(), workbenchModel);
+        simpleBlockItem(ModBlocks.WORKBENCH.get(), workbenchModel);
     }
 }

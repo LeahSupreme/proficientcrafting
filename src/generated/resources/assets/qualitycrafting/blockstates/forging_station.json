@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "qualitycrafting:block/forging_station"
+    },
+    "facing=north": {
+      "model": "qualitycrafting:block/forging_station",
+      "y": 270
+    },
+    "facing=south": {
+      "model": "qualitycrafting:block/forging_station",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "qualitycrafting:block/forging_station",
+      "y": 180
+    }
+  }
+}

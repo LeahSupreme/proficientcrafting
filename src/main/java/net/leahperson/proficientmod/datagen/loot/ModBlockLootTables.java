@@ -2,9 +2,7 @@ package net.leahperson.proficientmod.datagen.loot;
 
 import net.leahperson.proficientmod.block.ModBlocks;
 import net.minecraft.data.loot.BlockLootSubProvider;
-import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.flag.FeatureFlags;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.RegistryObject;
 
@@ -18,7 +16,7 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 
     @Override
     protected void generate() {
-        this.dropSelf(ModBlocks.FORGING_TABLE.get());
+        this.dropSelf(ModBlocks.FORGING_STATION.get());
         this.dropSelf(ModBlocks.COOKING_POT.get());
         this.dropSelf(ModBlocks.SCRIBING_TABLE.get());
         this.dropSelf(ModBlocks.JEWELCRAFTING_STATION.get());

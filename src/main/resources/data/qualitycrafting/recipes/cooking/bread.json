@@ -1,0 +1,15 @@
+{
+  "type": "qualitycrafting:cooking",
+  "ingredients": [
+    { "item": "minecraft:wheat" },
+    { "item": "minecraft:wheat" },
+    { "item": "minecraft:wheat" }
+  ],
+  "output": { "item": "minecraft:bread", "count": 2 },
+  "cookTime": 160,
+  "qualityCosts": [30, 100, 300],
+  "qualityPerIngredient": [10, 30, 90],
+  "qualityDecoration": [0, 1, 2, 3],
+  "yieldCost": 30,
+  "yieldAdded": 1
+}

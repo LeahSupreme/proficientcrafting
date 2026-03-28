@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "minecraft:smooth_stone"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "ASA",
+    " S ",
+    " S "
+  ],
+  "result": {
+    "item": "qualitycrafting:stone_forge_hammer"
+  },
+  "show_notification": true
+}

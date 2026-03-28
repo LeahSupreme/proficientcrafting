@@ -1,5 +1,10 @@
-// 1.20.1	2026-03-09T14:38:44.045112	Tags for minecraft:item mod id qualitycrafting
-01f901b27456d4787f2fed9ba7db4c57834111b4 data/qualitycrafting/tags/items/forging_hammer.json
+// 1.20.1	2026-03-21T18:08:13.656425	Tags for minecraft:item mod id qualitycrafting
+588b02eeb2b1d5d3a14d88e93655dcf626006b1d data/qualitycrafting/tags/items/cooking_ladle.json
+53e063de7f3eaeabafc08287044e62c7b49879bb data/qualitycrafting/tags/items/forging_hammer.json
 483bcd5d09befe602b1b40c1c3d1365d130c7666 data/qualitycrafting/tags/items/golden_hoes.json
 7e2fefed1689cdc93d54fe23ea13e525c9c61baf data/qualitycrafting/tags/items/golden_pickaxes.json
 9871a009afb820cac6e99b03ebe3e7b21c8ad23f data/qualitycrafting/tags/items/golden_swords.json
+b5d17afaf54b477abe0f9309f8c9dfb7a9d1f0ee data/qualitycrafting/tags/items/jewel_chisel.json
+222896e91bf6b6c315973eab8f0377e3453f8c99 data/qualitycrafting/tags/items/reforging_scepter.json
+a77aa4442deb750b95a4597ee7c72b4ffa11f024 data/qualitycrafting/tags/items/scribing_quill.json
+bb7db4f5e275073dae8b6b7a72c4d7a8cd625640 data/qualitycrafting/tags/items/woodworking_saw.json

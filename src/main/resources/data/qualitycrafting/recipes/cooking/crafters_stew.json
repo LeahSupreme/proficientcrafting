@@ -1,0 +1,14 @@
+{
+  "type": "qualitycrafting:cooking",
+  "ingredients": [
+    { "item": "minecraft:brown_mushroom" },
+    { "item": "minecraft:glow_berries" },
+    { "item": "minecraft:beetroot" },
+    { "item": "minecraft:bowl" }
+  ],
+  "output": { "item": "qualitycrafting:crafters_stew" },
+  "cookTime": 280,
+  "qualityCosts": [ 25, 80, 240 ],
+  "qualityPerIngredient": [ 7, 22, 65 ],
+  "qualityDecoration": [ 0, 1, 2, 3 ]
+}

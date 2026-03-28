@@ -13,7 +13,9 @@ import net.leahperson.proficientmod.ProficientMod;
 import net.leahperson.proficientmod.block.ModBlocks;
 import net.leahperson.proficientmod.quality.QualityUtils;
 import net.leahperson.proficientmod.recipe.CookingRecipe;
+import net.leahperson.proficientmod.util.ModTags;
 import net.leahperson.proficientmod.util.QualityDataUtil;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.NonNullList;
@@ -32,13 +34,15 @@ public class CookingPotCategory implements IRecipeCategory<CookingRecipe> {
 
     private static final int SLOT_SIZE = 18;
     private static final int INPUT_START_X = 5;
-    private static final int INPUT_START_Y = 20;
-    private static final int INPUT_COLUMNS = 4;
+    private static final int INPUT_START_Y = 35;
+    private static final int INPUT_COLUMNS = 3;
     private static final int OUTPUT_X = 139;
-    private static final int OUTPUT_START_Y = 5;
+    private static final int OUTPUT_START_Y = 15;
 
     public CookingPotCategory(IGuiHelper helper) {
-        this.background = helper.createBlankDrawable(240, 110);
+        this.background = helper.createDrawable(
+                ResourceLocation.fromNamespaceAndPath(ProficientMod.MOD_ID, "textures/gui/station_gui.png"),
+                0, 0, 246, 165);
         this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(ModBlocks.COOKING_POT.get()));
     }
 
@@ -54,7 +58,7 @@ public class CookingPotCategory implements IRecipeCategory<CookingRecipe> {
 
     @Override
     public int getHeight() {
-        return 110;
+        return 130;
     }
 
     @Override
@@ -96,8 +100,10 @@ public class CookingPotCategory implements IRecipeCategory<CookingRecipe> {
             }
         }
 
-        builder.addSlot(RecipeIngredientRole.CATALYST, 95, 28)
+        builder.addSlot(RecipeIngredientRole.CATALYST, 90, 52)
                 .addItemStack(new ItemStack(ModBlocks.COOKING_POT.get()));
+        builder.addSlot(RecipeIngredientRole.CATALYST, 90, 12)
+                .addIngredients(Ingredient.of(ModTags.Items.COOKING_LADLE));
 
         for (int i = 0; i < recipe.getOutputs().size(); i++) {
             ItemStack outputStack = recipe.getOutputs().get(i).copy();
@@ -123,12 +129,20 @@ public class CookingPotCategory implements IRecipeCategory<CookingRecipe> {
                 }
                 guiGraphics.drawString(Minecraft.getInstance().font,
                         range.append(Component.translatable("qualitycrafting:quality")),
-                        OUTPUT_X + SLOT_SIZE + 2, OUTPUT_START_Y + 5 + (SLOT_SIZE * i), 0xFF636363, false);
+                        OUTPUT_X + SLOT_SIZE + 2, OUTPUT_START_Y + 4 + (SLOT_SIZE * i), 0xFF636363, false);
             }
         }
 
         guiGraphics.drawString(Minecraft.getInstance().font,
-                Component.translatable("qualitycrafting.jei.cooktime").append(Integer.toString(recipe.getCookTime())),
+                Component.translatable("qualitycrafting.jei.proficiencycost").append(Integer.toString(recipe.getProficiencyRequired())),
                 10, 90, 0xFF636363, false);
+        guiGraphics.drawString(Minecraft.getInstance().font,
+                Component.translatable("qualitycrafting.jei.cooktime").append(Integer.toString(recipe.getCookTime())),
+                10, 101, 0xFF636363, false);
+        if (recipe.getYieldCost() > 0 && recipe.getYieldAdded() > 0) {
+            guiGraphics.drawString(Minecraft.getInstance().font,
+                    Component.translatable("qualitycrafting.jei.yieldcost", recipe.getYieldAdded(), recipe.getYieldCost()),
+                    10, 112, 0xFF636363, false);
+        }
     }
 }

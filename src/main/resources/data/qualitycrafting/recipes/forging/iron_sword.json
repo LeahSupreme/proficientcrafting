@@ -1,26 +1,17 @@
 {
   "type": "qualitycrafting:forging",
   "ingredients": [
-    {
-      "item": "minecraft:iron_ingot"
-    },
-    {
-      "item": "minecraft:iron_ingot"
-    },
-    {
-      "item": "minecraft:stick"
-    }
+    { "item": "minecraft:iron_ingot" },
+    { "item": "minecraft:iron_ingot" },
+    { "item": "minecraft:stick" }
   ],
-  "output": {
-    "item": "minecraft:iron_sword",
-    "count": 1
-  },
+  "output": { "item": "minecraft:iron_sword", "count": 1 },
   "proficiency": 0,
   "craftTime": 60,
   "levelCost": 1,
   "yieldCost": 0,
   "yieldAdded": 0,
-  "qualityCosts": [40, 100, 180],
-  "qualityPerIngredient": [30, 65, 110],
+  "qualityCosts": [50, 170, 510],
+  "qualityPerIngredient": [28, 67, 190],
   "qualityDecoration": [0, 1, 2, 3]
 }

@@ -25,6 +25,9 @@ public class CookingRecipeSerializer implements RecipeSerializer<CookingRecipe> 
         ItemStack output = CraftingHelper.getItemStack(GsonHelper.getAsJsonObject(json, "output"), true);
         int cookTime = GsonHelper.getAsInt(json, "cookTime", 200);
         int levelCost = GsonHelper.getAsInt(json, "levelCost", 0);
+        int proficiencyRequired = GsonHelper.getAsInt(json, "proficiencyRequired", 0);
+        int yieldCost = GsonHelper.getAsInt(json, "yieldCost", 0);
+        int yieldAdded = GsonHelper.getAsInt(json, "yieldAdded", 0);
 
         NonNullList<Integer> qualityRequired = NonNullList.withSize(0, 0);
         if (json.has("qualityCosts")) {
@@ -68,7 +71,7 @@ public class CookingRecipeSerializer implements RecipeSerializer<CookingRecipe> 
         }
 
         return new CookingRecipe(recipeId, inputItems, output, outputs, cookTime,
-                qualityRequired, qualityPerIngredient, qualityDecoration, levelCost);
+                qualityRequired, qualityPerIngredient, qualityDecoration, levelCost, proficiencyRequired, yieldCost, yieldAdded);
     }
 
     @Override
@@ -82,6 +85,9 @@ public class CookingRecipeSerializer implements RecipeSerializer<CookingRecipe> 
         ItemStack output = buf.readItem();
         int cookTime = buf.readVarInt();
         int levelCost = buf.readVarInt();
+        int proficiencyRequired = buf.readVarInt();
+        int yieldCost = buf.readVarInt();
+        int yieldAdded = buf.readVarInt();
 
         int costsSize = buf.readVarInt();
         NonNullList<Integer> qualityRequired = NonNullList.withSize(costsSize, 0);
@@ -108,7 +114,7 @@ public class CookingRecipeSerializer implements RecipeSerializer<CookingRecipe> 
         }
 
         return new CookingRecipe(recipeId, inputItems, output, outputs, cookTime,
-                qualityRequired, qualityPerIngredient, qualityDecoration, levelCost);
+                qualityRequired, qualityPerIngredient, qualityDecoration, levelCost, proficiencyRequired, yieldCost, yieldAdded);
     }
 
     @Override
@@ -121,6 +127,9 @@ public class CookingRecipeSerializer implements RecipeSerializer<CookingRecipe> 
         buf.writeItem(recipe.getResultItem(null));
         buf.writeVarInt(recipe.getCookTime());
         buf.writeVarInt(recipe.getLevelCost());
+        buf.writeVarInt(recipe.getProficiencyRequired());
+        buf.writeVarInt(recipe.getYieldCost());
+        buf.writeVarInt(recipe.getYieldAdded());
 
         buf.writeVarInt(recipe.getQualityRequired().size());
         for (int cost : recipe.getQualityRequired()) {

@@ -1,0 +1,17 @@
+{
+  "type": "qualitycrafting:cooking",
+  "ingredients": [
+    { "item": "minecraft:wheat" },
+    { "item": "minecraft:wheat" },
+    { "item": "minecraft:wheat" },
+    { "item": "minecraft:sugar" },
+    { "item": "minecraft:sugar" },
+    { "item": "minecraft:egg" },
+    { "item": "minecraft:honey_bottle" }
+  ],
+  "output": { "item": "qualitycrafting:wedding_cake" },
+  "cookTime": 480,
+  "qualityCosts": [ 50, 160, 480 ],
+  "qualityPerIngredient": [ 8, 25, 74 ],
+  "qualityDecoration": [ 0, 1, 2, 3 ]
+}

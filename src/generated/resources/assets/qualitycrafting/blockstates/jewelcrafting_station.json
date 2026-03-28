@@ -1,7 +1,19 @@
 {
   "variants": {
-    "": {
+    "facing=east": {
+      "model": "qualitycrafting:block/jewelcrafting_station",
+      "y": 90
+    },
+    "facing=north": {
       "model": "qualitycrafting:block/jewelcrafting_station"
+    },
+    "facing=south": {
+      "model": "qualitycrafting:block/jewelcrafting_station",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "qualitycrafting:block/jewelcrafting_station",
+      "y": 270
     }
   }
 }

@@ -1,7 +1,19 @@
 {
   "variants": {
-    "": {
+    "facing=east": {
+      "model": "qualitycrafting:block/workbench",
+      "y": 90
+    },
+    "facing=north": {
       "model": "qualitycrafting:block/workbench"
+    },
+    "facing=south": {
+      "model": "qualitycrafting:block/workbench",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "qualitycrafting:block/workbench",
+      "y": 270
     }
   }
 }

@@ -1,0 +1,21 @@
+{
+  "type": "qualitycrafting:scribing",
+  "ingredients": [
+    { "item": "minecraft:book" },
+    { "item": "minecraft:paper" },
+    { "item": "minecraft:ink_sac" },
+    { "item": "minecraft:blaze_powder" },
+    { "item": "minecraft:flint" }
+  ],
+  "output": { "item": "minecraft:enchanted_book", "count": 1 },
+  "enchantment": "minecraft:sharpness",
+  "enchantLevels": [1, 2, 3, 5],
+  "proficiency": 5,
+  "craftTime": 100,
+  "levelCost": 2,
+  "yieldCost": 0,
+  "yieldAdded": 0,
+  "qualityCosts": [50, 200, 650],
+  "qualityPerIngredient": [7, 27, 80],
+  "qualityDecoration": [0, 1, 2, 3]
+}

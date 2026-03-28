@@ -1,0 +1,22 @@
+{
+  "type": "qualitycrafting:reforging",
+  "target": [
+    { "item": "minecraft:golden_helmet" },
+    { "item": "minecraft:golden_chestplate" },
+    { "item": "minecraft:golden_leggings" },
+    { "item": "minecraft:golden_boots" }
+  ],
+  "catalysts": [{ "item": "minecraft:gold_ingot", "count": 2 }],
+  "craftTime": 100,
+  "proficiency": 0,
+  "levelCost": 1,
+  "qualityCosts": [60, 160, 260, 400],
+  "qualityDecoration": [1, 2, 3, 4, 5],
+  "attributeTiers": [
+    [{ "attribute_id": "qualitycrafting:proficiency", "min": 1,  "max": 5,  "operation": "ADDITION" }],
+    [{ "attribute_id": "qualitycrafting:proficiency", "min": 3,  "max": 9,  "operation": "ADDITION" }],
+    [{ "attribute_id": "qualitycrafting:proficiency", "min": 7,  "max": 14, "operation": "ADDITION" }],
+    [{ "attribute_id": "qualitycrafting:proficiency", "min": 12, "max": 22, "operation": "ADDITION" }],
+    [{ "attribute_id": "qualitycrafting:proficiency", "min": 18, "max": 32, "operation": "ADDITION" }]
+  ]
+}

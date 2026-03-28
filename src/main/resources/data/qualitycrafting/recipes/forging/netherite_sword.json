@@ -9,15 +9,27 @@
     }
   ],
   "output": {
-    "item": "minecraft:netherite_sword",
-    "count": 1
+    "item": "minecraft:netherite_sword"
   },
   "proficiency": 0,
   "craftTime": 100,
   "levelCost": 3,
   "yieldCost": 0,
   "yieldAdded": 0,
-  "qualityCosts": [40, 100, 175],
-  "qualityPerIngredient": [50, 110, 185],
-  "qualityDecoration": [0, 1, 2, 3]
+  "qualityCosts": [
+    70,
+    230,
+    690
+  ],
+  "qualityPerIngredient": [
+    70,
+    135,
+    383
+  ],
+  "qualityDecoration": [
+    0,
+    1,
+    2,
+    3
+  ]
 }

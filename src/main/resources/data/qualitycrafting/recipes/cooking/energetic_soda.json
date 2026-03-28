@@ -1,0 +1,14 @@
+{
+  "type": "qualitycrafting:cooking",
+  "ingredients": [
+    { "item": "minecraft:glass_bottle" },
+    { "item": "minecraft:gold_nugget" },
+    { "item": "minecraft:glowstone_dust" },
+    { "item": "minecraft:blaze_powder" }
+  ],
+  "output": { "item": "qualitycrafting:energetic_soda" },
+  "cookTime": 200,
+  "qualityCosts": [ 25, 80, 240 ],
+  "qualityPerIngredient": [ 7, 22, 65 ],
+  "qualityDecoration": [ 0, 1, 2, 3 ]
+}

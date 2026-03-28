@@ -27,28 +27,38 @@
     }
   ],
   "output": {
-    "item": "minecraft:iron_chestplate",
-    "count": 1
+    "item": "minecraft:iron_chestplate"
   },
-  "outputPerQuality": [
-    {
-      "item": "minecraft:golden_chestplate",
-      "count": 1
-    },
-    {
-      "item": "minecraft:diamond_chestplate",
-      "count": 1
-    },
-    {
-      "item": "minecraft:netherite_chestplate",
-      "count": 1
-    }
-  ],
   "proficiency": 0,
-  "qualityCosts": [11, 22, 33],
-  "qualityPerIngredient": [1, 2.5, 5],
+  "craftTime": 200,
+  "levelCost": 15,
   "yieldCost": 0,
   "yieldAdded": 0,
-  "levelCost": 15,
-  "craftTime": 200
+  "qualityCosts": [
+    50,
+    170,
+    510
+  ],
+  "qualityPerIngredient": [
+    10,
+    25,
+    71
+  ],
+  "qualityDecoration": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "outputPerQuality": [
+    {
+      "item": "minecraft:golden_chestplate"
+    },
+    {
+      "item": "minecraft:diamond_chestplate"
+    },
+    {
+      "item": "minecraft:netherite_chestplate"
+    }
+  ]
 }

@@ -1,17 +1,46 @@
 {
   "type": "qualitycrafting:cooking",
   "ingredients": [
-    { "item": "minecraft:beetroot" },
-    { "item": "minecraft:beetroot" },
-    { "item": "minecraft:beetroot" },
-    { "item": "minecraft:beetroot" },
-    { "item": "minecraft:beetroot" },
-    { "item": "minecraft:beetroot" },
-    { "item": "minecraft:bowl" }
+    {
+      "item": "minecraft:beetroot"
+    },
+    {
+      "item": "minecraft:beetroot"
+    },
+    {
+      "item": "minecraft:beetroot"
+    },
+    {
+      "item": "minecraft:beetroot"
+    },
+    {
+      "item": "minecraft:beetroot"
+    },
+    {
+      "item": "minecraft:beetroot"
+    },
+    {
+      "item": "minecraft:bowl"
+    }
   ],
-  "output": { "item": "minecraft:beetroot_soup" },
+  "output": {
+    "item": "minecraft:beetroot_soup"
+  },
   "cookTime": 200,
-  "qualityCosts": [25, 60, 120],
-  "qualityPerIngredient": [10, 25, 50],
-  "qualityDecoration": [0, 1, 2, 3]
+  "qualityCosts": [
+    35,
+    120,
+    360
+  ],
+  "qualityPerIngredient": [
+    7,
+    24,
+    67
+  ],
+  "qualityDecoration": [
+    0,
+    1,
+    2,
+    3
+  ]
 }

@@ -38,9 +38,9 @@ public class ForgingTableCategory implements IRecipeCategory<ForgingRecipe> {
 
     public ForgingTableCategory(IGuiHelper helper) {
         this.background = helper.createDrawable(
-                ResourceLocation.fromNamespaceAndPath(ProficientMod.MOD_ID,"textures/gui/forging_table_gui.png"),
+                ResourceLocation.fromNamespaceAndPath(ProficientMod.MOD_ID, "textures/gui/station_gui.png"),
                 0, 0, 246, 165);
-        this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(ModBlocks.FORGING_TABLE.get()));
+        this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(ModBlocks.FORGING_STATION.get()));
     }
 
     @Override
@@ -60,7 +60,7 @@ public class ForgingTableCategory implements IRecipeCategory<ForgingRecipe> {
 
     @Override
     public Component getTitle() {
-        return Component.translatable("block.qualitycrafting.forging_table");
+        return Component.translatable("block.qualitycrafting.forging_station");
     }
 
     @Override
@@ -87,7 +87,7 @@ public class ForgingTableCategory implements IRecipeCategory<ForgingRecipe> {
         }
 
         builder.addSlot(RecipeIngredientRole.CATALYST, 90, 52)
-               .addItemStack(new ItemStack(ModBlocks.FORGING_TABLE.get()));
+               .addItemStack(new ItemStack(ModBlocks.FORGING_STATION.get()));
         builder.addSlot(RecipeIngredientRole.CATALYST, 90, 12)
                .addIngredients(Ingredient.of(ModTags.Items.FORGING_HAMMER));
 
@@ -122,5 +122,13 @@ public class ForgingTableCategory implements IRecipeCategory<ForgingRecipe> {
         guiGraphics.drawString(Minecraft.getInstance().font,
                 Component.translatable("qualitycrafting.jei.proficiencycost").append(Integer.toString(recipe.getProficiencyRequired())),
                 10, 90, 0xFF636363, false);
+        guiGraphics.drawString(Minecraft.getInstance().font,
+                Component.translatable("qualitycrafting.jei.crafttime").append(Integer.toString(recipe.getCraftTime())),
+                10, 101, 0xFF636363, false);
+        if (recipe.getYieldCost() > 0 && recipe.getYieldAdded() > 0) {
+            guiGraphics.drawString(Minecraft.getInstance().font,
+                    Component.translatable("qualitycrafting.jei.yieldcost", recipe.getYieldAdded(), recipe.getYieldCost()),
+                    10, 112, 0xFF636363, false);
+        }
     }
 }

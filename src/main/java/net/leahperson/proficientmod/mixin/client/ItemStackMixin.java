@@ -1,8 +1,10 @@
 package net.leahperson.proficientmod.mixin.client;
 
+import net.leahperson.proficientmod.Config;
 import net.leahperson.proficientmod.attribute.EffectAddition;
 import net.leahperson.proficientmod.attribute.FoodAddition;
 import net.leahperson.proficientmod.attribute.ItemQualityData;
+import net.leahperson.proficientmod.item.food.QualityFoodItem;
 import net.leahperson.proficientmod.quality.QualityDataType;
 import net.leahperson.proficientmod.quality.QualityUtils;
 import net.minecraft.ChatFormatting;
@@ -10,6 +12,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TextColor;
 import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
@@ -28,7 +33,6 @@ import java.util.Optional;
 
 @Mixin(ItemStack.class)
 public class ItemStackMixin {
-
     @Inject(method = "getTooltipLines", at = @At("RETURN"))
     private void qualitycrafting$fixAttributeStyle(@Nullable Player player, TooltipFlag tooltipFlag, CallbackInfoReturnable<List<Component>> infoReturnable) {
         List<Component> tooltip = infoReturnable.getReturnValue();
@@ -48,8 +52,9 @@ public class ItemStackMixin {
 
     @Inject(method = "getTooltipLines", at = @At("RETURN"))
     private void qualitycrafting$addFoodQualityTooltip(@Nullable Player player, TooltipFlag tooltipFlag, CallbackInfoReturnable<List<Component>> infoReturnable) {
+        if (!Config.showFoodEffectTooltips) return;
         ItemStack self = (ItemStack) (Object) this;
-        if (!QualityUtils.hasQuality(self)) {
+        if (!QualityUtils.hasQuality(self) || self.getItem() instanceof QualityFoodItem) {
             return;
         }
 
@@ -69,24 +74,25 @@ public class ItemStackMixin {
 
         List<Component> tooltip = infoReturnable.getReturnValue();
 
+        if (foodAddition.effectsadd().isEmpty()) return;
+
+        tooltip.add(Component.translatable("qualitycrafting.tooltip.food.when_consumed")
+                .withStyle(ChatFormatting.GRAY));
+
         for (EffectAddition effectAddition : foodAddition.effectsadd()) {
             MobEffect mobEffect = minecraft.level.registryAccess()
                     .registryOrThrow(Registries.MOB_EFFECT)
                     .get(ResourceLocation.parse(effectAddition.effectid()));
-            if (mobEffect == null) {
-                continue;
-            }
-            Component effectName = Component.translatable(mobEffect.getDescriptionId());
+            if (mobEffect == null) continue;
+            MutableComponent effectName = Component.translatable(mobEffect.getDescriptionId())
+                    .copy()
+                    .withStyle(Style.EMPTY.withColor(TextColor.fromRgb(mobEffect.getColor())));
             if (effectAddition.amplifier() > 0) {
-                effectName = Component.translatable("potion.withAmplifier",
-                        effectName,
-                        Component.translatable("potion.potency." + effectAddition.amplifier()));
+                effectName.append(" ").append(Component.translatable("enchantment.level." + (effectAddition.amplifier() + 1)));
             }
-            int minutes = effectAddition.duration() / 60;
-            int seconds = effectAddition.duration() % 60;
-            String durationText = String.format("%d:%02d", minutes, seconds);
+            String durationText = effectAddition.duration() / 60 + ":" + String.format("%02d", effectAddition.duration() % 60);
             tooltip.add(Component.translatable("qualitycrafting.tooltip.food.effect", effectName, durationText)
-                    .withStyle(style -> style.withColor(net.minecraft.network.chat.TextColor.fromRgb(mobEffect.getColor()))));
+                    .withStyle(ChatFormatting.GRAY));
         }
     }
 

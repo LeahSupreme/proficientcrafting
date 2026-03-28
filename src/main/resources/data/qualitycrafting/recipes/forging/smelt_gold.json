@@ -12,13 +12,25 @@
     }
   ],
   "output": {
-    "item": "minecraft:gold_ingot",
-    "count": 2
+    "item": "minecraft:gold_ingot"
   },
   "proficiency": 0,
-  "qualityCosts": [15, 30, 45],
-  "qualityPerIngredient": [7.5, 15, 22.5],
-  "qualityDecoration": [0, 1, 2, 3],
+  "qualityCosts": [
+    30,
+    100,
+    300
+  ],
+  "qualityPerIngredient": [
+    20,
+    60,
+    165
+  ],
+  "qualityDecoration": [
+    0,
+    1,
+    2,
+    3
+  ],
   "yieldCost": 15,
   "yieldAdded": 1,
   "levelCost": 0,

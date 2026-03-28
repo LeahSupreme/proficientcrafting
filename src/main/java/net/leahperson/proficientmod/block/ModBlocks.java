@@ -2,7 +2,7 @@ package net.leahperson.proficientmod.block;
 
 import net.leahperson.proficientmod.ProficientMod;
 import net.leahperson.proficientmod.block.custom.CookingPotBlock;
-import net.leahperson.proficientmod.block.custom.ForgingTableBlock;
+import net.leahperson.proficientmod.block.custom.ForgingStationBlock;
 import net.leahperson.proficientmod.block.custom.JewelcraftingStationBlock;
 import net.leahperson.proficientmod.block.custom.ReforgingAltarBlock;
 import net.leahperson.proficientmod.block.custom.ScribingTableBlock;
@@ -11,7 +11,6 @@ import net.leahperson.proficientmod.item.ModItems;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
@@ -26,9 +25,8 @@ public class ModBlocks {
     public static final DeferredRegister<Block> BLOCKS =
             DeferredRegister.create(ForgeRegistries.BLOCKS, ProficientMod.MOD_ID);
 
-
-    public static final RegistryObject<Block> FORGING_TABLE = BLOCKS.register("forging_table",
-            () -> new ForgingTableBlock(BlockBehaviour.Properties.of()
+    public static final RegistryObject<Block> FORGING_STATION = registerBlock("forging_station",
+            () -> new ForgingStationBlock(BlockBehaviour.Properties.of()
                     .mapColor(MapColor.METAL)
                     .strength(3.5F)
                     .sound(SoundType.METAL)

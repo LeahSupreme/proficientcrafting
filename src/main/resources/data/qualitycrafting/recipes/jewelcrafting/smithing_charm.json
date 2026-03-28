@@ -1,0 +1,15 @@
+{
+  "type": "qualitycrafting:jewelcrafting",
+  "ingredients": [
+    { "item": "minecraft:gold_ingot" },
+    { "item": "minecraft:gold_ingot" },
+    { "item": "minecraft:diamond" },
+    { "item": "minecraft:emerald" },
+    { "item": "qualitycrafting:iron_forge_hammer" },
+    { "item": "minecraft:amethyst_shard" },
+    { "item": "minecraft:string" }
+  ],
+  "output": { "item": "qualitycrafting:smithing_charm" },
+  "craftTime": 300,
+  "levelCost": 3
+}

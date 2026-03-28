@@ -13,6 +13,7 @@ import net.leahperson.proficientmod.util.RarityAttributeNBT;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.network.chat.Component;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
@@ -51,6 +52,7 @@ public class CookingPotBlockEntity extends BlockEntity {
     private int maxProgress = 0;
     private boolean crafting = false;
     private int capturedQuality = 0;
+    private int capturedYield = 0;
     private UUID capturedPlayerUUID = null;
     private long[] inputPlacedTimes = new long[MAX_INPUTS];
     private long outputAppearTime = 0;
@@ -156,7 +158,19 @@ public class CookingPotBlockEntity extends BlockEntity {
 
         CookingRecipe recipe = recipeOpt.get();
 
+        int requiredProficiency = recipe.getProficiencyRequired();
+        if (requiredProficiency > 0) {
+            int playerProficiency = (int) player.getAttributeValue(ModAttributes.PROFICIENCY.get());
+            if (playerProficiency < requiredProficiency) {
+                player.displayClientMessage(Component.translatable(
+                        "qualitycrafting.station.notproficient",
+                        requiredProficiency, playerProficiency), true);
+                return false;
+            }
+        }
+
         capturedQuality = (int) player.getAttributeValue(ModAttributes.QUALITY.get());
+        capturedYield = (int) player.getAttributeValue(ModAttributes.YIELD.get());
         capturedPlayerUUID = player.getUUID();
 
         if (!recipe.getQualityPerIngredient().isEmpty()) {
@@ -235,6 +249,13 @@ public class CookingPotBlockEntity extends BlockEntity {
             List<AttributeAddition> additions = resolveAttributes(result, rarity, level);
             if (!additions.isEmpty()) {
                 RarityAttributeNBT.setAttributes(result, additions);
+            }
+        }
+
+        if (recipe.getYieldCost() > 0 && recipe.getYieldAdded() > 0) {
+            int bonusCount = (capturedYield / recipe.getYieldCost()) * recipe.getYieldAdded();
+            if (bonusCount > 0) {
+                result.grow(Math.min(bonusCount, result.getMaxStackSize() - result.getCount()));
             }
         }
 
@@ -414,6 +435,7 @@ public class CookingPotBlockEntity extends BlockEntity {
         progress = 0;
         maxProgress = 0;
         capturedQuality = 0;
+        capturedYield = 0;
         capturedPlayerUUID = null;
         craftStartTime = 0;
     }
@@ -440,6 +462,7 @@ public class CookingPotBlockEntity extends BlockEntity {
         tag.putInt("MaxProgress", maxProgress);
         tag.putBoolean("Crafting", crafting);
         tag.putInt("CapturedQuality", capturedQuality);
+        tag.putInt("CapturedYield", capturedYield);
         if (capturedPlayerUUID != null) {
             tag.putUUID("PlayerUUID", capturedPlayerUUID);
         }
@@ -459,6 +482,7 @@ public class CookingPotBlockEntity extends BlockEntity {
         maxProgress = tag.getInt("MaxProgress");
         crafting = tag.getBoolean("Crafting");
         capturedQuality = tag.getInt("CapturedQuality");
+        capturedYield = tag.getInt("CapturedYield");
         capturedPlayerUUID = tag.hasUUID("PlayerUUID") ? tag.getUUID("PlayerUUID") : null;
         if (tag.contains("InputPlacedTimes")) {
             long[] loaded = tag.getLongArray("InputPlacedTimes");

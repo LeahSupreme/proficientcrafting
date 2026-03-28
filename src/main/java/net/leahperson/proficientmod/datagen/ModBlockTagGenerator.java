@@ -23,7 +23,7 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
 
 
         this.tag(BlockTags.MINEABLE_WITH_PICKAXE)
-                .add(ModBlocks.FORGING_TABLE.get());
+                .add(ModBlocks.FORGING_STATION.get());
 
         /*this.tag(BlockTags.NEEDS_STONE_TOOL)
                 .add(ModBlocks.FORGING_TABLE.get());*/

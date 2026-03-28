@@ -1,0 +1,17 @@
+{
+  "type": "qualitycrafting:reforging",
+  "target": [{ "item": "minecraft:stone_hoe" }],
+  "catalysts": [{ "item": "minecraft:cobblestone", "count": 2 }],
+  "craftTime": 80,
+  "proficiency": 0,
+  "levelCost": 0,
+  "qualityCosts": [60, 160, 260, 400],
+  "qualityDecoration": [1, 2, 3, 4, 5],
+  "attributeTiers": [
+    [{ "attribute_id": "qualitycrafting:farming_quality", "min": 2,  "max": 4,  "operation": "ADDITION" }],
+    [{ "attribute_id": "qualitycrafting:farming_quality", "min": 3,  "max": 8,  "operation": "ADDITION" }],
+    [{ "attribute_id": "qualitycrafting:farming_quality", "min": 6,  "max": 13, "operation": "ADDITION" }],
+    [{ "attribute_id": "qualitycrafting:farming_quality", "min": 10, "max": 19, "operation": "ADDITION" }],
+    [{ "attribute_id": "qualitycrafting:farming_quality", "min": 14, "max": 27, "operation": "ADDITION" }]
+  ]
+}

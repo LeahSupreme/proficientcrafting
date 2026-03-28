@@ -4,6 +4,7 @@ import com.google.common.base.Suppliers;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import net.leahperson.proficientmod.Config;
 import net.leahperson.proficientmod.attribute.ModAttributes;
 import net.leahperson.proficientmod.event.GatheringAttributeEvent;
 import net.leahperson.proficientmod.util.QualityDataUtil;
@@ -19,6 +20,7 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.common.loot.LootModifier;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 
@@ -62,8 +64,12 @@ public class GatheringLootModifier extends LootModifier {
         int quality = (int) player.getAttributeValue(qualityAttribute.get());
         int yield = (int) player.getAttributeValue(yieldAttribute.get());
 
-        if (quality > 0) {
-            int rarity = GatheringAttributeEvent.computeRarity(quality, context.getRandom());
+        net.minecraft.resources.ResourceLocation blockId = ForgeRegistries.BLOCKS.getKey(state.getBlock());
+        int extraQuality = blockId != null ? Config.qualityThresholds.getOrDefault(blockId.toString(), 0) : 0;
+        int effectiveQuality = quality - extraQuality;
+
+        if (effectiveQuality > 0) {
+            int rarity = GatheringAttributeEvent.computeRarity(effectiveQuality, context.getRandom());
             if (rarity > 0) {
                 for (ItemStack stack : generatedLoot) {
                     QualityDataUtil.setRarity(stack, rarity);

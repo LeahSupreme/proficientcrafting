@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "E": {
+      "item": "minecraft:enchanting_table"
+    },
+    "L": {
+      "item": "minecraft:lapis_block"
+    },
+    "N": {
+      "item": "minecraft:nether_star"
+    },
+    "O": {
+      "item": "minecraft:obsidian"
+    }
+  },
+  "pattern": [
+    " N ",
+    "LEL",
+    "OOO"
+  ],
+  "result": {
+    "item": "qualitycrafting:reforging_altar"
+  },
+  "show_notification": true
+}
