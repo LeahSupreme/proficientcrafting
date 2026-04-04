@@ -15,6 +15,8 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraftforge.common.TierSortingRegistry;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+
 public class SawItem extends CraftingToolItem {
     private static final float SAW_ATTACK_DAMAGE_BONUS = 4.0f;
     private static final float SAW_ATTACK_SPEED = -2.6f;
@@ -23,8 +25,8 @@ public class SawItem extends CraftingToolItem {
         super(tier, properties);
     }
 
-    public SawItem(Tier tier, Attribute bonusAttribute, String modifierName, double bonusAmount, Properties properties) {
-        super(tier, bonusAttribute, modifierName, bonusAmount, properties);
+    public SawItem(Tier tier, List<AttributeBonus> bonusAttributes, Properties properties) {
+        super(tier, bonusAttributes, properties);
     }
 
     @Override

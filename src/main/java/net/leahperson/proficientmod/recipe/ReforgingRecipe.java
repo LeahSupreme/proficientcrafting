@@ -23,9 +23,7 @@ public class ReforgingRecipe implements Recipe<Container> {
     private final ResourceLocation id;
     private final Optional<Ingredient> targetIngredient;
     private final List<Ingredient> catalysts;
-    private final NonNullList<Integer> qualityRequired;
-    private final List<List<ReforgingAttributeDefinition>> attributeTiers;
-    private final NonNullList<Integer> qualityDecoration;
+    private final List<ReforgingAttributeDefinition> attributes;
     private final int craftTime;
     private final int proficiencyRequired;
     private final int levelCost;
@@ -33,100 +31,93 @@ public class ReforgingRecipe implements Recipe<Container> {
     public ReforgingRecipe(ResourceLocation id,
                            Optional<Ingredient> targetIngredient,
                            List<Ingredient> catalysts,
-                           NonNullList<Integer> qualityRequired,
-                           List<List<ReforgingAttributeDefinition>> attributeTiers,
-                           NonNullList<Integer> qualityDecoration,
+                           List<ReforgingAttributeDefinition> attributes,
                            int craftTime,
                            int proficiencyRequired,
                            int levelCost) {
         this.id = id;
         this.targetIngredient = targetIngredient;
         this.catalysts = catalysts;
-        this.qualityRequired = qualityRequired;
-        this.attributeTiers = attributeTiers;
-        this.qualityDecoration = qualityDecoration;
+        this.attributes = attributes;
         this.craftTime = craftTime;
         this.proficiencyRequired = proficiencyRequired;
         this.levelCost = levelCost;
     }
 
-    public Optional<Ingredient> getTargetIngredient() { return targetIngredient; }
-    public List<Ingredient> getCatalysts() { return catalysts; }
-    public NonNullList<Integer> getQualityRequired() { return qualityRequired; }
-    public List<List<ReforgingAttributeDefinition>> getAttributeTiers() { return attributeTiers; }
-    public NonNullList<Integer> getQualityDecoration() { return qualityDecoration; }
-    public int getCraftTime() { return craftTime; }
-    public int getProficiencyRequired() { return proficiencyRequired; }
-    public int getLevelCost() { return levelCost; }
-
-    public int getTierIndexForQuality(int qualityScore, RandomSource random) {
-        if (qualityRequired.isEmpty()) {
-            return 0;
-        }
-        int tierIndex = 0;
-        for (int threshold = 0; threshold < qualityRequired.size(); threshold++) {
-            if (qualityScore >= qualityRequired.get(threshold)) {
-                tierIndex = threshold + 1;
-            }
-        }
-        if (tierIndex < qualityRequired.size()) {
-            int lowerBound = tierIndex > 0 ? qualityRequired.get(tierIndex - 1) : 0;
-            int upperBound = qualityRequired.get(tierIndex);
-            float progressFraction = (float) (qualityScore - lowerBound) / (upperBound - lowerBound);
-            if (random.nextFloat() < progressFraction) {
-                tierIndex++;
-            }
-        }
-        return Math.min(tierIndex, attributeTiers.size() - 1);
+    public Optional<Ingredient> getTargetIngredient() {
+        return targetIngredient;
     }
 
-    public List<AttributeAddition> getAttributesForQuality(int qualityScore, RandomSource random) {
-        int tierIndex = getTierIndexForQuality(qualityScore, random);
-        if (tierIndex >= attributeTiers.size()) {
-            return List.of();
-        }
-        return attributeTiers.get(tierIndex).stream()
-                .map(def -> new AttributeAddition(
-                        def.attributeId(),
-                        def.min() + random.nextDouble() * (def.max() - def.min()),
-                        def.operation()))
-                .toList();
+    public List<Ingredient> getCatalysts() {
+        return catalysts;
     }
 
-    public int getRarityForTier(int tierIndex) {
-        if (tierIndex < qualityDecoration.size()) {
-            return qualityDecoration.get(tierIndex);
+    public List<ReforgingAttributeDefinition> getAttributes() {
+        return attributes;
+    }
+
+    public int getCraftTime() {
+        return craftTime;
+    }
+
+    public int getProficiencyRequired() {
+        return proficiencyRequired;
+    }
+
+    public int getLevelCost() {
+        return levelCost;
+    }
+
+    public List<AttributeAddition> getAttributesForQuality(int quality, RandomSource random) {
+        List<AttributeAddition> result = new ArrayList<>(attributes.size());
+        for (ReforgingAttributeDefinition definition : attributes) {
+            double averageAtQuality = Math.sqrt(quality / 100.0) * (definition.avg100() - definition.avg0()) + definition.avg0();
+            double standardDeviation = averageAtQuality * Math.sqrt(Math.PI / 2.0);
+            double amount = Math.floor(Math.abs(random.nextGaussian() * standardDeviation));
+            result.add(new AttributeAddition(definition.attributeId(), amount, definition.operation()));
         }
-        return tierIndex + 1;
+        return result;
     }
 
     @Override
     public boolean matches(Container container, Level level) {
-        if (container.getContainerSize() < 5) return false;
-
-        ItemStack targetStack = container.getItem(0);
-        if (targetStack.isEmpty()) return false;
-        if (targetIngredient.isPresent() && !targetIngredient.get().test(targetStack)) return false;
-
-        List<ItemStack> faceItems = new ArrayList<>();
-        for (int i = 1; i < 5; i++) {
-            ItemStack slot = container.getItem(i);
-            if (!slot.isEmpty()) faceItems.add(slot);
+        if (container.getContainerSize() < 5) {
+            return false;
         }
 
-        if (catalysts.size() != faceItems.size()) return false;
+        ItemStack targetStack = container.getItem(0);
+        if (targetStack.isEmpty()) {
+            return false;
+        }
+        if (targetIngredient.isPresent() && !targetIngredient.get().test(targetStack)) {
+            return false;
+        }
+
+        List<ItemStack> faceItems = new ArrayList<>();
+        for (int slotIndex = 1; slotIndex < 5; slotIndex++) {
+            ItemStack slot = container.getItem(slotIndex);
+            if (!slot.isEmpty()) {
+                faceItems.add(slot);
+            }
+        }
+
+        if (catalysts.size() != faceItems.size()) {
+            return false;
+        }
 
         List<ItemStack> remaining = new ArrayList<>(faceItems);
         for (Ingredient catalyst : catalysts) {
             boolean found = false;
-            for (int i = 0; i < remaining.size(); i++) {
-                if (catalyst.test(remaining.get(i))) {
-                    remaining.remove(i);
+            for (int remainingIndex = 0; remainingIndex < remaining.size(); remainingIndex++) {
+                if (catalyst.test(remaining.get(remainingIndex))) {
+                    remaining.remove(remainingIndex);
                     found = true;
                     break;
                 }
             }
-            if (!found) return false;
+            if (!found) {
+                return false;
+            }
         }
         return true;
     }

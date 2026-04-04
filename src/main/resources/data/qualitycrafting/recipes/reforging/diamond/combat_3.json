@@ -1,0 +1,15 @@
+{
+  "type": "qualitycrafting:reforging",
+  "target": [
+    { "item": "minecraft:diamond_sword" },
+    { "item": "minecraft:diamond_axe" }
+  ],
+  "catalysts": [{ "item": "minecraft:diamond", "count": 3 }],
+  "craftTime": 160,
+  "proficiency": 0,
+  "levelCost": 3,
+  "attributes": [
+    { "attribute_id": "qualitycrafting:mob_drop_quality", "avg0": 0, "avg100": 150, "operation": "ADDITION" },
+    { "attribute_id": "qualitycrafting:mob_drop_yield", "avg0": 0, "avg100": 150, "operation": "ADDITION" }
+  ]
+}

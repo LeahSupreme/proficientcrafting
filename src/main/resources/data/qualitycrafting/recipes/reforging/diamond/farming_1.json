@@ -1,0 +1,14 @@
+{
+  "type": "qualitycrafting:reforging",
+  "target": [
+    { "item": "minecraft:diamond_hoe" }
+  ],
+  "catalysts": [{ "item": "minecraft:diamond", "count": 1 }],
+  "craftTime": 160,
+  "proficiency": 0,
+  "levelCost": 3,
+  "attributes": [
+    { "attribute_id": "qualitycrafting:farming_quality", "avg0": 0, "avg100": 50, "operation": "ADDITION" },
+    { "attribute_id": "qualitycrafting:farming_yield", "avg0": 0, "avg100": 50, "operation": "ADDITION" }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "type": "qualitycrafting:reforging",
+  "target": [
+    { "item": "minecraft:diamond_pickaxe" },
+    { "item": "minecraft:diamond_shovel" }
+  ],
+  "catalysts": [{ "item": "minecraft:diamond", "count": 2 }],
+  "craftTime": 160,
+  "proficiency": 0,
+  "levelCost": 3,
+  "attributes": [
+    { "attribute_id": "qualitycrafting:mining_quality", "avg0": 0, "avg100": 100, "operation": "ADDITION" },
+    { "attribute_id": "qualitycrafting:mining_yield", "avg0": 0, "avg100": 100, "operation": "ADDITION" }
+  ]
+}

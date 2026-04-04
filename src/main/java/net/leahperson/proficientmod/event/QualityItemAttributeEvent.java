@@ -34,6 +34,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.server.ServerLifecycleHooks;
 import top.theillusivec4.curios.api.event.CurioAttributeModifierEvent;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -102,13 +103,25 @@ public class QualityItemAttributeEvent {
             if (rarityIndex < 0 || rarityIndex >= rarities.size()) return;
             attributeAdditions = rarities.get(rarityIndex);
         } else {
+            attributeAdditions = Collections.emptyList();
+        }
+
+        boolean hasRarity = !attributeAdditions.isEmpty();
+        boolean hasReforging = RarityAttributeNBT.hasReforgingAttributes(stack);
+        if (!hasRarity && !hasReforging) {
             return;
         }
 
-        if (attributeAdditions.isEmpty()) return;
+        Multimap<Attribute, AttributeModifier> combined = AttributeUtils.combineAttributes(
+                event.getOriginalModifiers(),
+                hasRarity ? buildModifiers(attributeAdditions, itemId, QualityUtils.getQualityLevel(stack))
+                        : HashMultimap.create());
 
-        Multimap<Attribute, AttributeModifier> qualityModifiers = buildModifiers(attributeAdditions, itemId, QualityUtils.getQualityLevel(stack));
-        Multimap<Attribute, AttributeModifier> combined = AttributeUtils.combineAttributes(event.getOriginalModifiers(), qualityModifiers);
+        if (hasReforging) {
+            List<AttributeAddition> reforgingAdditions = RarityAttributeNBT.getReforgingAttributes(stack);
+            combined = AttributeUtils.combineAttributes(combined, buildReforgingModifiers(reforgingAdditions, itemId));
+        }
+
         event.clearModifiers();
         combined.forEach(event::addModifier);
     }
@@ -138,13 +151,25 @@ public class QualityItemAttributeEvent {
             if (rarityIndex < 0 || rarityIndex >= rarities.size()) return;
             attributeAdditions = rarities.get(rarityIndex);
         } else {
+            attributeAdditions = Collections.emptyList();
+        }
+
+        boolean hasRarity = !attributeAdditions.isEmpty();
+        boolean hasReforging = RarityAttributeNBT.hasReforgingAttributes(stack);
+        if (!hasRarity && !hasReforging) {
             return;
         }
 
-        if (attributeAdditions.isEmpty()) return;
+        Multimap<Attribute, AttributeModifier> combined = AttributeUtils.combineAttributes(
+                event.getOriginalModifiers(),
+                hasRarity ? buildModifiers(attributeAdditions, itemId, QualityUtils.getQualityLevel(stack))
+                        : HashMultimap.create());
 
-        Multimap<Attribute, AttributeModifier> qualityModifiers = buildModifiers(attributeAdditions, itemId, QualityUtils.getQualityLevel(stack));
-        Multimap<Attribute, AttributeModifier> combined = AttributeUtils.combineAttributes(event.getOriginalModifiers(), qualityModifiers);
+        if (hasReforging) {
+            List<AttributeAddition> reforgingAdditions = RarityAttributeNBT.getReforgingAttributes(stack);
+            combined = AttributeUtils.combineAttributes(combined, buildReforgingModifiers(reforgingAdditions, itemId));
+        }
+
         event.clearModifiers();
         combined.forEach(event::addModifier);
     }
@@ -241,6 +266,25 @@ public class QualityItemAttributeEvent {
                     Mth.createInsecureUUID(RandomSource.create(
                             (itemId + ProficientMod.MOD_ID + qualityLevel + addition.attribute_id()).hashCode())),
                     ProficientMod.MOD_ID + " " + attribute.getDescriptionId(),
+                    addition.amount(),
+                    operation));
+        }
+        return modifiers;
+    }
+
+    private static Multimap<Attribute, AttributeModifier> buildReforgingModifiers(
+            List<AttributeAddition> additions, ResourceLocation itemId) {
+        Multimap<Attribute, AttributeModifier> modifiers = HashMultimap.create();
+        for (AttributeAddition addition : additions) {
+            Attribute attribute = ForgeRegistries.ATTRIBUTES.getValue(ResourceLocation.parse(addition.attribute_id()));
+            if (attribute == null) {
+                continue;
+            }
+            AttributeModifier.Operation operation = AttributeModifier.Operation.valueOf(addition.operation());
+            modifiers.put(attribute, new AttributeModifier(
+                    Mth.createInsecureUUID(RandomSource.create(
+                            (itemId + "reforging" + addition.attribute_id()).hashCode())),
+                    ProficientMod.MOD_ID + " reforging " + attribute.getDescriptionId(),
                     addition.amount(),
                     operation));
         }

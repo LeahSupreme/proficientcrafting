@@ -1,0 +1,17 @@
+{
+  "type": "qualitycrafting:reforging",
+  "target": [
+    { "item": "minecraft:diamond_helmet" },
+    { "item": "minecraft:diamond_chestplate" },
+    { "item": "minecraft:diamond_leggings" },
+    { "item": "minecraft:diamond_boots" }
+  ],
+  "catalysts": [{ "item": "minecraft:diamond", "count": 4 }],
+  "craftTime": 160,
+  "proficiency": 0,
+  "levelCost": 3,
+  "attributes": [
+    { "attribute_id": "qualitycrafting:mining_quality", "avg0": 0, "avg100": 200, "operation": "ADDITION" },
+    { "attribute_id": "qualitycrafting:mining_yield", "avg0": 0, "avg100": 200, "operation": "ADDITION" }
+  ]
+}

@@ -30,7 +30,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 public class ReforgingAltarBlockEntity extends BlockEntity {
-
     private static final int TOP_SLOT   = 0;
     private static final int NORTH_SLOT = 1;
     private static final int SOUTH_SLOT = 2;
@@ -52,10 +51,6 @@ public class ReforgingAltarBlockEntity extends BlockEntity {
         super(ModBlockEntities.REFORGING_ALTAR_BE.get(), pos, state);
     }
 
-    /**
-     * Expands the frustum-culling AABB to cover the full beam height while crafting,
-     * so the renderer is not skipped when only the beam tip is on screen.
-     */
     @Override
     public AABB getRenderBoundingBox() {
         if (!crafting) return super.getRenderBoundingBox();
@@ -154,9 +149,9 @@ public class ReforgingAltarBlockEntity extends BlockEntity {
             }
         }
 
-        capturedQuality     = (int) player.getAttributeValue(ModAttributes.QUALITY.get());
-        capturedPlayerUUID  = player.getUUID();
-        maxProgress         = recipe.getCraftTime();
+        capturedQuality = (int) player.getAttributeValue(ModAttributes.QUALITY.get());
+        capturedPlayerUUID = player.getUUID();
+        maxProgress = recipe.getCraftTime();
 
         if (maxProgress == 0) {
             finishCraft((ServerLevel) level);
@@ -192,9 +187,9 @@ public class ReforgingAltarBlockEntity extends BlockEntity {
         List<AttributeAddition> newAttributes = recipe.getAttributesForQuality(capturedQuality, level.getRandom());
 
         ItemStack reforgedItem = slots.get(TOP_SLOT).copy();
-        RarityAttributeNBT.clearAttributes(reforgedItem);
+        RarityAttributeNBT.clearReforgingAttributes(reforgedItem);
         if (!newAttributes.isEmpty()) {
-            RarityAttributeNBT.setAttributes(reforgedItem, newAttributes);
+            RarityAttributeNBT.setReforgingAttributes(reforgedItem, newAttributes);
         }
 
         for (int catalogSlot = NORTH_SLOT; catalogSlot < TOTAL_SLOTS; catalogSlot++) {
@@ -211,7 +206,6 @@ public class ReforgingAltarBlockEntity extends BlockEntity {
 
         level.playSound(null, worldPosition, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.BLOCKS, 1.0F, 1.2F);
 
-        // Burst of enchanting glyphs + sparkle end-rod particles at completion
         double cx = worldPosition.getX() + 0.5;
         double cy = worldPosition.getY() + 1.1;
         double cz = worldPosition.getZ() + 0.5;
@@ -219,8 +213,8 @@ public class ReforgingAltarBlockEntity extends BlockEntity {
         level.sendParticles(ParticleTypes.END_ROD,  cx, cy, cz, 30, 0.4, 0.4, 0.4, 0.4);
         level.sendParticles(ParticleTypes.WITCH,    cx, cy, cz, 20, 0.3, 0.3, 0.3, 0.2);
 
-        crafting    = false;
-        progress    = 0;
+        crafting = false;
+        progress = 0;
         maxProgress = 0;
         outputReady = true;
         setChangedAndSync();
@@ -244,8 +238,8 @@ public class ReforgingAltarBlockEntity extends BlockEntity {
     }
 
     private void resetCraftingState() {
-        crafting    = false;
-        progress    = 0;
+        crafting = false;
+        progress = 0;
         maxProgress = 0;
     }
 
@@ -281,13 +275,13 @@ public class ReforgingAltarBlockEntity extends BlockEntity {
         for (int slotIndex = 0; slotIndex < slots.size(); slotIndex++) {
             slots.set(slotIndex, ItemStack.of(tag.getCompound("Slot" + slotIndex)));
         }
-        progress            = tag.getInt("Progress");
-        maxProgress         = tag.getInt("MaxProgress");
-        crafting            = tag.getBoolean("Crafting");
-        outputReady         = tag.getBoolean("OutputReady");
-        capturedQuality     = tag.getInt("CapturedQuality");
-        capturedPlayerUUID  = tag.hasUUID("PlayerUUID") ? tag.getUUID("PlayerUUID") : null;
-        itemPlacedTime      = tag.getLong("ItemPlacedTime");
+        progress = tag.getInt("Progress");
+        maxProgress = tag.getInt("MaxProgress");
+        crafting = tag.getBoolean("Crafting");
+        outputReady = tag.getBoolean("OutputReady");
+        capturedQuality = tag.getInt("CapturedQuality");
+        capturedPlayerUUID = tag.hasUUID("PlayerUUID") ? tag.getUUID("PlayerUUID") : null;
+        itemPlacedTime = tag.getLong("ItemPlacedTime");
     }
 
     @Override

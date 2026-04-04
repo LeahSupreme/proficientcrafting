@@ -10,7 +10,6 @@ import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.leahperson.proficientmod.ProficientMod;
-import net.leahperson.proficientmod.attribute.AttributeAddition;
 import net.leahperson.proficientmod.recipe.ReforgingAttributeDefinition;
 import net.leahperson.proficientmod.block.ModBlocks;
 import net.leahperson.proficientmod.recipe.ReforgingRecipe;
@@ -22,6 +21,7 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -31,7 +31,17 @@ public class ReforgingAltarCategory implements IRecipeCategory<ReforgingRecipe> 
     public static final ResourceLocation UID = ResourceLocation.fromNamespaceAndPath(ProficientMod.MOD_ID, "reforging_altar");
     public static final RecipeType<ReforgingRecipe> REFORGING_ALTAR_TYPE = new RecipeType<>(UID, ReforgingRecipe.class);
 
-    private static final int SLOT_SIZE = 18;
+    private static final int STATION_X = 90;
+    private static final int STATION_Y = 52;
+    private static final int SCEPTER_Y = 12;
+
+    private static final int[][] ITEM_SLOT_POSITIONS = {
+        {41, 53},
+        {41, 35},
+        {41, 71},
+        {59, 53},
+        {23, 53},
+    };
 
     private final IDrawable background;
     private final IDrawable icon;
@@ -74,38 +84,27 @@ public class ReforgingAltarCategory implements IRecipeCategory<ReforgingRecipe> 
         return this.icon;
     }
 
-    private static final int[][] CATALYST_OFFSETS = {
-        { 0, -SLOT_SIZE },
-        { 0,  SLOT_SIZE },
-        { SLOT_SIZE,  0 },
-        { -SLOT_SIZE, 0 },
-    };
-
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, ReforgingRecipe recipe, IFocusGroup focuses) {
-        int centerX = 90;
-        int centerY = 35;
-
         if (recipe.getTargetIngredient().isPresent()) {
-            builder.addSlot(RecipeIngredientRole.INPUT, centerX, centerY)
-                   .addIngredients(recipe.getTargetIngredient().get());
+            builder.addSlot(RecipeIngredientRole.INPUT, ITEM_SLOT_POSITIONS[0][0], ITEM_SLOT_POSITIONS[0][1])
+                    .addIngredients(recipe.getTargetIngredient().get());
         } else {
-            builder.addSlot(RecipeIngredientRole.INPUT, centerX, centerY)
-                   .addItemStack(new ItemStack(net.minecraft.world.item.Items.IRON_SWORD));
+            builder.addSlot(RecipeIngredientRole.INPUT, ITEM_SLOT_POSITIONS[0][0], ITEM_SLOT_POSITIONS[0][1])
+                    .addItemStack(new ItemStack(net.minecraft.world.item.Items.IRON_SWORD));
         }
 
         List<Ingredient> catalysts = recipe.getCatalysts();
-        for (int i = 0; i < catalysts.size() && i < CATALYST_OFFSETS.length; i++) {
-            builder.addSlot(RecipeIngredientRole.INPUT,
-                            centerX + CATALYST_OFFSETS[i][0],
-                            centerY + CATALYST_OFFSETS[i][1])
-                   .addIngredients(catalysts.get(i));
+        for (int catalystIndex = 0; catalystIndex < catalysts.size() && catalystIndex + 1 < ITEM_SLOT_POSITIONS.length; catalystIndex++) {
+            int[] position = ITEM_SLOT_POSITIONS[catalystIndex + 1];
+            builder.addSlot(RecipeIngredientRole.INPUT, position[0], position[1])
+                    .addIngredients(catalysts.get(catalystIndex));
         }
 
-        builder.addSlot(RecipeIngredientRole.CATALYST, 5, 5)
-               .addItemStack(new ItemStack(ModBlocks.REFORGING_ALTAR.get()));
-        builder.addSlot(RecipeIngredientRole.CATALYST, 5, 23)
-               .addIngredients(Ingredient.of(ModTags.Items.REFORGING_SCEPTER));
+        builder.addSlot(RecipeIngredientRole.CATALYST, STATION_X, STATION_Y)
+                .addItemStack(new ItemStack(ModBlocks.REFORGING_ALTAR.get()));
+        builder.addSlot(RecipeIngredientRole.CATALYST, STATION_X, SCEPTER_Y)
+                .addIngredients(Ingredient.of(ModTags.Items.REFORGING_SCEPTER));
     }
 
     @Override
@@ -115,33 +114,17 @@ public class ReforgingAltarCategory implements IRecipeCategory<ReforgingRecipe> 
         int textStartX = 140;
         int textStartY = 8;
         int lineHeight = 10;
-        int lineIndex  = 0;
+        int lineIndex = 0;
 
-        if (!recipe.getAttributeTiers().isEmpty()) {
-            for (int tierIndex = 0; tierIndex < recipe.getAttributeTiers().size(); tierIndex++) {
-                int qualityThreshold = tierIndex > 0 ? recipe.getQualityRequired().get(tierIndex - 1) : 0;
-                MutableComponent tierLabel;
-                if (tierIndex == 0 && recipe.getQualityRequired().isEmpty()) {
-                    tierLabel = Component.literal("All quality:");
-                } else {
-                    String tierPrefix = tierIndex < recipe.getQualityRequired().size()
-                            ? qualityThreshold + "-" + (recipe.getQualityRequired().get(tierIndex) - 1)
-                            : qualityThreshold + "+";
-                    tierLabel = Component.literal(tierPrefix + " quality:");
-                }
-                guiGraphics.drawString(font, tierLabel, textStartX, textStartY + lineIndex * lineHeight, 0xFF404040, false);
+        if (!recipe.getAttributes().isEmpty()) {
+            guiGraphics.drawString(font, Component.literal("Reforge bonuses:"),
+                    textStartX, textStartY + lineIndex * lineHeight, 0xFF404040, false);
+            lineIndex++;
+
+            for (ReforgingAttributeDefinition definition : recipe.getAttributes()) {
+                MutableComponent attributeLabel = getMutableComponent(definition);
+                guiGraphics.drawString(font, attributeLabel, textStartX, textStartY + lineIndex * lineHeight, 0xFF606060, false);
                 lineIndex++;
-
-                List<ReforgingAttributeDefinition> tierAttributes = recipe.getAttributeTiers().get(tierIndex);
-                for (ReforgingAttributeDefinition def : tierAttributes) {
-                    String shortAttributeName = def.attributeId()
-                            .replaceFirst(".*:", "")
-                            .replace("_", " ");
-                    MutableComponent attributeLabel = Component.literal(
-                            "  " + def.min() + "-" + def.max() + " " + shortAttributeName);
-                    guiGraphics.drawString(font, attributeLabel, textStartX, textStartY + lineIndex * lineHeight, 0xFF606060, false);
-                    lineIndex++;
-                }
             }
         }
 
@@ -156,5 +139,20 @@ public class ReforgingAltarCategory implements IRecipeCategory<ReforgingRecipe> 
                             .append(Integer.toString(recipe.getProficiencyRequired())),
                     5, 101, 0xFF636363, false);
         }
+    }
+
+    private static @NotNull MutableComponent getMutableComponent(ReforgingAttributeDefinition definition) {
+        String attributeShortName = definition.attributeId()
+                .replaceFirst(".*:", "")
+                .replace("_", " ");
+        String avg0Display = definition.avg0() == Math.floor(definition.avg0())
+                ? String.valueOf((int) definition.avg0())
+                : String.valueOf(definition.avg0());
+        String avg100Display = definition.avg100() == Math.floor(definition.avg100())
+                ? String.valueOf((int) definition.avg100())
+                : String.valueOf(definition.avg100());
+        MutableComponent attributeLabel = Component.literal(
+                "  " + attributeShortName + ": " + avg0Display + " \u2192 " + avg100Display);
+        return attributeLabel;
     }
 }
