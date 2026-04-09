@@ -17,7 +17,7 @@
       "effectsadd": [
         {
           "effectid": "minecraft:regeneration",
-          "duration": 60,
+          "duration": 45,
           "amplifier": 0
         }
       ]

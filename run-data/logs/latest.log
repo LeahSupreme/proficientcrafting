@@ -1,40 +1,40 @@
-[27Mar2026 14:57:22.289] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher running: args [--launchTarget, forgedatauserdev, --assetIndex, 5, --assetsDir, C:\Users\Derp\.gradle\caches\forge_gradle\assets, --gameDir, ., --fml.forgeVersion, 47.4.9, --fml.mcVersion, 1.20.1, --fml.forgeGroup, net.minecraftforge, --fml.mcpVersion, 20230612.114412, --mod, qualitycrafting, --all, --output, C:\Users\Derp\Desktop\Commissions\proficientcrafting\src\generated\resources, --existing, C:\Users\Derp\Desktop\Commissions\proficientcrafting\src\main\resources, --mixin.config, qualitycrafting.mixins.json]
-[27Mar2026 14:57:22.299] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher 10.0.9+10.0.9+main.dcd20f30 starting: java version 17.0.15 by Eclipse Adoptium; OS Windows 11 arch amd64 version 10.0
-[27Mar2026 14:57:22.422] [main/INFO] [net.minecraftforge.fml.loading.ImmediateWindowHandler/]: ImmediateWindowProvider not loading because launch target is forgedatauserdev
-[27Mar2026 14:57:22.464] [main/INFO] [mixin/]: SpongePowered MIXIN Subsystem Version=0.8.5 Source=union:/C:/Users/Derp/.gradle/caches/modules-2/files-2.1/org.spongepowered/mixin/0.8.5/9d1c0c3a304ae6697ecd477218fa61b850bf57fc/mixin-0.8.5.jar%23128!/ Service=ModLauncher Env=CLIENT
-[27Mar2026 14:57:22.738] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\Derp\.gradle\caches\modules-2\files-2.1\net.minecraftforge\javafmllanguage\1.20.1-47.4.9\6802c410879d06cd2c16ac24988dd5893293e21c\javafmllanguage-1.20.1-47.4.9.jar is missing mods.toml file
-[27Mar2026 14:57:22.741] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\Derp\.gradle\caches\modules-2\files-2.1\net.minecraftforge\lowcodelanguage\1.20.1-47.4.9\1a098871d069f3cb2ed12f392f96f462902c0350\lowcodelanguage-1.20.1-47.4.9.jar is missing mods.toml file
-[27Mar2026 14:57:22.744] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\Derp\.gradle\caches\modules-2\files-2.1\net.minecraftforge\mclanguage\1.20.1-47.4.9\5279b751da7297817db4fa9729e3f3c7bf03d594\mclanguage-1.20.1-47.4.9.jar is missing mods.toml file
-[27Mar2026 14:57:22.747] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\Derp\.gradle\caches\modules-2\files-2.1\net.minecraftforge\fmlcore\1.20.1-47.4.9\f4f03c369d155fb551ebf908db260a0c5600c29b\fmlcore-1.20.1-47.4.9.jar is missing mods.toml file
-[27Mar2026 14:57:22.904] [main/INFO] [net.minecraftforge.fml.loading.moddiscovery.JarInJarDependencyLocator/]: Found 1 dependencies adding them to mods collection
-[27Mar2026 14:57:24.481] [main/INFO] [mixin/]: Compatibility level set to JAVA_17
-[27Mar2026 14:57:24.498] [main/INFO] [cpw.mods.modlauncher.LaunchServiceHandler/MODLAUNCHER]: Launching target 'forgedatauserdev' with arguments [--gameDir, ., --assetsDir, C:\Users\Derp\.gradle\caches\forge_gradle\assets, --assetIndex, 5, --mod, qualitycrafting, --all, --output, C:\Users\Derp\Desktop\Commissions\proficientcrafting\src\generated\resources, --existing, C:\Users\Derp\Desktop\Commissions\proficientcrafting\src\main\resources]
-[27Mar2026 14:57:24.658] [main/WARN] [mixin/]: Reference map 'qualitycrafting.refmap.json' for qualitycrafting.mixins.json could not be read. If this is a development environment you can ignore this message
-[27Mar2026 14:57:24.961] [main/INFO] [mixin/]: Remapping refMap curios.refmap.json using C:\Users\Derp\Desktop\Commissions\proficientcrafting\build\createSrgToMcp\output.srg
-[27Mar2026 14:57:24.963] [main/INFO] [mixin/]: Remapping refMap jade.refmap.json using C:\Users\Derp\Desktop\Commissions\proficientcrafting\build\createSrgToMcp\output.srg
-[27Mar2026 14:57:25.391] [main/INFO] [net.minecraftforge.data.loading.DatagenModLoader/]: Initializing Data Gatherer for mods [qualitycrafting]
-[27Mar2026 14:57:25.532] [main/INFO] [MixinExtras|Service/]: Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.4.1).
-[27Mar2026 14:57:29.506] [modloading-worker-0/INFO] [net.minecraftforge.common.ForgeMod/FORGEMOD]: Forge mod loading, version 47.4.9, for MC 1.20.1 with MCP 20230612.114412
-[27Mar2026 14:57:29.506] [modloading-worker-0/INFO] [net.minecraftforge.common.MinecraftForge/FORGE]: MinecraftForge v47.4.9 Initialized
-[27Mar2026 14:57:29.783] [modloading-worker-0/INFO] [mezz.jei.library.load.PluginCaller/]: Sending ConfigManager...
-[27Mar2026 14:57:29.794] [modloading-worker-0/INFO] [mezz.jei.library.load.PluginCaller/]: Sending ConfigManager took 7.179 ms
-[27Mar2026 14:57:30.186] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/C:/Users/Derp/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.9_mapped_parchment_2023.06.26-1.20.1/forge-1.20.1-47.4.9_mapped_parchment_2023.06.26-1.20.1-recomp.jar%23191!/assets/.mcassetsroot' uses unexpected schema
-[27Mar2026 14:57:30.186] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/C:/Users/Derp/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.9_mapped_parchment_2023.06.26-1.20.1/forge-1.20.1-47.4.9_mapped_parchment_2023.06.26-1.20.1-recomp.jar%23191!/data/.mcassetsroot' uses unexpected schema
-[27Mar2026 14:57:30.388] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Recipes
-[27Mar2026 14:57:30.436] [main/INFO] [net.minecraft.data.DataGenerator/]: Recipes finished after 47 ms
-[27Mar2026 14:57:30.436] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Loot Tables
-[27Mar2026 14:57:30.469] [main/INFO] [net.minecraft.data.DataGenerator/]: Loot Tables finished after 32 ms
-[27Mar2026 14:57:30.469] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Global Loot Modifiers : qualitycrafting
-[27Mar2026 14:57:30.479] [main/INFO] [net.minecraft.data.DataGenerator/]: Global Loot Modifiers : qualitycrafting finished after 10 ms
-[27Mar2026 14:57:30.479] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Item Models: qualitycrafting
-[27Mar2026 14:57:30.509] [main/INFO] [net.minecraft.data.DataGenerator/]: Item Models: qualitycrafting finished after 29 ms
-[27Mar2026 14:57:30.510] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Block States: qualitycrafting
-[27Mar2026 14:57:30.629] [main/INFO] [net.minecraft.data.DataGenerator/]: Block States: qualitycrafting finished after 119 ms
-[27Mar2026 14:57:30.629] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Languages: en_us
-[27Mar2026 14:57:30.631] [main/INFO] [net.minecraft.data.DataGenerator/]: Languages: en_us finished after 1 ms
-[27Mar2026 14:57:30.631] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Tags for minecraft:block mod id qualitycrafting
-[27Mar2026 14:57:30.641] [main/INFO] [net.minecraft.data.DataGenerator/]: Tags for minecraft:block mod id qualitycrafting finished after 9 ms
-[27Mar2026 14:57:30.641] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Tags for minecraft:item mod id qualitycrafting
-[27Mar2026 14:57:30.643] [main/INFO] [net.minecraft.data.DataGenerator/]: Tags for minecraft:item mod id qualitycrafting finished after 2 ms
-[27Mar2026 14:57:30.643] [main/INFO] [net.minecraft.data.DataGenerator/]: All providers took: 255 ms
-[27Mar2026 14:57:30.657] [main/INFO] [net.minecraft.data.HashCache/]: Caching: total files: 96, old count: 95, new count: 97, removed stale: 0, written: 1
+[05Apr.2026 19:15:17.678] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher running: args [--launchTarget, forgedatauserdev, --assetIndex, 5, --assetsDir, C:\Users\zigma\.gradle\caches\forge_gradle\assets, --gameDir, ., --fml.forgeVersion, 47.4.9, --fml.mcVersion, 1.20.1, --fml.forgeGroup, net.minecraftforge, --fml.mcpVersion, 20230612.114412, --mod, qualitycrafting, --all, --output, C:\Users\zigma\Downloads\forge-1.20.1-47.4.9-mdk-advancedcraft\src\generated\resources, --existing, C:\Users\zigma\Downloads\forge-1.20.1-47.4.9-mdk-advancedcraft\src\main\resources, --mixin.config, qualitycrafting.mixins.json]
+[05Apr.2026 19:15:17.699] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher 10.0.9+10.0.9+main.dcd20f30 starting: java version 17.0.14 by Eclipse Adoptium; OS Windows 11 arch amd64 version 10.0
+[05Apr.2026 19:15:18.065] [main/INFO] [net.minecraftforge.fml.loading.ImmediateWindowHandler/]: ImmediateWindowProvider not loading because launch target is forgedatauserdev
+[05Apr.2026 19:15:18.222] [main/INFO] [mixin/]: SpongePowered MIXIN Subsystem Version=0.8.5 Source=union:/C:/Users/zigma/.gradle/caches/modules-2/files-2.1/org.spongepowered/mixin/0.8.5/9d1c0c3a304ae6697ecd477218fa61b850bf57fc/mixin-0.8.5.jar%23128!/ Service=ModLauncher Env=CLIENT
+[05Apr.2026 19:15:18.955] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\zigma\.gradle\caches\modules-2\files-2.1\net.minecraftforge\javafmllanguage\1.20.1-47.4.9\6802c410879d06cd2c16ac24988dd5893293e21c\javafmllanguage-1.20.1-47.4.9.jar is missing mods.toml file
+[05Apr.2026 19:15:18.959] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\zigma\.gradle\caches\modules-2\files-2.1\net.minecraftforge\lowcodelanguage\1.20.1-47.4.9\1a098871d069f3cb2ed12f392f96f462902c0350\lowcodelanguage-1.20.1-47.4.9.jar is missing mods.toml file
+[05Apr.2026 19:15:18.965] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\zigma\.gradle\caches\modules-2\files-2.1\net.minecraftforge\mclanguage\1.20.1-47.4.9\5279b751da7297817db4fa9729e3f3c7bf03d594\mclanguage-1.20.1-47.4.9.jar is missing mods.toml file
+[05Apr.2026 19:15:18.973] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\zigma\.gradle\caches\modules-2\files-2.1\net.minecraftforge\fmlcore\1.20.1-47.4.9\f4f03c369d155fb551ebf908db260a0c5600c29b\fmlcore-1.20.1-47.4.9.jar is missing mods.toml file
+[05Apr.2026 19:15:19.347] [main/INFO] [net.minecraftforge.fml.loading.moddiscovery.JarInJarDependencyLocator/]: Found 1 dependencies adding them to mods collection
+[05Apr.2026 19:15:22.501] [main/INFO] [mixin/]: Compatibility level set to JAVA_17
+[05Apr.2026 19:15:22.530] [main/INFO] [cpw.mods.modlauncher.LaunchServiceHandler/MODLAUNCHER]: Launching target 'forgedatauserdev' with arguments [--gameDir, ., --assetsDir, C:\Users\zigma\.gradle\caches\forge_gradle\assets, --assetIndex, 5, --mod, qualitycrafting, --all, --output, C:\Users\zigma\Downloads\forge-1.20.1-47.4.9-mdk-advancedcraft\src\generated\resources, --existing, C:\Users\zigma\Downloads\forge-1.20.1-47.4.9-mdk-advancedcraft\src\main\resources]
+[05Apr.2026 19:15:22.789] [main/WARN] [mixin/]: Reference map 'qualitycrafting.refmap.json' for qualitycrafting.mixins.json could not be read. If this is a development environment you can ignore this message
+[05Apr.2026 19:15:23.555] [main/INFO] [mixin/]: Remapping refMap curios.refmap.json using C:\Users\zigma\Downloads\forge-1.20.1-47.4.9-mdk-advancedcraft\build\createSrgToMcp\output.srg
+[05Apr.2026 19:15:23.557] [main/INFO] [mixin/]: Remapping refMap jade.refmap.json using C:\Users\zigma\Downloads\forge-1.20.1-47.4.9-mdk-advancedcraft\build\createSrgToMcp\output.srg
+[05Apr.2026 19:15:24.553] [main/INFO] [net.minecraftforge.data.loading.DatagenModLoader/]: Initializing Data Gatherer for mods [qualitycrafting]
+[05Apr.2026 19:15:24.835] [main/INFO] [MixinExtras|Service/]: Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.4.1).
+[05Apr.2026 19:15:36.425] [modloading-worker-0/INFO] [net.minecraftforge.common.ForgeMod/FORGEMOD]: Forge mod loading, version 47.4.9, for MC 1.20.1 with MCP 20230612.114412
+[05Apr.2026 19:15:36.430] [modloading-worker-0/INFO] [net.minecraftforge.common.MinecraftForge/FORGE]: MinecraftForge v47.4.9 Initialized
+[05Apr.2026 19:15:37.227] [modloading-worker-0/INFO] [mezz.jei.library.load.PluginCaller/]: Sending ConfigManager...
+[05Apr.2026 19:15:37.238] [modloading-worker-0/INFO] [mezz.jei.library.load.PluginCaller/]: Sending ConfigManager took 7.335 ms
+[05Apr.2026 19:15:37.923] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/C:/Users/zigma/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.9_mapped_parchment_2023.06.26-1.20.1/forge-1.20.1-47.4.9_mapped_parchment_2023.06.26-1.20.1-recomp.jar%23191!/assets/.mcassetsroot' uses unexpected schema
+[05Apr.2026 19:15:37.923] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/C:/Users/zigma/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.9_mapped_parchment_2023.06.26-1.20.1/forge-1.20.1-47.4.9_mapped_parchment_2023.06.26-1.20.1-recomp.jar%23191!/data/.mcassetsroot' uses unexpected schema
+[05Apr.2026 19:15:38.542] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Recipes
+[05Apr.2026 19:15:38.645] [main/INFO] [net.minecraft.data.DataGenerator/]: Recipes finished after 102 ms
+[05Apr.2026 19:15:38.646] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Loot Tables
+[05Apr.2026 19:15:38.715] [main/INFO] [net.minecraft.data.DataGenerator/]: Loot Tables finished after 68 ms
+[05Apr.2026 19:15:38.716] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Global Loot Modifiers : qualitycrafting
+[05Apr.2026 19:15:38.727] [main/INFO] [net.minecraft.data.DataGenerator/]: Global Loot Modifiers : qualitycrafting finished after 10 ms
+[05Apr.2026 19:15:38.727] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Item Models: qualitycrafting
+[05Apr.2026 19:15:38.767] [main/INFO] [net.minecraft.data.DataGenerator/]: Item Models: qualitycrafting finished after 39 ms
+[05Apr.2026 19:15:38.767] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Block States: qualitycrafting
+[05Apr.2026 19:15:38.931] [main/INFO] [net.minecraft.data.DataGenerator/]: Block States: qualitycrafting finished after 163 ms
+[05Apr.2026 19:15:38.931] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Languages: en_us
+[05Apr.2026 19:15:38.940] [main/INFO] [net.minecraft.data.DataGenerator/]: Languages: en_us finished after 9 ms
+[05Apr.2026 19:15:38.940] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Tags for minecraft:block mod id qualitycrafting
+[05Apr.2026 19:15:38.990] [main/INFO] [net.minecraft.data.DataGenerator/]: Tags for minecraft:block mod id qualitycrafting finished after 49 ms
+[05Apr.2026 19:15:38.990] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Tags for minecraft:item mod id qualitycrafting
+[05Apr.2026 19:15:38.996] [main/INFO] [net.minecraft.data.DataGenerator/]: Tags for minecraft:item mod id qualitycrafting finished after 5 ms
+[05Apr.2026 19:15:38.997] [main/INFO] [net.minecraft.data.DataGenerator/]: All providers took: 455 ms
+[05Apr.2026 19:15:39.027] [main/INFO] [net.minecraft.data.HashCache/]: Caching: total files: 96, old count: 96, new count: 97, removed stale: 0, written: 0

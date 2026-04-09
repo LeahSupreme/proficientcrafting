@@ -1,12 +1,4 @@
--Add curious support
--Add curious attribute increases from rarity
--Add visual effects/visual rarity/visual multi item
--Add mining effects
--Add harvesting effects
--Add slaying effects
--Add cooking pot
--Add scribing table
--Add jewelcrafting station
--Add workbench
--Add reforging station
--Implement reforging mechanics
+-Weighted Reforging
+-Amethyst hoe, chisel missing. Remove gold chisel.
+-Remove craft time from JEI
+-Remove potion crafting recipes

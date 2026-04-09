@@ -1,0 +1,34 @@
+{
+  "item_id": "qualitycrafting:crafters_stew",
+  "food": [
+    {
+      "nutritionadd": 2,
+      "saturationmodifieradd": 0,
+      "effectsadd": [{
+        "effectid": "qualitycrafting:proficiency",
+        "duration": 5,
+        "amplifier": 0
+      }]
+    },
+    {
+      "nutritionadd": 4,
+      "saturationmodifieradd": 0.1,
+      "effectsadd": [{
+        "effectid": "qualitycrafting:proficiency",
+        "duration": 30,
+        "amplifier": 1
+      }]
+    },
+    {
+      "nutritionadd": 6,
+      "saturationmodifieradd": 0.2,
+      "effectsadd": [
+        {
+          "effectid": "qualitycrafting:proficiency",
+          "duration": 300,
+          "amplifier": 2
+        }
+      ]
+    }
+  ]
+}

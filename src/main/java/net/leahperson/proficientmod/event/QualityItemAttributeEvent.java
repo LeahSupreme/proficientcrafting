@@ -219,17 +219,17 @@ public class QualityItemAttributeEvent {
         if (qualityLevel > 0) {
             additions.put(net.leahperson.proficientmod.attribute.ModAttributes.QUALITY.get(),
                     new AttributeModifier(ENCHANT_QUALITY_UUID, "Crafting Quality Enchantment",
-                            qualityLevel * 5.0, AttributeModifier.Operation.ADDITION));
+                            qualityLevel * 10.0, AttributeModifier.Operation.ADDITION));
         }
         if (proficiencyLevel > 0) {
             additions.put(net.leahperson.proficientmod.attribute.ModAttributes.PROFICIENCY.get(),
                     new AttributeModifier(ENCHANT_PROFICIENCY_UUID, "Crafting Proficiency Enchantment",
-                            proficiencyLevel * 5.0, AttributeModifier.Operation.ADDITION));
+                            proficiencyLevel * 10.0, AttributeModifier.Operation.ADDITION));
         }
         if (yieldLevel > 0) {
             additions.put(net.leahperson.proficientmod.attribute.ModAttributes.YIELD.get(),
                     new AttributeModifier(ENCHANT_YIELD_UUID, "Crafting Yield Enchantment",
-                            yieldLevel * 5.0, AttributeModifier.Operation.ADDITION));
+                            yieldLevel * 10.0, AttributeModifier.Operation.ADDITION));
         }
 
         Multimap<Attribute, AttributeModifier> combined = AttributeUtils.combineAttributes(event.getOriginalModifiers(), additions);

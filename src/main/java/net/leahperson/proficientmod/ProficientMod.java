@@ -94,19 +94,19 @@ public class ProficientMod
     }
 
     private static void registerBrewingRecipes() {
-        Ingredient awkwardPotion = Ingredient.of(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.AWKWARD));
-        Ingredient redstone = Ingredient.of(Items.REDSTONE);
-        Ingredient glowstone = Ingredient.of(Items.GLOWSTONE_DUST);
+        //Ingredient awkwardPotion = Ingredient.of(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.AWKWARD));
+        //Ingredient redstone = Ingredient.of(Items.REDSTONE);
+        //Ingredient glowstone = Ingredient.of(Items.GLOWSTONE_DUST);
 
-        addBrewingSet(awkwardPotion, Ingredient.of(Items.DIAMOND), ModPotions.QUALITY, ModPotions.LONG_QUALITY, ModPotions.STRONG_QUALITY, redstone, glowstone);
-        addBrewingSet(awkwardPotion, Ingredient.of(Items.BOOK), ModPotions.PROFICIENCY, ModPotions.LONG_PROFICIENCY, ModPotions.STRONG_PROFICIENCY, redstone, glowstone);
-        addBrewingSet(awkwardPotion, Ingredient.of(Items.EMERALD), ModPotions.YIELD, ModPotions.LONG_YIELD, ModPotions.STRONG_YIELD, redstone, glowstone);
-        addBrewingSet(awkwardPotion, Ingredient.of(Items.SPIDER_EYE), ModPotions.MOB_DROP_QUALITY, ModPotions.LONG_MOB_DROP_QUALITY, ModPotions.STRONG_MOB_DROP_QUALITY, redstone, glowstone);
-        addBrewingSet(awkwardPotion, Ingredient.of(Items.BONE), ModPotions.MOB_DROP_YIELD, ModPotions.LONG_MOB_DROP_YIELD, ModPotions.STRONG_MOB_DROP_YIELD, redstone, glowstone);
-        addBrewingSet(awkwardPotion, Ingredient.of(Items.WHEAT_SEEDS), ModPotions.FARMING_QUALITY, ModPotions.LONG_FARMING_QUALITY, ModPotions.STRONG_FARMING_QUALITY, redstone, glowstone);
-        addBrewingSet(awkwardPotion, Ingredient.of(Items.BONE_MEAL), ModPotions.FARMING_YIELD, ModPotions.LONG_FARMING_YIELD, ModPotions.STRONG_FARMING_YIELD, redstone, glowstone);
-        addBrewingSet(awkwardPotion, Ingredient.of(Items.QUARTZ), ModPotions.MINING_QUALITY, ModPotions.LONG_MINING_QUALITY, ModPotions.STRONG_MINING_QUALITY, redstone, glowstone);
-        addBrewingSet(awkwardPotion, Ingredient.of(Items.COAL), ModPotions.MINING_YIELD, ModPotions.LONG_MINING_YIELD, ModPotions.STRONG_MINING_YIELD, redstone, glowstone);
+        //addBrewingSet(awkwardPotion, Ingredient.of(Items.DIAMOND), ModPotions.QUALITY, ModPotions.LONG_QUALITY, ModPotions.STRONG_QUALITY, redstone, glowstone);
+        //addBrewingSet(awkwardPotion, Ingredient.of(Items.BOOK), ModPotions.PROFICIENCY, ModPotions.LONG_PROFICIENCY, ModPotions.STRONG_PROFICIENCY, redstone, glowstone);
+        //addBrewingSet(awkwardPotion, Ingredient.of(Items.EMERALD), ModPotions.YIELD, ModPotions.LONG_YIELD, ModPotions.STRONG_YIELD, redstone, glowstone);
+        //addBrewingSet(awkwardPotion, Ingredient.of(Items.SPIDER_EYE), ModPotions.MOB_DROP_QUALITY, ModPotions.LONG_MOB_DROP_QUALITY, ModPotions.STRONG_MOB_DROP_QUALITY, redstone, glowstone);
+        //addBrewingSet(awkwardPotion, Ingredient.of(Items.BONE), ModPotions.MOB_DROP_YIELD, ModPotions.LONG_MOB_DROP_YIELD, ModPotions.STRONG_MOB_DROP_YIELD, redstone, glowstone);
+        //addBrewingSet(awkwardPotion, Ingredient.of(Items.WHEAT_SEEDS), ModPotions.FARMING_QUALITY, ModPotions.LONG_FARMING_QUALITY, ModPotions.STRONG_FARMING_QUALITY, redstone, glowstone);
+        //addBrewingSet(awkwardPotion, Ingredient.of(Items.BONE_MEAL), ModPotions.FARMING_YIELD, ModPotions.LONG_FARMING_YIELD, ModPotions.STRONG_FARMING_YIELD, redstone, glowstone);
+        //addBrewingSet(awkwardPotion, Ingredient.of(Items.QUARTZ), ModPotions.MINING_QUALITY, ModPotions.LONG_MINING_QUALITY, ModPotions.STRONG_MINING_QUALITY, redstone, glowstone);
+        //addBrewingSet(awkwardPotion, Ingredient.of(Items.COAL), ModPotions.MINING_YIELD, ModPotions.LONG_MINING_YIELD, ModPotions.STRONG_MINING_YIELD, redstone, glowstone);
     }
 
     private static void addBrewingSet(

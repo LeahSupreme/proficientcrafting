@@ -97,15 +97,15 @@ public class ModLanguageProvider extends LanguageProvider {
         addSimpleNameEnchant(ModEnchantments.CRAFTING_PROFICIENCY);
         addSimpleNameEnchant(ModEnchantments.CRAFTING_YIELD);
 
-        addPotionTranslations(ModPotions.QUALITY, "Quality");
-        addPotionTranslations(ModPotions.LONG_QUALITY, "Quality");
-        addPotionTranslations(ModPotions.STRONG_QUALITY, "Quality");
-        addPotionTranslations(ModPotions.PROFICIENCY, "Proficiency");
-        addPotionTranslations(ModPotions.LONG_PROFICIENCY, "Proficiency");
-        addPotionTranslations(ModPotions.STRONG_PROFICIENCY, "Proficiency");
-        addPotionTranslations(ModPotions.YIELD, "Yield");
-        addPotionTranslations(ModPotions.LONG_YIELD, "Yield");
-        addPotionTranslations(ModPotions.STRONG_YIELD, "Yield");
+        addPotionTranslations(ModPotions.QUALITY, "Crafting Quality");
+        addPotionTranslations(ModPotions.LONG_QUALITY, "Crafting Quality");
+        addPotionTranslations(ModPotions.STRONG_QUALITY, "Crafting Quality");
+        addPotionTranslations(ModPotions.PROFICIENCY, "Crafting Proficiency");
+        addPotionTranslations(ModPotions.LONG_PROFICIENCY, "Crafting Proficiency");
+        addPotionTranslations(ModPotions.STRONG_PROFICIENCY, "Crafting Proficiency");
+        addPotionTranslations(ModPotions.YIELD, "Crafting Yield");
+        addPotionTranslations(ModPotions.LONG_YIELD, "Crafting Yield");
+        addPotionTranslations(ModPotions.STRONG_YIELD, "Crafting Yield");
         addPotionTranslations(ModPotions.MOB_DROP_QUALITY, "Mob Drop Quality");
         addPotionTranslations(ModPotions.LONG_MOB_DROP_QUALITY, "Mob Drop Quality");
         addPotionTranslations(ModPotions.STRONG_MOB_DROP_QUALITY, "Mob Drop Quality");
@@ -143,11 +143,11 @@ public class ModLanguageProvider extends LanguageProvider {
         add("qualitycrafting.jei.crafttime", "Craft Time: ");
         add("qualitycrafting.jei.reforging.hint", "Place quality item, then activate with scepter");
 
-        add("qualitycrafting:proficiency", "Proficiency");
+        add("qualitycrafting:proficiency", "Crafting Proficiency");
         add("qualitycrafting:proficiency.desc", "Determines which items you can forge.");
-        add("qualitycrafting:quality", "Quality");
+        add("qualitycrafting:quality", "Crafting Quality");
         add("qualitycrafting:quality.desc", "Improves the result of forged items.");
-        add("qualitycrafting:yield", "Yield");
+        add("qualitycrafting:yield", "Crafting Yield");
         add("qualitycrafting:yield.desc", "Improves the amount of forged items created.");
 
         add("qualitycrafting:farming_quality", "Farming Quality");

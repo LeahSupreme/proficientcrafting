@@ -1,0 +1,21 @@
+{
+  "type": "qualitycrafting:forging",
+  "ingredients": [
+    { "item": "minecraft:netherite_ingot" },
+    { "item": "minecraft:diamond" },
+    { "item": "minecraft:diamond" },
+    { "item": "minecraft:stick" },
+    { "item": "minecraft:stick" },
+    { "item": "minecraft:stick" },
+    { "item": "minecraft:netherite_upgrade_smithing_template" }
+  ],
+  "output": { "item": "qualitycrafting:netherite_forge_hammer", "count": 1 },
+  "proficiency": 30,
+  "craftTime": 60,
+  "levelCost": 0,
+  "yieldCost": 0,
+  "yieldAdded": 0,
+  "qualityCosts": [10, 20, 40],
+  "qualityPerIngredient": [1, 2, 3],
+  "qualityDecoration": [0, 1, 2, 3]
+}

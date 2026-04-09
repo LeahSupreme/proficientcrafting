@@ -9,7 +9,7 @@ import java.util.List;
 public class EnergeticSoda extends QualityFoodItem {
     public EnergeticSoda() {
         super(null,
-            List.of(new EffectDefinition(ModEffects.QUALITY, 0, 600, 300)),
+                List.of(),
             new Properties().stacksTo(1).food(new FoodProperties.Builder()
                     .nutrition(3)
                     .saturationMod(0.2f)

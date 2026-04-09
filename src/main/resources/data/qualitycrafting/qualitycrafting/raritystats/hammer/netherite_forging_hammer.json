@@ -1,0 +1,31 @@
+{
+  "item_id": "qualitycrafting:netherite_forge_hammer",
+  "rarities": [
+    [
+      {
+        "attribute_id": "qualitycrafting:proficiency",
+        "amount": 5,
+        "operation": "ADDITION"
+      }
+    ],
+    [
+      {
+        "attribute_id": "qualitycrafting:proficiency",
+        "amount": 10,
+        "operation": "ADDITION"
+      }
+    ],
+    [
+      {
+        "attribute_id": "qualitycrafting:proficiency",
+        "amount": 20,
+        "operation": "ADDITION"
+      },
+      {
+        "attribute_id": "qualitycrafting:quality",
+        "amount": 10,
+        "operation": "ADDITION"
+      }
+    ]
+  ]
+}
