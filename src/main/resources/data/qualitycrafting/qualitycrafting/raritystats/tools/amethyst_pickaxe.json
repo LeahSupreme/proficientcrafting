@@ -1,39 +1,29 @@
 {
-  "item_id": "minecraft:iron_pickaxe",
+  "item_id": "qualitycrafting:amethyst_pickaxe",
   "rarities": [
     [
       {
         "attribute_id": "qualitycrafting:mining_quality",
-        "amount": 20,
-        "operation": "ADDITION"
-      },
-      {
-        "attribute_id": "qualitycrafting:mining_yield",
-        "amount": 4,
+        "amount": 5,
         "operation": "ADDITION"
       }
     ],
     [
       {
         "attribute_id": "qualitycrafting:mining_quality",
-        "amount": 45,
-        "operation": "ADDITION"
-      },
-      {
-        "attribute_id": "qualitycrafting:mining_yield",
-        "amount": 10,
+        "amount": 15,
         "operation": "ADDITION"
       }
     ],
     [
       {
         "attribute_id": "qualitycrafting:mining_quality",
-        "amount": 80,
+        "amount": 40,
         "operation": "ADDITION"
       },
       {
         "attribute_id": "qualitycrafting:mining_yield",
-        "amount": 20,
+        "amount": 25,
         "operation": "ADDITION"
       }
     ]

@@ -12,7 +12,7 @@ public abstract class CraftingToolEnchantment extends Enchantment {
     );
 
     protected CraftingToolEnchantment() {
-        super(Rarity.UNCOMMON, CRAFTING_TOOL_CATEGORY, new EquipmentSlot[]{ EquipmentSlot.MAINHAND });
+        super(Rarity.VERY_RARE, CRAFTING_TOOL_CATEGORY, new EquipmentSlot[]{ EquipmentSlot.MAINHAND });
     }
 
     @Override
@@ -20,9 +20,11 @@ public abstract class CraftingToolEnchantment extends Enchantment {
         return 3;
     }
 
+
+
     @Override
     public int getMinCost(int level) {
-        return 1 + (level - 1) * 10;
+        return 1 + (level) * 10;
     }
 
     @Override

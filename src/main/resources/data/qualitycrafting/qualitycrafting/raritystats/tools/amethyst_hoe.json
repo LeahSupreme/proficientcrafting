@@ -1,0 +1,31 @@
+{
+  "item_id": "qualitycrafting:amethyst_hoe",
+  "rarities": [
+    [
+      {
+        "attribute_id": "qualitycrafting:farming_quality",
+        "amount": 5,
+        "operation": "ADDITION"
+      }
+    ],
+    [
+      {
+        "attribute_id": "qualitycrafting:farming_quality",
+        "amount": 15,
+        "operation": "ADDITION"
+      }
+    ],
+    [
+      {
+        "attribute_id": "qualitycrafting:farming_quality",
+        "amount": 40,
+        "operation": "ADDITION"
+      },
+      {
+        "attribute_id": "qualitycrafting:farming_yield",
+        "amount": 25,
+        "operation": "ADDITION"
+      }
+    ]
+  ]
+}

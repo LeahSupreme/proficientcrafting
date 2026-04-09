@@ -42,7 +42,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy(getHasName(Items.CAULDRON), has(Items.CAULDRON))
                 .save(pWriter);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.SCRIBING_TABLE.get())
+        /*ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.SCRIBING_TABLE.get())
                 .pattern("I F")
                 .pattern("PLP")
                 .pattern("PPP")
@@ -61,7 +61,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('D', Items.DIAMOND)
                 .define('A', Items.ANVIL)
                 .unlockedBy(getHasName(Items.DIAMOND), has(Items.DIAMOND))
-                .save(pWriter);
+                .save(pWriter);*/
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.WORKBENCH.get())
                 .pattern("PCP")
@@ -74,7 +74,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy(getHasName(Items.CRAFTING_TABLE), has(Items.CRAFTING_TABLE))
                 .save(pWriter);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.REFORGING_ALTAR.get())
+        /*ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.REFORGING_ALTAR.get())
                 .pattern(" N ")
                 .pattern("LEL")
                 .pattern("OOO")
@@ -84,7 +84,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('L', Items.LAPIS_BLOCK)
                 .unlockedBy(getHasName(Items.ENCHANTING_TABLE), has(Items.ENCHANTING_TABLE))
                 .save(pWriter);
-
+        */
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.STONE_FORGE_HAMMER.get())
                 .pattern("ASA")
                 .pattern(" S ")
@@ -103,7 +103,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy(getHasName(Items.OAK_PLANKS), has(ItemTags.PLANKS))
                 .save(pWriter);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.IRON_TIPPED_QUILL.get())
+        /*ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.IRON_TIPPED_QUILL.get())
                 .pattern(" F")
                 .pattern("I ")
                 .define('F', Items.FEATHER)
@@ -137,5 +137,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('S', Items.STICK)
                 .unlockedBy(getHasName(Items.AMETHYST_BLOCK), has(Items.AMETHYST_BLOCK))
                 .save(pWriter);
+
+         */
     }
 }

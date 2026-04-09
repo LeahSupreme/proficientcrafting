@@ -20,6 +20,7 @@ public class ModCreativeModeTabs {
                     .title(Component.translatable("creativetab.proficient_tab"))
                     .displayItems((parameters, output) -> {
                         output.accept(ModItems.AMETHYST_PICKAXE.get());
+                        output.accept(ModItems.AMETHYST_HOE.get());
 
                         output.accept(ModItems.STONE_FORGE_HAMMER.get());
                         output.accept(ModItems.IRON_FORGE_HAMMER.get());
@@ -37,6 +38,7 @@ public class ModCreativeModeTabs {
 
                         output.accept(ModItems.IRON_CHISEL.get());
                         output.accept(ModItems.GOLD_CHISEL.get());
+                        output.accept(ModItems.AMETHYST_CHISEL.get());
                         output.accept(ModItems.DIAMOND_CHISEL.get());
                         output.accept(ModItems.NETHERITE_CHISEL.get());
 

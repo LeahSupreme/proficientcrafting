@@ -19,6 +19,7 @@ public class ModItemModelProvider extends ItemModelProvider {
     @Override
     protected void registerModels() {
         simpleHandheldItem(ModItems.AMETHYST_PICKAXE);
+        simpleHandheldItem(ModItems.AMETHYST_HOE);
 
         simpleHandheldItem(ModItems.STONE_FORGE_HAMMER);
         simpleHandheldItem(ModItems.IRON_FORGE_HAMMER);
@@ -37,6 +38,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.IRON_CHISEL);
         simpleItem(ModItems.DIAMOND_CHISEL);
         simpleItem(ModItems.GOLD_CHISEL);
+        simpleItem(ModItems.AMETHYST_CHISEL);
         simpleItem(ModItems.NETHERITE_CHISEL);
 
         simpleHandheldItem(ModItems.IRON_SAW);

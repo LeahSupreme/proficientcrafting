@@ -1,0 +1,50 @@
+{
+  "type": "qualitycrafting:forging",
+  "ingredients": [
+    {
+      "item": "minecraft:gold_ingot"
+    },{
+      "item": "minecraft:gold_ingot"
+    },{
+      "item": "minecraft:gold_ingot"
+    },{
+      "item": "minecraft:gold_ingot"
+    },
+    {
+      "item": "minecraft:netherite_scrap"
+    },
+    {
+      "item": "minecraft:netherite_scrap"
+    },
+    {
+      "item": "minecraft:netherite_scrap"
+    },
+    {
+      "item": "minecraft:netherite_scrap"
+    }
+  ],
+  "output": {
+    "item": "minecraft:netherite_ingot"
+  },
+  "proficiency": 10,
+  "qualityCosts": [
+    40,
+    80,
+    150
+  ],
+  "qualityPerIngredient": [
+    5,
+    10,
+    15
+  ],
+  "qualityDecoration": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "yieldCost": 80,
+  "yieldAdded": 1,
+  "levelCost": 0,
+  "craftTime": 80
+}

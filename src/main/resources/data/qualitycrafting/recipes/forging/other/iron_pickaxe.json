@@ -20,20 +20,20 @@
   "output": {
     "item": "minecraft:iron_pickaxe"
   },
-  "proficiency": 0,
+  "proficiency": 7,
   "craftTime": 60,
-  "levelCost": 1,
+  "levelCost": 0,
   "yieldCost": 0,
   "yieldAdded": 0,
   "qualityCosts": [
-    50,
-    170,
-    510
+    10,
+    20,
+    35
   ],
   "qualityPerIngredient": [
-    17,
-    40,
-    114
+    4,
+    8,
+    12
   ],
   "qualityDecoration": [
     0,

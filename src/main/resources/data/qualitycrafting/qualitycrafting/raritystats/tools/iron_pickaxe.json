@@ -1,0 +1,33 @@
+{
+  "item_id": "minecraft:iron_pickaxe",
+  "rarities": [
+    [
+
+      {
+        "attribute_id": "qualitycrafting:mining_yield",
+        "amount": 10,
+        "operation": "ADDITION"
+      }
+    ],
+    [
+
+      {
+        "attribute_id": "qualitycrafting:mining_yield",
+        "amount": 20,
+        "operation": "ADDITION"
+      }
+    ],
+    [
+      {
+        "attribute_id": "qualitycrafting:mining_quality",
+        "amount": 20,
+        "operation": "ADDITION"
+      },
+      {
+        "attribute_id": "qualitycrafting:mining_yield",
+        "amount": 40,
+        "operation": "ADDITION"
+      }
+    ]
+  ]
+}

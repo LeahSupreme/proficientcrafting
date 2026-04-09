@@ -1,0 +1,21 @@
+{
+  "type": "qualitycrafting:workbench",
+  "ingredients": [
+    { "item": "minecraft:glow_ink_sac" },
+    { "item": "minecraft:cyan_carpet" },
+    { "item": "minecraft:bookshelf" },
+    { "tag": "minecraft:planks" },
+    { "tag": "minecraft:planks" },
+    { "tag": "minecraft:planks" },
+    { "tag": "minecraft:planks" }
+  ],
+  "output": { "item": "qualitycrafting:scribing_table", "count": 1 },
+  "proficiency": 15,
+  "craftTime": 60,
+  "levelCost": 0,
+  "yieldCost": 0,
+  "yieldAdded": 0,
+  "qualityCosts": [],
+  "qualityPerIngredient": [],
+  "qualityDecoration": [0]
+}

@@ -29,6 +29,7 @@ public class ModLanguageProvider extends LanguageProvider {
     @Override
     protected void addTranslations() {
         addSimpleItemName(ModItems.AMETHYST_PICKAXE);
+        addSimpleItemName(ModItems.AMETHYST_HOE);
 
         addSimpleItemName(ModItems.STONE_FORGE_HAMMER);
         addSimpleItemName(ModItems.IRON_FORGE_HAMMER);
@@ -47,6 +48,7 @@ public class ModLanguageProvider extends LanguageProvider {
         addSimpleItemName(ModItems.IRON_CHISEL);
         addSimpleItemName(ModItems.DIAMOND_CHISEL);
         addSimpleItemName(ModItems.GOLD_CHISEL);
+        addSimpleItemName(ModItems.AMETHYST_CHISEL);
         addSimpleItemName(ModItems.NETHERITE_CHISEL);
 
         addSimpleItemName(ModItems.IRON_SAW);

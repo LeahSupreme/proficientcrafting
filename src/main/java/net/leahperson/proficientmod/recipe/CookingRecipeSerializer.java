@@ -25,7 +25,7 @@ public class CookingRecipeSerializer implements RecipeSerializer<CookingRecipe> 
         ItemStack output = CraftingHelper.getItemStack(GsonHelper.getAsJsonObject(json, "output"), true);
         int cookTime = GsonHelper.getAsInt(json, "cookTime", 200);
         int levelCost = GsonHelper.getAsInt(json, "levelCost", 0);
-        int proficiencyRequired = GsonHelper.getAsInt(json, "proficiencyRequired", 0);
+        int proficiencyRequired = GsonHelper.getAsInt(json, "proficiency", 0);
         int yieldCost = GsonHelper.getAsInt(json, "yieldCost", 0);
         int yieldAdded = GsonHelper.getAsInt(json, "yieldAdded", 0);
 

@@ -8,7 +8,8 @@
   ],
   "output": { "item": "qualitycrafting:crafters_stew" },
   "cookTime": 280,
-  "qualityCosts": [ 25, 80, 240 ],
-  "qualityPerIngredient": [ 7, 22, 65 ],
+  "proficiency": 5,
+  "qualityCosts": [ 5, 10, 25 ],
+  "qualityPerIngredient": [ 1, 2, 3 ],
   "qualityDecoration": [ 0, 1, 2, 3 ]
 }

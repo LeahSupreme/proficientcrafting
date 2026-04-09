@@ -7,11 +7,7 @@ import net.leahperson.proficientmod.item.curios.SmithingCharm;
 import net.leahperson.proficientmod.item.food.CraftersStew;
 import net.leahperson.proficientmod.item.food.EnergeticSoda;
 import net.leahperson.proficientmod.item.food.WeddingCake;
-import net.leahperson.proficientmod.item.tools.AmethystPickaxe;
-import net.leahperson.proficientmod.item.tools.AttributeBonus;
-import net.leahperson.proficientmod.item.tools.CraftingToolItem;
-import net.leahperson.proficientmod.item.tools.ForgeHammerItem;
-import net.leahperson.proficientmod.item.tools.SawItem;
+import net.leahperson.proficientmod.item.tools.*;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.Tiers;
@@ -28,6 +24,9 @@ public class ModItems {
 
     public static final RegistryObject<Item> AMETHYST_PICKAXE = ITEMS.register("amethyst_pickaxe",
             AmethystPickaxe::new);
+
+    public static final RegistryObject<Item> AMETHYST_HOE = ITEMS.register("amethyst_hoe",
+            AmethystHoe::new);
 
     public static final RegistryObject<Item> STONE_FORGE_HAMMER = ITEMS.register("stone_forge_hammer",
             () -> new ForgeHammerItem(Tiers.STONE,
@@ -104,6 +103,12 @@ public class ModItems {
             () -> new CraftingToolItem(Tiers.GOLD,
                     List.of(new AttributeBonus(ModAttributes.YIELD.get(), "qualitycrafting:gold_chisel.yield", 5.0),new AttributeBonus(ModAttributes.PROFICIENCY.get(), "qualitycrafting:gold_chisel.proficiency", 5.0)),
                     new Item.Properties().stacksTo(1).durability(32)));
+
+
+    public static final RegistryObject<Item> AMETHYST_CHISEL = ITEMS.register("amethyst_chisel",
+            () -> new CraftingToolItem(ModTiers.AMETHYST,
+                    List.of(new AttributeBonus(ModAttributes.QUALITY.get(), "qualitycrafting:amethyst_chisel.quality", 5.0),new AttributeBonus(ModAttributes.PROFICIENCY.get(), "qualitycrafting:amethyst_chisel.proficiency", 5.0)),
+                    new Item.Properties().stacksTo(1).durability(64)));
 
     public static final RegistryObject<Item> NETHERITE_CHISEL = ITEMS.register("netherite_chisel",
             () -> new CraftingToolItem(Tiers.NETHERITE,

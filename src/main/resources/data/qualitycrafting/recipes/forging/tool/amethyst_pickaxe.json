@@ -1,0 +1,19 @@
+{
+  "type": "qualitycrafting:forging",
+  "ingredients": [
+    { "item": "minecraft:amethyst_shard" },
+    { "item": "minecraft:amethyst_shard" },
+    { "item": "minecraft:amethyst_shard" },
+    { "item": "minecraft:stick" },
+    { "item": "minecraft:stick" }
+  ],
+  "output": { "item": "qualitycrafting:amethyst_pickaxe", "count": 1 },
+  "proficiency": 6,
+  "craftTime": 60,
+  "levelCost": 0,
+  "yieldCost": 0,
+  "yieldAdded": 0,
+  "qualityCosts": [10, 20, 40],
+  "qualityPerIngredient": [1, 2, 3],
+  "qualityDecoration": [0, 1, 2, 3]
+}
