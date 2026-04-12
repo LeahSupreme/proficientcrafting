@@ -206,8 +206,6 @@ public class ScribingTableBlockEntity extends BlockEntity {
             result = recipe.getOutputForQuality(capturedQuality, level.getRandom());
         } else {
             result = recipe.assemble(container, level.registryAccess());
-            int rarity = recipe.getProficiencyRequired() > 0 ? 1 : 0;
-            QualityDataUtil.setRarity(result, rarity);
         }
         if (capturedPlayerUUID != null && recipe.getLevelCost() > 0) {
             Player player = level.getPlayerByUUID(capturedPlayerUUID);

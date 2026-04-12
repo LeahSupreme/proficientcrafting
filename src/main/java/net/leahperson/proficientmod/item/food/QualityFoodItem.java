@@ -3,10 +3,12 @@ package net.leahperson.proficientmod.item.food;
 import net.leahperson.proficientmod.Config;
 import net.leahperson.proficientmod.attribute.EffectAddition;
 import net.leahperson.proficientmod.attribute.FoodAddition;
+import net.leahperson.proficientmod.attribute.ItemQualityData;
 import net.leahperson.proficientmod.quality.QualityDataType;
 import net.leahperson.proficientmod.util.QualityDataUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
@@ -66,7 +68,7 @@ public class QualityFoodItem extends Item {
         super.appendHoverText(stack, level, tooltip, flag);
         if (!Config.showFoodEffectTooltips) return;
         int rarity = QualityDataUtil.getRarity(stack);
-        List<EffectAddition> rarityEffects = getRarityEffects(level, rarity);
+        List<EffectAddition> rarityEffects = getRarityEffects(level, stack, rarity);
 
         if (effectDefinitions.isEmpty() && rarityEffects.isEmpty()) return;
 
@@ -98,11 +100,29 @@ public class QualityFoodItem extends Item {
                 .withStyle(ChatFormatting.GRAY);
     }
 
-    private static List<EffectAddition> getRarityEffects(@Nullable Level level, int rarity) {
+    private static List<EffectAddition> getRarityEffects(@Nullable Level level, ItemStack stack, int rarity) {
         if (rarity == 0) return Collections.emptyList();
         Level resolvedLevel = level != null ? level : Minecraft.getInstance().level;
         if (resolvedLevel == null) return Collections.emptyList();
-        Optional<net.minecraft.core.Registry<QualityDataType>> registry =
+
+        ResourceLocation itemId = stack.getItem().builtInRegistryHolder().key().location();
+        String itemIdStr = itemId.getNamespace() + ":" + itemId.getPath();
+        int rarityIndex = rarity - 1;
+        Optional<Registry<ItemQualityData>> itemRegistry =
+                resolvedLevel.registryAccess().registry(ItemQualityData.REGISTRY);
+        if (itemRegistry.isPresent()) {
+            Optional<List<EffectAddition>> perItemEffects = itemRegistry.get().stream()
+                    .filter(entry -> entry.item_id().equals(itemIdStr))
+                    .findAny()
+                    .flatMap(ItemQualityData::food)
+                    .filter(foodList -> rarityIndex < foodList.size())
+                    .map(foodList -> foodList.get(rarityIndex).effectsadd());
+            if (perItemEffects.isPresent()) {
+                return perItemEffects.get();
+            }
+        }
+
+        Optional<Registry<QualityDataType>> registry =
                 resolvedLevel.registryAccess().registry(QualityDataType.RARITY_REGISTRY);
         return registry.map(qualityDataTypes -> qualityDataTypes.stream()
                 .filter(tier -> tier.index() == rarity)
