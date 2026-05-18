@@ -13,8 +13,9 @@ public class WeddingCake extends QualityFoodItem {
                 new EffectDefinition(ModEffects.PROFICIENCY, 0, 3600, 1200)
             ),
             new Properties().stacksTo(1).food(new FoodProperties.Builder()
-                    .nutrition(10)
+                    .nutrition(8)
                     .saturationMod(1.2f)
+                    .alwaysEat()
                     .build())
         );
     }

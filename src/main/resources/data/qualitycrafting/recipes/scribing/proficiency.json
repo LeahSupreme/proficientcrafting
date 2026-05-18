@@ -1,0 +1,20 @@
+{
+  "type": "qualitycrafting:scribing",
+  "ingredients": [
+    { "item": "minecraft:book" },
+    { "item": "minecraft:glow_ink_sac" },
+    { "item": "minecraft:diamond" },
+    { "item": "minecraft:diamond" }
+  ],
+  "output": { "item": "minecraft:enchanted_book", "count": 1 },
+  "enchantment": "qualitycrafting:crafting_proficiency",
+  "enchantLevels": [1, 2, 3],
+  "proficiency": 20,
+  "craftTime": 100,
+  "levelCost": 5,
+  "yieldCost": 0,
+  "yieldAdded": 0,
+  "qualityCosts": [30,60],
+  "qualityPerIngredient": [8, 12, 18],
+  "qualityDecoration": [0, 0, 0, 0]
+}

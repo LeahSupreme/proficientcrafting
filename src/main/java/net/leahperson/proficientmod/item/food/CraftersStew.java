@@ -11,7 +11,7 @@ public class CraftersStew extends QualityFoodItem {
         super(Items.BOWL,
             List.of(),
             new Properties().food(new FoodProperties.Builder()
-                    .nutrition(6)
+                    .nutrition(2)
                     .saturationMod(0.7f)
                     .build())
         );

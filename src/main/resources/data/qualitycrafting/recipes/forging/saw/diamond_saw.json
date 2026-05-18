@@ -1,0 +1,18 @@
+{
+  "type": "qualitycrafting:forging",
+  "ingredients": [
+    { "item": "minecraft:diamond" },
+    { "item": "minecraft:diamond" },
+    { "item": "minecraft:diamond" },
+    { "item": "minecraft:stick" }
+  ],
+  "output": { "item": "qualitycrafting:diamond_saw", "count": 1 },
+  "proficiency": 11,
+  "craftTime": 60,
+  "levelCost": 0,
+  "yieldCost": 0,
+  "yieldAdded": 0,
+  "qualityCosts": [10, 20, 40],
+  "qualityPerIngredient": [1, 2, 3],
+  "qualityDecoration": [0, 1, 2, 3]
+}

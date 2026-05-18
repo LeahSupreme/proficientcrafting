@@ -99,11 +99,11 @@ public class ModItems {
                     List.of(new AttributeBonus(ModAttributes.PROFICIENCY.get(), "qualitycrafting:diamond_chisel.proficiency", 15.0)),
                     new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON).durability(1024)));
 
-    public static final RegistryObject<Item> GOLD_CHISEL = ITEMS.register("gold_chisel",
+    /*public static final RegistryObject<Item> GOLD_CHISEL = ITEMS.register("gold_chisel",
             () -> new CraftingToolItem(Tiers.GOLD,
                     List.of(new AttributeBonus(ModAttributes.YIELD.get(), "qualitycrafting:gold_chisel.yield", 5.0),new AttributeBonus(ModAttributes.PROFICIENCY.get(), "qualitycrafting:gold_chisel.proficiency", 5.0)),
                     new Item.Properties().stacksTo(1).durability(32)));
-
+    */
 
     public static final RegistryObject<Item> AMETHYST_CHISEL = ITEMS.register("amethyst_chisel",
             () -> new CraftingToolItem(ModTiers.AMETHYST,

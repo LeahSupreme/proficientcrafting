@@ -37,7 +37,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.NETHERITE_LADLE.get());
 
                         output.accept(ModItems.IRON_CHISEL.get());
-                        output.accept(ModItems.GOLD_CHISEL.get());
+                       // output.accept(ModItems.GOLD_CHISEL.get());
                         output.accept(ModItems.AMETHYST_CHISEL.get());
                         output.accept(ModItems.DIAMOND_CHISEL.get());
                         output.accept(ModItems.NETHERITE_CHISEL.get());

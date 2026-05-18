@@ -86,6 +86,8 @@ public class JewelcraftingStationCategory implements IRecipeCategory<Jewelcrafti
             }
         }
 
+
+
         builder.addSlot(RecipeIngredientRole.CATALYST, 90, 52)
                 .addItemStack(new ItemStack(ModBlocks.JEWELCRAFTING_STATION.get()));
         builder.addSlot(RecipeIngredientRole.CATALYST, 90, 12)
@@ -117,6 +119,11 @@ public class JewelcraftingStationCategory implements IRecipeCategory<Jewelcrafti
                         range.append(Component.translatable("qualitycrafting:quality")),
                         159, OUTPUT_START_Y + 5 + (SLOT_SIZE * i), 0xFF636363, false);
             }
+        }
+
+        if(recipe.getLevelCost() > 0){
+            guiGraphics.drawString(Minecraft.getInstance().font,Component.translatable("qualitycrafting.jei.levelcost").append(Integer.toString(recipe.getLevelCost())),5,20,0xFF80FC20,true);
+
         }
 
         guiGraphics.drawString(Minecraft.getInstance().font,

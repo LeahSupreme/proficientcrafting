@@ -1,0 +1,18 @@
+{
+  "type": "qualitycrafting:forging",
+  "ingredients": [
+    { "item": "minecraft:nether_star" },
+    { "item": "minecraft:netherite_ingot" },
+    { "item": "minecraft:netherite_ingot" },
+    { "item": "minecraft:netherite_ingot" }
+  ],
+  "output": { "item": "qualitycrafting:nether_star_scepter", "count": 1 },
+  "proficiency": 30,
+  "craftTime": 60,
+  "levelCost": 0,
+  "yieldCost": 0,
+  "yieldAdded": 0,
+  "qualityCosts": [10, 20, 40],
+  "qualityPerIngredient": [1, 2, 3],
+  "qualityDecoration": [0, 1, 2, 3]
+}

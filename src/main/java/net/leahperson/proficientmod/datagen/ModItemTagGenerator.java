@@ -45,7 +45,7 @@ public class ModItemTagGenerator extends ItemTagsProvider {
         this.tag(ModTags.Items.JEWEL_CHISEL)
                 .add(ModItems.IRON_CHISEL.get())
                 .add(ModItems.DIAMOND_CHISEL.get())
-                .add(ModItems.GOLD_CHISEL.get())
+                //.add(ModItems.GOLD_CHISEL.get())
                 .add(ModItems.AMETHYST_CHISEL.get())
                 .add(ModItems.NETHERITE_CHISEL.get());
 

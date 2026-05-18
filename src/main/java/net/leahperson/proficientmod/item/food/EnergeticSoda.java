@@ -11,8 +11,9 @@ public class EnergeticSoda extends QualityFoodItem {
         super(null,
                 List.of(),
             new Properties().stacksTo(1).food(new FoodProperties.Builder()
-                    .nutrition(3)
+                    .nutrition(1)
                     .saturationMod(0.2f)
+                    .alwaysEat()
                     .build())
         );
     }

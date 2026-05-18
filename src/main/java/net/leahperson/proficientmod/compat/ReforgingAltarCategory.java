@@ -94,6 +94,8 @@ public class ReforgingAltarCategory implements IRecipeCategory<ReforgingRecipe> 
                     .addItemStack(new ItemStack(net.minecraft.world.item.Items.IRON_SWORD));
         }
 
+
+
         List<Ingredient> catalysts = recipe.getCatalysts();
         for (int catalystIndex = 0; catalystIndex < catalysts.size() && catalystIndex + 1 < ITEM_SLOT_POSITIONS.length; catalystIndex++) {
             int[] position = ITEM_SLOT_POSITIONS[catalystIndex + 1];
@@ -126,6 +128,11 @@ public class ReforgingAltarCategory implements IRecipeCategory<ReforgingRecipe> 
                 guiGraphics.drawString(font, attributeLabel, textStartX, textStartY + lineIndex * lineHeight, 0xFF606060, false);
                 lineIndex++;
             }
+        }
+
+        if(recipe.getLevelCost() > 0){
+            guiGraphics.drawString(Minecraft.getInstance().font,Component.translatable("qualitycrafting.jei.levelcost").append(Integer.toString(recipe.getLevelCost())),5,20,0xFF80FC20,true);
+
         }
 
         guiGraphics.drawString(font,

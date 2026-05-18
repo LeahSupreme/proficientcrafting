@@ -37,7 +37,7 @@ public class ModItemModelProvider extends ItemModelProvider {
 
         simpleItem(ModItems.IRON_CHISEL);
         simpleItem(ModItems.DIAMOND_CHISEL);
-        simpleItem(ModItems.GOLD_CHISEL);
+        //simpleItem(ModItems.GOLD_CHISEL);
         simpleItem(ModItems.AMETHYST_CHISEL);
         simpleItem(ModItems.NETHERITE_CHISEL);
 

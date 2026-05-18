@@ -1,0 +1,17 @@
+{
+  "type": "qualitycrafting:workbench",
+  "ingredients": [
+    { "item": "minecraft:sugar_cane" },
+    { "item": "minecraft:sugar_cane" },
+    { "item": "minecraft:sugar_cane" }
+  ],
+  "output": { "item": "qualitycrafting:paper", "count": 3 },
+  "proficiency": 15,
+  "craftTime": 60,
+  "levelCost": 0,
+  "yieldCost": 5,
+  "yieldAdded": 2,
+  "qualityCosts": [21,42,63],
+  "qualityPerIngredient": [7,14,21],
+  "qualityDecoration": [0,1,2,3]
+}

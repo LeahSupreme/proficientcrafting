@@ -1,0 +1,18 @@
+{
+  "type": "qualitycrafting:workbench",
+  "ingredients": [
+    { "item": "minecraft:paper" },
+    { "item": "minecraft:paper" },
+    { "item": "minecraft:paper" },
+    { "tag": "minecraft:leather" }
+  ],
+  "output": { "item": "qualitycrafting:scribing_table", "count": 1 },
+  "proficiency": 15,
+  "craftTime": 60,
+  "levelCost": 0,
+  "yieldCost": 0,
+  "yieldAdded": 0,
+  "qualityCosts": [28,56,84],
+  "qualityPerIngredient": [7,14,21],
+  "qualityDecoration": [0,1,2,3]
+}

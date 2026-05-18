@@ -137,6 +137,11 @@ public class ScribingTableCategory implements IRecipeCategory<ScribingRecipe> {
             }
         }
 
+        if(recipe.getLevelCost() > 0){
+            guiGraphics.drawString(Minecraft.getInstance().font,Component.translatable("qualitycrafting.jei.levelcost").append(Integer.toString(recipe.getLevelCost())),5,20,0xFF80FC20,true);
+
+        }
+
         guiGraphics.drawString(Minecraft.getInstance().font,
                 Component.translatable("qualitycrafting.jei.proficiencycost").append(Integer.toString(recipe.getProficiencyRequired())),
                 10, 90, 0xFF636363, false);

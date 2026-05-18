@@ -47,7 +47,7 @@ public class ModLanguageProvider extends LanguageProvider {
 
         addSimpleItemName(ModItems.IRON_CHISEL);
         addSimpleItemName(ModItems.DIAMOND_CHISEL);
-        addSimpleItemName(ModItems.GOLD_CHISEL);
+        //addSimpleItemName(ModItems.GOLD_CHISEL);
         addSimpleItemName(ModItems.AMETHYST_CHISEL);
         addSimpleItemName(ModItems.NETHERITE_CHISEL);
 
